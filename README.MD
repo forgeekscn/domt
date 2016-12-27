@@ -60,14 +60,14 @@
 登录，查看公告，查看自己信息，查看失误信息，申请保修
 
 2.系统管理员：
-![](/images/note/root.png)
-![](/images/note/root1.png)
+![](/note/root.png)
+![](/note/root1.png)
 3.财产管理员：
-![](/images/note/admin1.png)
+![](/note/admin1.png)
 4.财产管理员
-![](/images/note/host1.png)
+![](/note/host1.png)
 5.公共功能
-![](/images/note/public.png)
+![](/note/public.png)
 	
 ##系统功能详细划分
 
@@ -183,11 +183,11 @@
 	别名 宿舍物品条目信息 
 	描述 记录着各个宿舍的物品条目详细信息 
 	定义 宿舍物品条目=记录ID+宿舍ID+物品ID+物品数量
-	![](/images/note/er.png)
-	![](/images/note/er2.png)
+	![](/note/er.png)
+	![](/note/er2.png)
 	
 ##数据库关系图
-	![](/images/note/db.png)
+	![](/note/db.png)
 		
 ##写dao,service接口
 ##根据pojo功能来写实现类
