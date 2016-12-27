@@ -3,9 +3,8 @@
 <head>
 </head>
 <script type="text/javascript">
-	
+window.location.href = "home.action";		//javascript页面跳转
 </script>
 <body>
-	<h1>高校宿舍综合管理系统演示平台</h1>
 </body>
 </html>

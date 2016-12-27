@@ -18,7 +18,7 @@
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 	
 	<!-- 2. 包扫描dao,service -->
-	<context:component-scan base-package="cn.itcast.jk.dao,cn.itcast.jk.service"/>
+	<context:component-scan base-package="cn.forgeeks.dao,cn.forgeeks.service"/>
 	
 	<!-- 3. 数据源dataSource  C3P0 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -38,7 +38,7 @@
 		<property name="dataSource" ref="dataSource"/>
 		<!-- 整合mybatis，包扫描 mapper文件 -->
 		<property name="configLocation" value="classpath:sqlMapConfig.xml"/>
-		<property name="mapperLocations" value="classpath:cn/itcast/jk/mapper/*.xml"/>
+		<property name="mapperLocations" value="classpath:cn/forgeeks/mapper/*.xml"/>
 	</bean>
 	
 	<!-- 5. 事务 -->
@@ -60,7 +60,7 @@
 	</tx:advice>
 	
 	<aop:config>
-		<aop:pointcut expression="execution(* cn.itcast.jk.service.*.*(..))" id="txPointcut"/>
+		<aop:pointcut expression="execution(* cn.forgeeks.service.*.*(..))" id="txPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config>
 			
