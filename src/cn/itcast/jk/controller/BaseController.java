@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 /**
  * @Description:
- * @Author:	nutony
+ * @Author:	hechao
  * @Company:	http://java.itcast.cn
  * @CreateDate:	2014-3-4
  */
