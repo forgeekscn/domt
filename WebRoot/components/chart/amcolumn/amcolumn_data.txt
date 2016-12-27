@@ -1,0 +1,9 @@
+USA;4.2;3.5
+UK;3.1;1.7
+Canada;2.9;2.8
+Japan;2.3;2.6
+France;2.1;1.4
+Brazil;4.9;2.6
+Russia;7.2;6.4
+India;7.4;8.0
+China;10.1;9.9  

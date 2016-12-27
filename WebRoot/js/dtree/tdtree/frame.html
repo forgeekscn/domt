@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<head>
+	<title>self J2ee Frame</title>
+
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="dtree.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="dtree">
+	<p><a href="javascript: d.openAll();">Open all</a> | <a href="javascript: d.closeAll();">Close all</a></p>
+<script language="javascript">
+
+d = new dTree('d','.','testForm');
+d.add('0','-1','Develope Base');
+d.add('05','0','Rule');
+d.add('01','0','Language');
+d.add('04','0','MVC Frame');
+d.add('02','0','Software');
+d.add('03','0','Env');
+
+d.add('0101','01','Java2');
+
+d.add('0201','02','Eclipse 6.5');
+d.add('0202','02','EditPlus 2.11');
+d.add('0203','02','Power Designer 12.5');
+d.add('0204','02','FrontPage 2003');
+d.add('0205','02','CVS');
+d.add('0206','02','Office Word/Excel/ppt 2003');
+
+d.add('0301','03','SqlServer 2000 (Database)');
+d.add('0302','03','jdk 1.6_04');
+d.add('0303','03','Tomcat 6.0');
+
+d.add('0401','04','View');
+d.add('040101','0401','html','');
+
+d.add('040102','0401','css','');
+d.add('040103','0401','javascript(js)','');
+d.add('040104','0401','jsp','');
+d.add('040105','0401','validator','');
+d.add('040106','0401','jstl(tiglib)','');
+
+d.add('0402','04','Control');
+d.add('040201','0402','log4j','');
+d.add('040202','0402','class','');
+d.add('040203','0402','action(struts)');
+d.add('040204','0402','javabean');
+d.add('040205','0402','tool class');
+
+d.add('0403','04','Model');
+d.add('040301','0403','hibernate','');
+d.add('040302','0403','spring','');
+d.add('040303','0403','jdbc','');
+d.add('040304','0403','sql','');
+d.add('040305','0403','hql','');
+
+d.add('0501','05','coding');
+d.add('0502','05','ISO doc');
+
+document.write(d);
+
+</script>
+ 
+
+
+</body>
+
+</html>

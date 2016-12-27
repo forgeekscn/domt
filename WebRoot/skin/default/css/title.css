@@ -1,0 +1,80 @@
+#userInfo {
+	height:35px;
+	position: absolute;
+	right:20px;
+	top: -1px;
+	padding:8px 8px 0px 15px;
+	color: #fff;
+	text-align: right;		
+	cursor:pointer;
+}
+
+.memo{
+	background:url(../images/title/memo.gif) no-repeat;
+	position:absolute;
+	right:129px;
+	top:55px;
+	z-index:996;
+	width:56px;
+	height:51px;
+}
+.small_login{
+	background:url(../images/title/small_login.gif) no-repeat;
+	position:absolute;
+	right:69px;
+	top:55px;
+	z-index:996;
+	width:56px;
+	height:51px;
+}
+.small_login_out{
+	background:url(../images/title/login_out.gif) no-repeat;
+	position:absolute;
+	right:10px;
+	top:55px;
+	z-index:996;
+	width:56px;
+	height:51px;
+}
+
+.top_logo {
+	background:url("../images/login/logo.png") no-repeat -2px 2px;
+    height:91px;
+    white-space:nowrap;
+    overflow:hiddle;
+}
+.headerBg {
+	background:url(../images/title/title_bgs.jpg) no-repeat right top;
+    height:106px;
+    margin: 0px;
+}
+.titleDate{float:left;height:29px;width:200px;text-align:left;color:#fff; line-height:29px; font-size:12px;font-weight:normal;padding-left:30px;}
+#menuContent{ height:29px;left:0px;padding:0px 5px 0px 5px; font-size:12px;}
+#topmenu{ margin-top:1px;padding:6px 11px 5px 13px;color:white;height:29px;cursor:pointer; overflow:hiddle; }
+#tm_separator{ height:28px;width:2px;background:url(../images/title/tm_separator.jpg) no-repeat;}
+#prompt_div{
+	width:150px;
+	height:50px;
+	position:absolute;
+	right:18%;
+	top:35px;
+	z-index:9999;
+}
+#leftKey{
+	float:left;
+	width:16px;
+	cursor: hand;
+	padding:2px 0px 0px 0px;
+}
+#mask{
+	height: 100%;
+	overflow: hidden; 	
+}
+#rightKey{
+	padding-top:5px;
+	width:16px;
+	cursor: hand;
+	z-index: 99999;
+	float:left;
+	padding:2px 5px 0px 5px;
+}

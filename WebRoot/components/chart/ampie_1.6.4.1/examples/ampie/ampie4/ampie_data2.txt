@@ -1,0 +1,5 @@
+Zero; 30
+One;40
+Two;15
+More;15
+

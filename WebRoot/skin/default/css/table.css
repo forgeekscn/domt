@@ -1,0 +1,276 @@
+table {
+    border-collapse: collapse;
+}
+
+tbody, tfoot {
+    /*background: #FFF;*/
+    COLOR: #333333;
+}
+
+caption {
+	font: 14.7px "宋体";
+	color: #476CA4;	
+}
+
+/* 默认下拉列表框 */
+select {
+    font: 12px "宋体";
+    background: #FFF;
+    border: 1px solid #637DDE;
+}
+
+/*默认数据文本框控制*/
+textarea {
+    width:98%;
+    font: 12px "宋体";
+    border: 1px solid #7F9DB9;
+    /*
+    word-wrap:break-word;
+    word-break:break-all;
+    */
+}
+.commonText {
+    width: 260px;
+}
+
+/* 通用表格 */
+.commonTable {
+	width:98%;
+}
+.commonTable_main{
+	width:100%;
+	border:1px solid #daf2ef;
+}
+.commonTable_special{
+	width:100%;
+	border:1px solid #daf2ef;
+	border-top:1px solid #7ccac1;
+	
+}
+
+/* 表格栏目 */
+.columnTitle_mustbe {
+	width: 90px;
+	PADDING: 0px 5px 5px 18px;
+	BACKGROUND:url(../images/must.gif) no-repeat left 15px; 
+	FONT: 9pt 宋体; 
+	COLOR: #00544a; 
+	TEXT-ALIGN: left;
+	border-bottom:1px solid #c1e1dd;
+	padding-top:15px;
+	letter-spacing:1.5px;
+}
+
+.columnTitle {
+	width: 90px;
+	PADDING: 0px 5px 5px 18px;
+	FONT: 9pt 宋体; 
+	COLOR: #00544a; 
+	TEXT-ALIGN: left;
+	border-bottom:1px solid #c1e1dd;
+	padding-top:15px;
+	letter-spacing:1.5px;
+}
+/* 表格内容 */
+.normalTD {
+    text-align:left;
+	word-break:break-all;
+	border-bottom:1px solid #c1e1dd;
+}
+.tableContent {
+    width:300px;
+    text-align:left;
+	word-break:break-all;
+	border-bottom:1px solid #c1e1dd;
+}
+.tableContentAuto {
+    text-align:left;
+	word-break:break-all;
+	border-bottom:1px solid #c1e1dd;
+}
+.tableContent input{
+     padding-top:3px;
+	 padding-left:2px;
+	 width:100%;
+}
+
+
+.td_title {
+    PADDING: 5px 5px 5px 6px;
+	FONT: 9pt 宋体; 
+	COLOR: #00544a; 
+	TEXT-ALIGN: left;
+	border-bottom:1px solid #c1e1dd;
+	padding-top:15px;
+	letter-spacing:1.5px;
+}
+
+/*
+部门模块修改页面使用
+*/
+.td_mustbe {
+    PADDING: 5px 5px 5px 6px;
+	BACKGROUND:url(/skin/default/images/must.gif) no-repeat  -9px 14px; 
+	FONT: 9pt 宋体; 
+	COLOR: #00544a; 
+	TEXT-ALIGN: left;
+	border-bottom:1px solid #c1e1dd;
+	padding-top:15px;
+	letter-spacing:1.5px;
+}
+
+.columnTitle_mustbe_custom {
+	width: 80px;
+	PADDING: 5px 5px 5px 22px;
+	BACKGROUND:url(/skin/default/images/must.gif) no-repeat left 32px; 
+	FONT: 9pt 宋体; 
+	COLOR: #00544a; 
+	TEXT-ALIGN: left;
+	border-bottom:1px solid #c1e1dd;
+	padding-top:15px;
+	letter-spacing:1.5px;
+}
+.columnTitle_mustbe_custom2 {
+	background:#f0fcfa url(/skin/default/images/must.gif) no-repeat 25px 6px; 
+}
+.tableContent_c td{
+    width:auto;
+	PADDING:5px;    
+	word-break:break-all;
+	border-top:1px solid #c1e1dd;
+	padding-top:10px;
+}
+.tc_others{width:auto;margin-left:15px;position:absolute;}
+.tc_others_input{float:left;}
+.tc_others_word{float:left;margin-top:5px;margin-left:3px;color:#009900;}
+
+
+/* 通用表格行定义 */
+.commonTable tr {
+    font-size: 12px;
+}
+
+
+/* 通用表格内容 */
+
+.tableFooter {
+	height:3px;
+	background: #f5f9fd;
+}
+
+/* 通用表格标题栏 */
+.listTablew{
+	margin-top:5px;
+	padding:1px;
+	width:98%;
+	border:1px solid #45b4a7;	
+}
+.rowTitle {
+    font-weight: bold;
+    text-align: center;
+    HEIGHT:30px;
+}
+.rowTitle td{
+    font-weight: bold;
+    text-align: center;
+    HEIGHT:28px;
+    border-bottom:1px solid #75bdb5;
+    background:#f0fcfa;
+}
+
+.CTM_title{
+	background:#f0fcfa;
+    text-align: center;
+    HEIGHT:30px;
+    border-bottom:1px solid #e1f1ef;
+}
+.CTM_title_main{
+	background:url(images/Now_job_bg.gif) repeat-x;
+    text-align: center;
+    HEIGHT:30px;
+    color:#fff;
+    border-bottom:1px solid #badcd8;	
+	}
+.CTM_title_main td{
+	font-weight: bold;
+	border-bottom:1px solid #52ada2;
+	}
+.CTM_title td{
+    font-weight: bold;
+    color:#00554a;
+    word-break:break-all;
+}
+.CTM_row td{
+	height:35px;
+	padding:3px 8px;
+	border-top:1px solid #badcd8;
+	letter-spacing:1.5px;
+	line-height:150%;
+	}
+.CTM_rower td{
+	height:35px;
+	padding:3px 8px;
+	border-top:1px solid #daf2ef;
+	letter-spacing:1.5px;
+	line-height:150%;
+    word-break:break-all;
+	}
+.CTM_rower2 td{
+	height:35px;
+	padding:3px;
+	border-top:1px solid #daf2ef;
+	letter-spacing:1.5px;
+	line-height:150%;
+    word-break:break-all;
+	}
+.CTM_rower input, .CTM_rower select{
+	width:95%;
+}
+.CTM_rower2 input, .CTM_rower2 select{
+	width:95%;
+}
+.CTM_row_light{
+	height:35px;
+	padding:0 5px;
+	border-top:1px solid #badcd8;
+	letter-spacing:1.5px;
+	line-height:150%;
+	background:#f0fcfa;
+	}
+.CTM_row_light td{
+	padding:5px 5px;
+	height:32px;
+	}
+.CTM_row_light_focus_left{
+	background:#f0fcfa url(images/CMT_row_title_bg.gif) no-repeat 15px 0px;
+	padding:5px 5px;
+	height:32px;
+	}
+.CTM_row_light_focus_left_last{
+	background:#f0fcfa url(images/CMT_row_title_bg_last.gif) no-repeat 15px 0px;
+	padding:5px 5px;
+	height:32px;
+	}
+.CTM_row_dark_focus{
+	background:#eef4f3 url(images/document.gif) no-repeat 3px 4px;
+	padding:5px 0px 3px 35px;
+	height:32px;
+	}
+.CTM_row_light_focus{
+	background:#f0fcfa url(images/document_out.gif) no-repeat 3px 4px;
+	padding:5px 0px 3px 35px;
+	height:32px;	
+	}
+ .CTM_row_dark td{
+ 	border-top:1px solid #d3d9d8;
+	border-bottom:1px solid #c0c5c4;
+	padding:5px 5px;
+	height:38px;
+	}
+.CTM_row_dark{
+	height:35px;
+	padding:0 5px;
+	letter-spacing:1.5px;
+	line-height:150%;
+	background:#eef4f3;
+	}

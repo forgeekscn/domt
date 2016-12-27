@@ -1,0 +1,166 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ampie</title>
+</head>
+<body>
+<b><font color="red">Attention! Because of security restrictions in most cases this example will work only if you upload files to your web server.</font></b><br><br>
+<!-- saved from url=(0013)about:internet -->
+
+<script type="text/javascript" src="../ampie/swfobject.js"></script>
+
+<script type="text/javascript">
+      // get flash movie object
+      var flashMovie;
+      function init() {
+         if (document.getElementById) {
+            flashMovie = document.getElementById("ampie");
+         }
+      }
+      // wait for the page to fully load before initializing
+      window.onload = init;
+
+      // chart control functions ///////////////////////////////////
+      // set data
+      function setData() {
+         if (flashMovie) {            
+            var txt = document.getElementById("data").value;
+            flashMovie.setData(txt);
+         }
+      }
+      // reload data
+      function reloadData() {
+         if (flashMovie) {            
+            flashMovie.reloadData();       // you can pass new data file name: reloadData(new_data_file_name)
+         }
+      }
+      // reload settings
+      function reloadSettings() {
+         if (flashMovie) {            
+            flashMovie.reloadSettings();   // you can pass new settings file name: reloadSettings(new_settings_file_name)
+         }
+      }
+      // reload all
+      function reloadAll() {
+         if (flashMovie) {            
+            flashMovie.reloadAll();        // reloadAll(new_data_file_name, new_settings_file_name)
+         }
+      }
+      // set param
+      function setParam() {
+         if (flashMovie) {
+            var param = document.getElementById("param").value;
+            var value = document.getElementById("value").value;
+            flashMovie.setParam(param, value);
+         }
+      }
+      // get param
+      function getParam() {
+         if (flashMovie) {
+            var param = document.getElementById("getparam").value;            
+            flashMovie.getParam(param);
+         }
+      } 
+      // get data
+      function getData() {
+         if (flashMovie) {
+            flashMovie.getData();
+         }
+      }   
+      // export image
+      function exportImage() {
+         if (flashMovie) {
+            flashMovie.exportImage('../ampie/export.php'); // it is not required to pass filename here if you set it in settings file) 
+         }
+      }    
+      // print chart
+      function print(){
+         if (flashMovie) {
+            flashMovie.print();
+         }
+      }
+      // print chart as bitmap
+      function printAsBitmap(){
+         if (flashMovie) {
+            flashMovie.printAsBitmap();
+         }
+      }
+      
+              
+      // functions called from flash /////////////////////////////////////////
+      // this function is called then chart is finished
+      function amChartInited(chart_id){
+          document.getElementById("chartfinished").value = "chart " + chart_id + " is finished";           
+      }      
+      // return data 
+      function amReturnData(chart_id, param){
+          document.getElementById("data").value = unescape(param);
+      }
+      // return param     
+      function amReturnParam(chart_id, param){
+          document.getElementById("returnedparam").value = unescape(param);
+      }          
+      // mouse over slice           
+      function amSliceOver(chart_id, id, title, value, percents, color, description){
+          document.getElementById("sliceover").value = title + "(" + percents + "%)";
+      }
+      // mouse out           
+      function amSliceOut(chart_id){
+          document.getElementById("sliceover").value = "none";
+      }                  
+      // click slice           
+      function amSliceClick(chart_id, id, title, value, percents, color, description){
+          document.getElementById("sliceclick").value = title;
+      }          
+
+   // ]]>
+</script>
+
+
+<!-- ampie script-->
+	<div id="flashcontent">
+		<strong>You need to upgrade your Flash Player</strong>
+	</div>
+
+	<script type="text/javascript">
+		// <![CDATA[		
+		var so = new SWFObject("../ampie/ampie.swf", "ampie", "520", "400", "7", "#FFFFFF");
+		so.addVariable("path", "../ampie/");
+		so.addVariable("chart_id", "ampie");
+		so.addVariable("settings_file", escape("ampie/js/ampie_settings.xml"));
+		so.addVariable("data_file", escape("ampie/js/ampie_data.xml"));
+		so.addVariable("preloader_color", "#999999");
+		so.write("flashcontent");
+		// ]]>
+	</script>
+<!-- end of ampie script -->
+
+		<form action="" id="myform">
+      <input type="text" id="chartfinished">				
+      <input type="button" value="reload Data" onclick="reloadData();" />
+	    <input type="button" value="reload Settings" onclick="reloadSettings();" />
+      <input type="button" value="reload All" onclick="reloadAll();" />
+    	<hr noshade size="1">
+      <input type="button" value="export image" onclick="exportImage();" />            	    
+      <input type="button" value="print" onclick="print();" />
+      <input type="button" value="print as bitmap" onclick="printAsBitmap();" />
+    	<hr noshade size="1">	
+      <textarea id="data" rows="6" cols="62"></textarea><br>
+   	   <input type="button" value="Get data" onclick="getData();" />
+       <input type="button" value="Set Data" onclick="setData();" />
+   		<hr noshade size="1">	 
+  	  Param: <input type="text" id="param" value="background.color"/> Value: <input type="text" id="value" value="0xBBBB00"/>
+      <input type="button" value="set param" onclick="setParam();" />
+   		<hr noshade size="1">   
+   	  Param: <input type="text" id="getparam" value="pie.angle">
+   		Value: <input type="text" id="returnedparam" />
+   		<input type="button" value="get param" onclick="getParam();" />
+   		<hr noshade size="1">   
+   		Mouse is over slice: <input type="text" id="sliceover" />
+      Clicked on slice: <input type="text" id="sliceclick" />
+   		</p>
+		</form>
+
+
+</body>
+</html>

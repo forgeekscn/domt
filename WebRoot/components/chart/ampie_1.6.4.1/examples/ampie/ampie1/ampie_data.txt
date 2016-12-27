@@ -1,0 +1,8 @@
+China;1314.4;;;http://en.wikipedia.org/wiki/China;Click on the slice to find more information about China
+India;1120.4;;;http://en.wikipedia.org/wiki/India;Click on the slice to find more information about India
+United States;300.38;;;http://en.wikipedia.org/wiki/Usa;Click on the slice to find more information about USA
+Indonesia;233.52 
+Brazil;187.67 
+Pakistan;158.85 
+Bangladesh;148.9
+Other Countries;3007.5;true

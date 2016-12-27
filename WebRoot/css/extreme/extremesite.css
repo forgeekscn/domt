@@ -1,0 +1,114 @@
+html, body {
+	margin:0;
+	padding:0;
+	height:100%;
+	border:none
+}
+
+img {
+	border:0;	
+}
+
+a {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px; 
+	color:black;
+}
+
+pre {
+	font: 12px verdana, arial, helvetica, sans-serif;
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    background-color: #F4F4F4;
+}
+
+h4 h3 {
+	color: #e75a08;
+}
+   
+#bodyMenu {
+	width: 160px;
+	vertical-align:top;
+}
+
+#bodyContent {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px; 
+	padding:10px;
+	vertical-align:top;
+}
+
+#header {
+	display:block;
+	height:75px;
+	width:100%;
+	border: 0;
+}
+
+#email {
+	display: block;
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px; 
+	text-align: center;
+	width: 100%;
+	margin-top: 20px;
+}
+
+#sidelinks a {
+	display: block;
+	margin: 0 3px 0 0;
+	padding: 1px 10px 1px 5px;
+	font: bold 12px arial, verdana, sans-serif;
+	text-decoration: none;
+	border-right: 1px solid #b7bcc3;
+	color: rgb(55%,55%,60%);
+	background-color: transparent;
+}
+
+#sidelinks a:visited {
+	color: rgb(55%,55%,60%);
+}
+
+#sidelinks a:hover {
+	background-color: #308dbb;
+	color: #fff;
+}
+		
+#sidelinks h4 {
+	background-color: transparent;
+	color: #086c9f;
+	margin: 0 3px 0 0;
+	padding: 1em 0 0;
+	font: bold 100% Arial, Verdana, sans-serif;
+	border-right: 1px solid #b7bcc3;
+	border-bottom: 2px solid #b7bcc3;
+}
+
+.button {
+	cursor: pointer;
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size:12px;
+	font-weight: bold;
+	background-color: #308dbb;
+	color: white;
+	margin-top: 5px;
+	border: outset 1px #333;
+	vertical-align: middle;
+}
+
+#google {
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+#google input {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+}
+
+#google span {
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 12px;
+}

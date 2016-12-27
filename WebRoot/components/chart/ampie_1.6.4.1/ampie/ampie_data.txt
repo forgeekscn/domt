@@ -1,0 +1,9 @@
+[title];[value];[pull_out];[color];[url];[description];[alpha];[label_radius]
+China;1314.4;;;http://www.interactivemaps.org
+India;1120.4 
+United States;300.38
+Indonesia;233.52 
+Brazil;187.67 
+Pakistan;158.85 
+Bangladesh;148.9
+Other Countries;3007.5;true;;http://www.amcharts.com;Click to find out more

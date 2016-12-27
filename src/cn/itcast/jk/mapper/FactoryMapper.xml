@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.jk.mapper.FactoryMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="cn.itcast.jk.domain.Factory" id="factoryRM">
+		<!-- 主键 -->
+		<id property="id" column="FACTORY_ID"/>
+		<!-- 一般属性 -->
+		<result property="fullName" column="FULL_NAME"/>
+		<result property="factoryName" column="FACTORY_NAME"/>
+		<result property="contacts" column="CONTACTS"/>
+		<result property="phone" column="PHONE"/>
+		<result property="mobile" column="MOBILE"/>
+		<result property="fax" column="FAX"/>
+		<result property="cnote" column="CNOTE"/>
+		<result property="inspector" column="INSPECTOR"/>
+		<result property="orderNo" column="ORDER_NO"/>
+		<result property="state" column="STATE"/>
+		
+		<result property="createBy" column="CREATE_BY"/>
+		<result property="createDept" column="CREATE_DEPT"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+	
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="factoryRM">
+		select * from factory_c
+		where 1=1
+		<if test="state!=null"> and STATE=#{state}</if>
+	</select>
+	
+	<!-- 查询一个 -->
+	<select id="get" parameterType="string" resultMap="factoryRM">
+		select * from factory_c
+		where factory_id=#{pid}
+	</select>
+	
+	<!-- 新增  oracle jdbc驱动 当这个值为null时，必须告诉它当前字段默认值的类型jdbcType=VARCHAR （mybatis定义）,
+			无效的列类型: 1111; nested exception is java.sql.SQLException
+	 		mysql不用写  -->
+	<insert id="insert" parameterType="cn.itcast.jk.domain.Factory">
+		insert into factory_c
+		(FACTORY_ID,FULL_NAME,FACTORY_NAME,CONTACTS,PHONE,MOBILE,FAX,CNOTE,INSPECTOR,ORDER_NO,STATE,CREATE_BY,CREATE_DEPT,CREATE_TIME)
+		values
+		(	#{id},
+			#{fullName, jdbcType=VARCHAR},
+			#{factoryName, jdbcType=VARCHAR},
+			#{contacts, jdbcType=VARCHAR},
+			#{phone, jdbcType=VARCHAR},
+			#{mobile, jdbcType=VARCHAR},
+			#{fax, jdbcType=VARCHAR},
+			#{cnote, jdbcType=VARCHAR},
+			#{inspector, jdbcType=VARCHAR},
+			#{orderNo, jdbcType=INTEGER},
+			#{state, jdbcType=VARCHAR},
+			#{createBy, jdbcType=VARCHAR},
+			#{createDept, jdbcType=VARCHAR},
+			#{createTime, jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<!-- 修改 动态SQL语句 -->
+	<update id="update" parameterType="cn.itcast.jk.domain.Factory">
+		update factory_c
+		<set>
+			<if test="fullName != null">FULL_NAME=#{fullName, jdbcType=VARCHAR},</if>
+			<if test="factoryName != null">FACTORY_NAME=#{factoryName, jdbcType=VARCHAR},</if>
+			<if test="contacts != null">CONTACTS=#{contacts, jdbcType=VARCHAR},</if>
+			<if test="phone != null">PHONE=#{phone, jdbcType=VARCHAR},</if>
+			<if test="mobile != null">MOBILE=#{mobile, jdbcType=VARCHAR},</if>
+			<if test="fax != null">FAX=#{fax, jdbcType=VARCHAR},</if>
+			<if test="cnote != null">CNOTE=#{cnote, jdbcType=VARCHAR},</if>
+			<if test="inspector != null">INSPECTOR=#{inspector, jdbcType=VARCHAR},</if>
+			<if test="orderNo != null">ORDER_NO=#{orderNo, jdbcType=INTEGER},</if>
+			<if test="state != null">STATE=#{state, jdbcType=VARCHAR},</if>
+		</set>
+		where FACTORY_ID=#{id}
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string">
+		delete from factory_c
+		where FACTORY_ID=#{pid}
+	</delete>
+	
+	<!-- 删除多条（一维字符串数组） -->
+	<delete id="delete" parameterType="string">
+		delete from factory_c
+		where FACTORY_ID in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 修改状态 -->
+	<update id="updateState" parameterType="map">
+		update factory_c set state=#{state}
+		where FACTORY_ID in
+		<foreach collection="ids" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+</mapper>

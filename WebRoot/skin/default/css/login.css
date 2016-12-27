@@ -1,0 +1,54 @@
+body{background:#00716B url(../images/login/bg.png) no-repeat 50% -190; margin:0px; padding:0px; font-size:12px; color:#FFFFFF; text-align:center; }
+#warpbox{height:500px;  width:630px; margin:0 auto; position:relative;}
+
+a:link,a:visited, a:active{ color:#bee7e5; text-decoration:none;}
+a:hover {color:#FED03F; text-decoration:underline;} 
+
+.main{ height:200px;  text-align:left; padding-top:300px; padding-left:140px;}
+
+.logo {height:80px; background:url(../images/login/logo.gif) no-repeat;}
+
+.zck{width:480px; height:90px; font-size:14px;}
+.zc{width:240px; float:left;}
+.zc input{background:url(../images/login/input_bg.jpg) repeat-x; padding:5px; width:160px; height:26px; border:1px solid #00897F; vertical-align:middle;}
+.zc_line{height:30px; margin-top:8px;}
+
+.dl{width:235px; float:right; padding-top:18px;}
+.dl input{ width:width:96px; height:45px;}
+
+.loginImgOut {width:96px; height:45px; padding-top:18px; background:url(../images/login/loginImgOut.jpg) no-repeat; border:0px; cursor:pointer;}
+.loginImgOver{width:96px; height:45px; padding-top:18px; background:url(../images/login/loginImgOver.jpg) no-repeat; border:0px; cursor:pointer;}
+
+.resetImgOut {width:96px; height:45px; padding-top:18px; background:url(../images/login/resetImgOut.jpg) no-repeat; border:0px; cursor:pointer;} 
+.resetImgOver{width:96px; height:45px; padding-top:18px; background:url(../images/login/resetImgOver.jpg) no-repeat; border:0px; cursor:pointer;} 
+
+.bqxx{height:90px; text-align:center; margin-top:50px; color:#bee7e5; line-height:22px; margin-left:-40px; }
+
+
+#ts{
+    position:absolute;
+	display:none;
+	top:335px;
+	left:204px;
+	width:450px;
+	background:#dbfbf9;
+	border:1px solid #cae9e7;
+	text-align:left;
+	color:#000000;
+	padding:10px;
+}
+#ts a{
+	display:block;
+	height:25px;
+	line-height:25px;
+	cursor:pointer;
+}
+#ts a:hover, #ts a.selected{
+	display:block;	
+	background:#dbfbf9;
+	height:25px;
+	line-height:25px;
+	color:#000000;
+}
+	
+	

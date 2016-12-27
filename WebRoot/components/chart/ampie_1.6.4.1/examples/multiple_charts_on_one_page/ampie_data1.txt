@@ -1,0 +1,3 @@
+Yes;40;true
+No;30;true
+Divorced;30;true

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pie>
+  <slice title="Twice a day" pull_out="true">358</slice>
+  <slice title="Once a day" pull_out="false">241</slice>
+  <slice title="Once a week" pull_out="false">58</slice>
+  <slice title="Never" pull_out="false">120</slice>
+  <slice title="After every meal" alpha="30">50</slice>
+</pie>

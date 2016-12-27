@@ -1,0 +1,220 @@
+*** CHANGE LOG *****************************************************************
+*** 1.6.4.0 ********************************************************************
+FEATURE ADDED
+amReturnParam function also returns the param name:
+amReturnParam(chart_id, value, param);
+*** 1.6.3.1 ********************************************************************
+FIX: stacking issue with missing values fixed
+FIX: balloons do not go above the plot area 
+FIX: js function print could print three charts instead of one
+*** 1.6.3.0 ********************************************************************
+FEATURE ADDED:
+New settings <scientific_min> and <scientific_max> added. If absolute value of 
+your number is equal or bigger then scientific_max or equal or less then 
+scientific_min, this number will be formatted using scientific notation, for
+example:
+
+15000000000000000 -> 1.5e16
+0.0000023 -> 2.3e-6
+
+FIX: amClickedOnSeries is not called anymore when zooming the chart.
+*** 1.6.2.1 ********************************************************************
+FEATURE ADDED:
+a new setting, <js_enabled> was added. It allows disabling all javascript-html
+communication. Id you set this to false, then the chart won't listen and won't
+call any JavaScript functions. This will also disable the security warning
+message when opening the chart from your hard drive or CD.
+*** 1.6.2.0 ********************************************************************
+FEATURE ADDED:Y axis values can be formatted as duration. To do this, you have to
+tell the duration unit of your data. For example, if your data represents seconds,
+you have to set: <values><y_left><duration>ss</duration></y_left></values>
+The units of the duration can be changed in the <strings> section.
+
+FIX: you can call JS functions after amError function was called by the chart
+
+FIX: amClickedOnSeries function is called even the zoomable is set to false now
+*** 1.6.1.4 ********************************************************************
+FEATURE ADDED: Margins can be set in percents now
+FIX: balloon.text_color setting was ignored
+FIX: in some cases, when values were missing and axis type was "stacked" or
+"100% stacked" the area to the stacked graph was filled incorrectly
+FIX: amGetZoom was called when resizing window (if the redraw was set to true)
+FIX: if balloon.only_one was set to true, the balloon wasn't appearing if the 
+graph was hidden or not selected and the mouse was close to this graph.
+*** 1.6.1.3 ********************************************************************
+FIX: amGetZoom returned "undefined" if the indicator was moved off the plot area
+to the right side. 
+*** 1.6.1.2 ********************************************************************
+FIX: incorrect scroller could appear after reloadData javascript function was
+called. 
+
+The chart didn't accept new JS functions if error, such as no data occureed 
+
+*** 1.6.1.1 ********************************************************************
+FIX: the indicator could go left of the plot area
+
+*** 1.6.1.0 ********************************************************************
+IMPORTANT UPDATE:
+JS functions amClickedOnSeries(), amClickedOnBullet() and amRolledOverBullet()
+changed - now the first parameter they return is chart_id, like for all the other
+JS functions which are called by flash. If you are using these functions, you 
+will have to update your scripts.
+
+FEATURE ADDED: JavaScript functions are cued now - previously you could call one
+JS function at a time and call another only after the chart finished the
+previous process. Now, you can call several functions one after another, without
+waiting for the chart to finish doing something. The functions are cued and all
+of them will be executed.
+
+
+FEATURE ADDED: New JavaScript function amProcessCompleted(chart_id, process) 
+This function is called after some process initialized by some JS function is
+finished. For example, if you make the chart to reload data by calling reloadData
+function, after the data is reloaded, the chart will call amProcessCompleted 
+function and the "process" parameter will be "reloadData" - the same as the 
+function name you called. Check examples/javascript_control example to see this
+in action.
+
+FIX: The bullets might be displayed out of plot area, when the <strict_min_max>
+was set to true and the graph's values were out of the <min> and <max> range.
+
+FIX: If all the graphs of one axis were hidden, the grid and values still 
+remained.
+
+FIX: chart_id was lost after the use of setSettings JS function.
+
+
+*** 1.6.0.0 ********************************************************************
+
+FEATURE ADDED: RESCALING THE CHART WHEN THE GRAPH IS HIDDEN
+When you click on the legend key, the graph is hidden or shown. Now the chart
+recalculates min and max values (rescales the chart) when you do this. You can
+turn this feature off by setting <rescale_on_hide> to "false".
+
+
+FEATURE ADDED: AUTO-FITTING OF THE LEGEND and X AXIS VALUES
+
+The legend now automatically adjusts bottom margin to fit to the flash object's 
+area. If your X axis values are rotated, the legend position is adjusted not to
+overlap the values. In order this to work, you have to leave <legend><y> setting
+empty.
+
+
+FEATURE ADDED: Y BALLOONS NO LONGER OVERLAP
+
+
+FEATURE ADDED: NEW BULLET TYPES
+
+New bullet types are: square_outline and round_outline
+
+
+FEATURE ADDED: CHART TYPE CAN BE SET SEPARATELY FOR RIGHT AND LEFT AXES
+
+Previously you set the same <type> (line, stacked, 100% stacked) for both
+left and right axes. Now you can set the type separately. This setting is now 
+in <axes> section.
+
+
+FEATURE ADDED: MORE SETTINGS FOR THE Y BALLOON
+
+New balloon settings allows you to have balloon border and rounded corners:
+
+   <balloon>
+      <only_one></only_one>
+      <on_off></on_off>
+      <color></color>          
+      <alpha></alpha>          
+      <text_color></text_color>
+      <text_size></text_size>  
+      <max_width></max_width>  
+      <corner_radius></corner_radius>
+      <border_width></border_width>  
+      <border_alpha></border_alpha>  
+      <border_color></border_color>    
+   </balloon> 
+   
+The <only_one> setting replaced the <indicator><one_y_balloon> setting, and the
+<on_off></on_off> replaced the <indicator><y_balloon_on_off>. The old ones will
+also work.
+
+
+FEATURE ADDED: POSSIBILITY TO SET ARRAY OF COLORS
+
+Using <colors></colors> setting, you can set an array fo colors, which will
+be used if the graph's color is not set.
+
+
+FEATURE ADDED: CHANGE MULTIPLE SETTINGS WITH JAVASCRIPT
+
+Using new function, flashMovie.setSettings(settings, rebuild) You can control
+multiple settings.  It is recommended to use this new function even for one 
+setting, instead of setParam() function. The "rebuild" option might be "true" 
+or "false" (the default is "true"). If you set it to "false", then the settings
+will not be applied until you call another new JS function: flashMovie.rebuild()
+or pass another set of settings with the "rebuild" set to "true". 
+
+A new function flashMovie.getSettings() will return the full settings 
+XML by calling amReturnSettings(chart_id, settings) function. 
+
+
+FEATURE ADDED: IMAGE DATA IS PASSED TO JAVASCRIPT
+
+When exporting chart as an image, the chart passes image data to JavaScript 
+function: amReturnImageData(chart_id, data) 
+
+
+FEATURE ADDED: FONT COLOR AND SIZE OF A LABEL TEXT
+
+<labels> Can accept  font color and font size HTML tags now, for example:
+<text><![CDATA[Source: <font color="#CC0000" size="14">amCharts</font>]]></text>
+
+
+CHANGE OF THE DEFAULT SETTINGS:
+<context_menu><default_items><zoom> default value was changed to "false"
+
+
+FIXES:
+When adding some settings using additional_chart_settings variable, you don't 
+need to set all the <graph> or <label> settings anymore. When 
+changing some <label> property using additional_chart_settings, in order to
+identify <label>, the labels id (lid) must be added, for example: <label lid="0">
+
+When <connect> is set to true, and there are values missing, the chart shows
+full line when zoomed.
+
+"aditional_chart_settings" variable can accept multiple guides now.
+
+min / max calculation bug with stacked chart type fixed.
+
+
+
+*** 1.5.2.0 ********************************************************************
+
+
+New features:
+
+JavaScript function amError(chart_id, error_message) is called when one of the
+known errors occurs.
+
+New JavaScript function for showing/hiding and selecting/deselecting graphs 
+added:
+
+flashMovie.showGraph(index)
+flashMovie.hideGraph(index)
+flashMovie.selectGraph(index)
+flashMovie.deselectGraph(index)
+
+You can also use these functions in case you load chart to another swf movie.
+
+
+
+*** 1.5.1.0 ********************************************************************
+
+
+New feature: the area between every second y axis grid can be filled with
+color. The color is defined at: <grid><y_left><fill_color>. Fill alpha can be
+defined at <grid><y_left><fill_alpha>
+
+Bug fix: When reloading settings with reloadSettings() function, if settings
+file contained data, the data wasn't refreshed. This is fixed in this version.
+********************************************************************************

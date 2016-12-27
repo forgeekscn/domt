@@ -1,0 +1,456 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>JavaScript control example</title>
+</head>
+<style>
+  body{
+  	background-color: #FFFFFF;
+  	font-family: Arial;
+  	font-size: 12px;
+  }
+</style>
+<body>
+<b><font color="red">Attention! Because of security restrictions in most cases this
+example will work only if you upload files to your web server.</font></b><br><br>
+<!-- saved from url=(0013)about:internet -->
+<!-- amline script-->
+<script type="text/javascript" src="../../amline/swfobject.js"></script>
+<div id="flashcontent">
+	<strong>You need to upgrade your Flash Player</strong>
+</div>
+
+<script type="text/javascript">
+  var so = new SWFObject("../../amline/amline.swf", "amline", "520", "400", "8", "#FFFFFF");
+  so.addVariable("path", "../../amline/");  
+  so.addVariable("chart_id", "amline"); // if you have more then one chart in one page, set different chart_id for each chart	
+  so.addVariable("settings_file", encodeURIComponent("amline_settings.xml"));
+  so.addVariable("data_file", encodeURIComponent("amline_data.xml"));
+  so.addVariable("preloader_color", "#999999");
+  so.write("flashcontent");
+</script>
+<!-- end of amline script -->
+
+
+<script type="text/javascript">
+//////////////////////////////////////////////////////////////////////////////////////////
+// Functions that control the chart //////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// SET DATA //////////////////////////////////////////////////////////////////////////////
+// flashMovie.setData(data, rebuild)
+// This function can be used for setting the chart's data on the fly. 
+// Data must be in CSV or XML form, as per the <data_type> setting.
+// The "rebuild" parameter is optional and can be "true" or "false". "false" means that 
+// the new data will not be applied right after this function is called.   
+
+function setData() {
+  // gets data from the text area with id "data"
+  var data = document.getElementById("data").value;
+  // sets data
+  flashMovie.setData(data);
+}
+
+// APPEND DATA ///////////////////////////////////////////////////////////////////////////
+// flashMovie.appendData(data[, remove_count])
+// This function can be used to append new data to the existing dataset. 
+// The data must be in CSV or XML form, as per the <data_type> setting. 
+// The remove_count variable is optional and sets the number of data points
+// that should be removed from the beginning of dataset.
+function appendData() {
+  // gets data from the text area with id "data"
+  var data = document.getElementById("data").value;
+  // appends data
+  flashMovie.appendData(data, 0);
+}
+
+// SET SETTINGS //////////////////////////////////////////////////////////////////////////
+// flashMove.setSettings(settings[, rebuild])
+// This function can be used to set some part or all the settings. The settings should be
+// in XML format, inside <settings></settings>. The "rebuild" parameter is optional and 
+// can be "true" or "false". "false" means that the new settings will not be applied right
+// after this function is called. They will can be applied using flashMovie.rebuild()
+// function or by adding some more setings with the "rebuild" set to "true". The default
+// value of "rebuild" is "true"  
+function setSettings() {
+  var settings = document.getElementById("settings").value;
+  flashMovie.setSettings(settings, true);
+}   
+
+// REBUILD CHART /////////////////////////////////////////////////////////////////////////
+// flashMovie.rebuild();
+// This function might be used to rebuild the chart after several portions of settings were
+// set using setSettings(settings, rebuild) function, with the rebuild set to false
+function rebuild() {
+  flashMovie.rebuild();
+}
+
+// RELOAD DATA ///////////////////////////////////////////////////////////////////////////
+// flashMove.reloadData([file_name], [show_all])
+// This function will reload the data. The file_name variable is optional, if you do not
+// set it here, data from the original file will be reloaded. The show_all variable 
+// tells the chart whether it should keep the selected period or show full new data
+// the default value of show_all is "true"       
+function reloadData() {
+  flashMovie.reloadData(); 
+}
+
+// RELOAD SETTINGS ///////////////////////////////////////////////////////////////////////
+// flashMovie.reloadSettings([file_name], [show_all])
+// This function will reload the settings. The file_name variable is optional, if you do
+// not set it here, settings from the original file will be reloaded. The show_all variable 
+// tells the chart whether it should keep the selected period or show full new data
+// the default value of show_all is "true"       
+function reloadSettings() {
+  flashMovie.reloadSettings();
+}
+
+// RELOAD ALL ////////////////////////////////////////////////////////////////////////////
+// flashMovie.reloadAll([data_file_name][,settings_file_name])
+// This function will reload both data and settings. The names of the files are optional. 
+// If you do not set them, the original file names will be used.
+function reloadAll() {
+  flashMovie.reloadAll();
+}
+
+// SET PARAM /////////////////////////////////////////////////////////////////////////////
+// flashMovie.setParam(param, value)
+// This function lets you change a single setting. The parameter names are formed using 
+// the section name and the parameter name, separated with a period. For example: 
+// background.alpha or labels.label[1].text 
+function setParam() {
+  // gets param name from a field with id "param"
+  var param = document.getElementById("param").value;
+  // gets param value from a field with id "value"
+  var value = document.getElementById("value").value;
+  // sets param
+  flashMovie.setParam(param, value);
+}
+      
+// GET PARAM /////////////////////////////////////////////////////////////////////////////
+// flashMovie.getParam(param)
+// This function will ask Flash to return the value of a setting. The parameter name is
+// formed in the same way as the setParam function (described above). When you call this
+// function to return the setting value, Flash will return the value by calling the 
+// amReturnParam(chart_id, param_value, param_name) function
+function getParam() {
+  // get the param name from a field with id "getparam"
+  var param = document.getElementById("getparam").value;            
+  flashMovie.getParam(param);
+} 
+
+// GET DATA //////////////////////////////////////////////////////////////////////////////
+// flashMovie.getData()
+// This function will ask Flash to return the whole data. When you call this function to
+// return the data, Flash will call the amReturnData(chart_id, data) function.
+function getData() {
+  flashMovie.getData();
+}   
+      
+// GET SETTINGS //////////////////////////////////////////////////////////////////////////
+// flashMovie.getSettings()
+// This function will ask Flash to return the whole settings XML. When you call this 
+// function to return the settings, Flash will call the 
+// amReturnSettings(chart_id, settings) function. 
+function getSettings() {
+  flashMovie.getSettings();
+}   
+      
+// EXPORT AS IMAGE ///////////////////////////////////////////////////////////////////////
+// flashMovie.exportImage([file_name]) 
+// This function will start the process of exporting the chart as an image. The file_name
+// is a name of a file to which image data will be posted (files provided in the download 
+// package are export.php and export.aspx). The file_name is optional and can be set in 
+// the <export_as_image><file> setting.
+function exportImage() {
+  flashMovie.exportImage('../../amline/export.php');  
+}
+
+// PRINT /////////////////////////////////////////////////////////////////////////////////
+// flashMovie.print()
+// This function will print the chart. Use this print function if you don't have any
+// values rotated by 90 degrees, also if you don't have a custom bitmap background.
+function print(){
+  flashMovie.print();
+}
+      
+// PRINT AS BITMAP ///////////////////////////////////////////////////////////////////////
+// flashMovie.printAsBitmap()
+// Use it if you have values rotated by 90 degrees and/or a custom bitmap background.
+function printAsBitmap(){
+  flashMovie.printAsBitmap();
+}
+
+// Line chart specific functions //////////////////////////////////////////////////////////
+
+// SHOW GRAPH /////////////////////////////////////////////////////////////////////////////
+// flashMovie.showGraph(index)
+// This function will show the graph (if it is hidden). Index is the sequential number of a
+// graph in your settings, counting from 0.
+function showGraph(){
+  var index = document.getElementById("graphshow").value;
+  flashMovie.showGraph(index);
+}
+
+// HIDE GRAPH ////////////////////////////////////////////////////////////////////////////
+// flashMovie.hideGraph(index)
+// This function will hide the graph (if it is visible). Index is the sequential number of
+// a graph in your settings, counting from 0.
+function hideGraph(){
+  var index = document.getElementById("graphhide").value;         
+  flashMovie.hideGraph(index);
+}
+
+// SELECT GRAPH //////////////////////////////////////////////////////////////////////////
+// flashMovie.selectGraph(index)
+// This function will select the graph (the value balloon will become visible). Index is 
+// the sequential number of a graph in your settings, counting from 0.
+function selectGraph(){
+  var index = document.getElementById("graphselect").value;
+  flashMovie.selectGraph(index);
+}
+
+// DESELECT GRAPH ////////////////////////////////////////////////////////////////////////
+// flashMovie.deselectGraph(index)
+// This function will deselect the graph (the value balloon will become invisible). 
+// Index is the sequential number of a graph in your settings, counting from 0.
+function deselectGraph(){ 
+  var index = document.getElementById("graphdeselect").value;
+  flashMovie.deselectGraph(index);
+}  
+// SET ZOOM //////////////////////////////////////////////////////////////////////////////
+// flashMovie.setZoom(from, to)
+// This function will change the selected period. "From" and "to" values must match the 
+// values of the series in the data file, otherwise an error message will be displayed.
+function setZoom(){
+  var from = document.getElementById("from").value;
+  var to = document.getElementById("to").value;  
+  flashMovie.setZoom(from, to); 
+}
+
+// SHOW ALL //////////////////////////////////////////////////////////////////////////////
+// flashMovie.showAll();
+// This function will show the full chart if some shorter period was previously selected.
+function showAll(){
+  flashMovie.showAll(); 
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Functions that are called by the chart ////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+      
+// CHART INITED //////////////////////////////////////////////////////////////////////////    
+// amChartInited(chart_id)
+// This function is called when the chart is fully loaded and initialized.
+function amChartInited(chart_id){
+  // get the flash object into "flashMovie" variable   
+  flashMovie = document.getElementById(chart_id);
+  // tell the field with id "chartfinished" that this chart was initialized
+  document.getElementById("chartfinished").value = chart_id;           
+}      
+
+// PROCESS COMPLETED //////////////////////////////////////////////////////////////////////////    
+// amProcessCompleted(chart_id, process_name)
+// This function is called when the chart finishes doing some task triggered by another 
+// JavaScript function 
+function amProcessCompleted(chart_id, process_name){
+  document.getElementById("processcompleted").value = process_name;           
+}
+      
+// RETURN DATA ///////////////////////////////////////////////////////////////////////////
+// amReturnData(chart_id, data)
+// This function is called when you request data from a chart 
+//  by calling the flashMove.getData() function.
+function amReturnData(chart_id, data){
+  document.getElementById("data").value = unescape(data);
+}
+
+// RETURN PARAM //////////////////////////////////////////////////////////////////////////
+// amReturnParam(chart_id, value, param_name)
+// This function is called when you request a setting from a chart  
+// by calling the flashMovie.getParam(param) function.
+function amReturnParam(chart_id, value, param_name){
+  document.getElementById("returnedparam").value = unescape(value);
+}
+
+// RETURN SETTINGS ///////////////////////////////////////////////////////////////////////
+// amReturnSettings(chart_id, settings)
+// This function is called when you request settings from a chart 
+// by calling flashMovie.getSettings() function.  
+function amReturnSettings(chart_id, settings){
+  document.getElementById("settings").value = unescape(settings);
+}      
+
+// RETURN IMAGE DATA /////////////////////////////////////////////////////////////////////
+// amReturnImageData(chart_id, data)
+// This function is called when the export to image process is finished and might be used
+// as alternative way to get image data (instead of posting it to some file)
+function amReturnImageData(chart_id, data){
+  // your own functions here
+}   
+
+// ERROR /////////////////////////////////////////////////////////////////////////////////
+// amError(chart_id, message)
+// This function is called when an error occurs, such as no data, or file not found.
+function amError(chart_id, message){
+  alert(message);
+}      
+
+// GET ZOOM //////////////////////////////////////////////////////////////////////////////
+// amGetZoom(chart_id, from, to, from_xid, to_xid)
+// This function is called when the selected period is changed.
+function amGetZoom(chart_id, from, to, from_xid, to_xid){
+  document.getElementById("from").value = from;
+  document.getElementById("to").value = to;
+}
+
+// FIND OUT WHICH GRAPH WAS SELECTED /////////////////////////////////////////////////////
+// amGraphSelect(chart_id, index, title)
+// This function is called when the viewer selects the graph by clicking on it or on the
+// graph's legend entry. Index is the sequential number of a graph in your settings, 
+// counting from 0.
+function amGraphSelect(chart_id, index, title){
+  document.getElementById("graphselect").value = index;
+}
+
+// FIND OUT WHICH GRAPH WAS DESELECTED ///////////////////////////////////////////////////
+// amGraphDeselect(chart_id, index, title)
+// This function is called when the viewer deselects the graph by clicking on it or on the
+// graph's legend entry. Index is the sequential number of a graph in your settings, 
+// counting from 0.
+function amGraphDeselect(chart_id, index, title){
+  document.getElementById("graphdeselect").value = index;
+}
+
+// FIND OUT WHICH GRAPH WAS HIDDEN ///////////////////////////////////////////////////////
+// amGraphHide(chart_id, index, title)
+// This function is called when the viewer hides the graph by clicking on the checkbox in
+// the legend. Index is the sequential number of a graph in your settings, counting from 0
+function amGraphHide(chart_id, index, title){
+  document.getElementById("graphhide").value = index;
+}
+
+// FIND OUT WHICH GRAPH WAS SHOWN ///////////////////////////////////////////////////////
+// amGraphShow(chart_id, index, title)
+// This function is called when the viewer shows the graph by clicking on the checkbox in
+// the legend. Index is the sequential number of a graph in your settings, counting from 0
+function amGraphShow(chart_id, index, title){
+  document.getElementById("graphshow").value = index;
+} 
+
+// FIND CURRENTLY HOVERED SERIES ////////////////////////////////////////////////////////           
+// amRolledOverSeries(chart_id, series)
+// This function is called when the viewer moves the mouse over the plot area. It returns
+// the value of the series over which the mouse is currently hovered.
+function amRolledOverSeries(chart_id, series){
+  document.getElementById("series_hover").value = series;
+}
+
+// FIND WHICH SERIES WAS CLICKED ////////////////////////////////////////////////////////           
+// amClickedOnSeries(chart_id, series)
+// This function is called when the viewer clicks somewhere on the plot area. It returns 
+// the value of the series over which the mouse hovered when it was clicked.
+function amClickedOnSeries(chart_id, series){
+  document.getElementById("series_clicked").value = series;
+}
+
+// FIND WHICH BULLET WAS CLICKED ////////////////////////////////////////////////////////
+// amClickedOnBullet(chart_id, graph_index, value, series, url, description)
+// This function is called when the viewer clicks on a graph bullet. It returns the
+// sequential number of a graph (graph_index), the value of the data point (value),
+// the series value (series), the URL and the description attributes.
+function amClickedOnBullet(chart_id, graph_index, value, series, url, description){
+  document.getElementById("bullet_clicked").value = value;
+}          
+// FIND WHICH BULLET WAS HOVERED ////////////////////////////////////////////////////////
+// amRolledOverBullet(chart_id, graph_index, value, series, url, description)
+// This function is called when the viewer rolls over a graph bullet. It returns the 
+// sequential number of a graph (graph_index), the value of the data point (value), 
+// the series value (series), the URL and the description attributes.
+function amRolledOverBullet(chart_id, graph_index, value, series, url, description){
+  document.getElementById("bullet_hover").value = value;
+}  
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// this is example function which is called from right-click menu ////////////////////////
+function selectInterval(interval){
+  flashMovie.setZoom(2006 - interval, 2006);
+}
+
+
+</script>
+
+
+<!-- Buttons and forms -->
+
+<form>
+  <hr noshade size="1">
+  Chart initialized: <input type="text" id="chartfinished">
+  Process completed: <input type="text" id="processcompleted">
+  <hr noshade size="1">
+
+  <input type="button" value="reload Data" onclick="reloadData();" />
+	<input type="button" value="reload Settings" onclick="reloadSettings();" />
+  <input type="button" value="reload All" onclick="reloadAll();" />
+  <hr noshade size="1">
+  
+  <input type="button" value="export image" onclick="exportImage();" />            	    
+  <input type="button" value="print" onclick="print();" />
+  <input type="button" value="print as bitmap" onclick="printAsBitmap();" />
+  <hr noshade size="1">
+  	
+  Indicator is on:<input type="text" id="series_hover">
+  Clicked on series:<input type="text" id="series_clicked">
+  <hr noshade size="1">
+  	
+  Rolled over bullet:<input type="text" id="bullet_hover">
+  Clicked on bullet:<input type="text" id="bullet_clicked">      
+  <hr noshade size="1">
+  	
+  <textarea id="data" rows="6" cols="62"></textarea><br>
+  <input type="button" value="Get data" onclick="getData();" />
+  <input type="button" value="Set Data" onclick="setData();" />
+  <input type="button" value="Append Data" onclick="appendData();" />
+  <hr noshade size="1">
+  	 
+  Param: <input type="text" id="param" value="graphs.graph[0].hidden"/>
+  Value: <input type="text" id="value" value="true"/>
+  <input type="button" value="set param" onclick="setParam();" />
+  <hr noshade size="1">
+     
+  Param: <input type="text" id="getparam" value="axes.x.width">   		
+  Value: <input type="text" id="returnedparam" />
+  <input type="button" value="get param" onclick="getParam();" />
+  <hr noshade size="1">
+         
+  Zoom from: <input type="text" id="from"/>
+  to: <input type="text" id="to"/>
+  <input type="button" value="set zoom" onclick="setZoom();" />
+  <input type="button" value="show all" onclick="showAll();" />
+  <hr noshade size="1">
+  
+  Select:<input type="text" id="graphselect" value="0"/>
+  <input type="button" value="select" onclick="selectGraph();" />
+  Deselect:<input type="text" id="graphdeselect" value="0"/>
+  <input type="button" value="deselect" onclick="deselectGraph();" />
+  <hr noshade size="1">
+  
+  Show:<input type="text" id="graphshow" value="1"/>
+  <input type="button" value="show" onclick="showGraph();" />
+  Hide:<input type="text" id="graphhide" value="1"/>
+  <input type="button" value="hide" onclick="hideGraph();" />
+  <hr noshade size="1">
+  
+  <textarea id="settings" rows="6" cols="62"></textarea><br>
+  <input type="button" value="Get settings" onclick="getSettings();" />
+  <input type="button" value="Set settings" onclick="setSettings();" />
+  <input type="button" value="Rebuild" onclick="rebuild();" />  
+  <hr noshade size="1">
+	
+  </form>
+
+Right-click on the chart - you will see custom menu items. These items are configurable - you can assign custom JavaScript functions to them.
+
+</body>
+</html>

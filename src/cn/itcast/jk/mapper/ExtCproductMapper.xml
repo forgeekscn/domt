@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itcast.jk.mapper.ExtCproductMapper">
+	<resultMap type="cn.itcast.jk.domain.ExtCproduct" id="extCproductRM">
+		<id property="id" column="EXT_CPRODUCT_ID" />
+		<result property="contractProductId" column="CONTRACT_PRODUCT_ID" />
+		<result property="factoryId" column="FACTORY_ID" />
+		<result property="factoryName" column="FACTORY_NAME" />
+		<result property="productNo" column="PRODUCT_NO" />
+		<result property="productImage" column="PRODUCT_IMAGE" />
+		<result property="productDesc" column="PRODUCT_DESC" />
+		<result property="cnumber" column="CNUMBER" />
+		<result property="ctype" column="CTYPE" />
+		<result property="price" column="PRICE" />
+		<result property="amount" column="AMOUNT" />
+		<result property="productRequest" column="PRODUCT_REQUEST" />
+		<result property="orderNo" column="ORDER_NO" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="extCproductRM">
+		select * from ext_cproduct_c
+		where 1=1
+		<if test="contractId!=null"> and CONTRACT_PRODUCT_ID=#{contractProductId} </if>
+	</select>
+	<select id="get" parameterType="map" resultMap="extCproductRM">
+		select * from
+		ext_cproduct_c
+		where ext_cproduct_id=#{pid}
+	</select>
+	<insert id="insert" parameterType="cn.itcast.jk.domain.ExtCproduct">
+		insert into ext_cproduct_c
+		(EXT_CPRODUCT_ID,CONTRACT_PRODUCT_ID,FACTORY_ID,FACTORY_NAME,PRODUCT_NO,
+		PRODUCT_IMAGE,PRODUCT_DESC,CNUMBER,PRICE,AMOUNT,ORDER_NO,CTYPE,PRODUCT_REQUEST)
+		values
+		(
+		#{id},
+		#{contractProductId},
+		#{factoryId},
+		#{factoryName,
+		jdbcType=VARCHAR},
+		#{productNo, jdbcType=VARCHAR},
+		#{productImage,
+		jdbcType=VARCHAR},
+		#{productDesc, jdbcType=VARCHAR},
+		#{cnumber,jdbcType=INTEGER},
+		#{price, jdbcType=DOUBLE},
+		#{amount,jdbcType=DOUBLE},
+		#{orderNo, jdbcType=INTEGER},
+		#{ctype,jdbcType=INTEGER},
+		#{productRequest, jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="cn.itcast.jk.domain.ExtCproduct">
+		update ext_cproduct_c
+		<set>
+			CONTRACT_PRODUCT_ID=#{contractProductId},
+			FACTORY_ID=#{factoryId},
+			<if test="factoryName != null">FACTORY_NAME=#{factoryName},</if>
+			<if test="productNo != null">PRODUCT_NO=#{productNo},</if>
+			<if test="productImage != null">PRODUCT_IMAGE=#{productImage},</if>
+			<if test="productDesc != null">PRODUCT_DESC=#{productDesc},</if>
+			<if test="cnumber != null">CNUMBER=#{cnumber},</if>
+			<if test="price != null">PRICE=#{price},</if>
+			<if test="amount != null">AMOUNT=#{amount},</if>
+			<if test="orderNo != null">ORDER_NO=#{orderNo},</if>
+			<if test="ctype != null">CTYPE=#{ctype},</if>
+			<if test="productRequest != null">PRODUCT_REQUEST=#{productRequest}</if>
+		</set>
+	</update>
+	<delete id="deleteById" parameterType="string">
+		delete from ext_cproduct_c
+		where EXT_CPRODUCT_ID = #{pid}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from ext_cproduct_c
+		where ext_cproduct_id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{pid}
+		</foreach>
+	</delete>
+
+	<delete id="deleteByContractProductById" parameterType="string">
+		delete from ext_cproduct_c 
+		where CONTRACT_PRODUCT_ID in 
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach> 
+	</delete>
+
+	<delete id="deleteByContractId" parameterType="string">
+		delete from ext_cproduct_c 
+		where CONTRACT_PRODUCT_ID in
+		(
+			select CONTRACT_PRODUCT_ID from contract_product_c
+			where CONTRACT_ID in
+			<foreach collection="array" item="id" open="(" close=")" separator=",">
+				#{id}
+			</foreach> 
+		)
+	</delete>
+</mapper>
