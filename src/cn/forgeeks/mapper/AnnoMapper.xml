@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.AnnoMapper">
+	<resultMap type="cn.forgeeks.domain.Anno" id="annoRM">
+		<id property="annoId" column="ANNO_ID" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="annoRM">
+		select announcement_id,title,content 
+		 from announcement
+	</select>
+
+	<select id="get" parameterType="string" resultMap="annoRM">
+	</select>
+
+</mapper>
