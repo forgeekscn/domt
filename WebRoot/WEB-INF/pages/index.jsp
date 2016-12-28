@@ -26,13 +26,10 @@
   <h2><span class="icon-user"></span>基本管理</h2>
   <ul style="display:block">
     <li><a href="pass.html" target="right"><span class="icon-caret-right"></span>公告管理</a></li>
-    <li><a href="page.html" target="right"><span class="icon-caret-right"></span>失物管理</a></li>  
-    <li><a href="adv.html" target="right"><span class="icon-caret-right"></span>报修管理</a></li>   
-    <li><a href="book.html" target="right"><span class="icon-caret-right"></span>分配宿舍</a></li>     
-    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>调换宿舍</a></li>
-    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>腾空宿舍</a></li>
-    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>人数统计</a></li>
-    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>宿舍统计</a></li>
+    <li><a href="pass.html" target="right"><span class="icon-caret-right"></span>宿舍管理</a></li>
+    <li><a href="${ctx}/student/get.action" target="right"><span class="icon-caret-right"></span>学生管理</a></li>  
+    <li><a href="adv.html" target="right"><span class="icon-caret-right"></span>出入管理</a></li>   
+    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>统计查询</a></li>
     
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>系统管理</h2>
