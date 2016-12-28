@@ -13,7 +13,6 @@ import cn.forgeeks.pagination.Page;
 
 public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements BaseDao<T>{
 	@Autowired
-	//mybatis-spring 1.0无需此方法；mybatis-spring1.2必须注入。
 	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory){
 		super.setSqlSessionFactory(sqlSessionFactory);
 	}

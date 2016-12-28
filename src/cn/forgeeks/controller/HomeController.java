@@ -11,6 +11,7 @@ public class HomeController {
 
 	@RequestMapping(value = { "/home.action" })
 	public String home() {
+
 		return "/index.jsp";
 	}
 
@@ -18,15 +19,16 @@ public class HomeController {
 	public String left() {
 		return "/basic/default.jsp";
 	}
+
 	@RequestMapping(value = { "/tologin.action" })
 	public String tologin() {
 		return "/basic/login.jsp";
 	}
+
 	@RequestMapping(value = { "/login.action" })
 	public String login(Model model) {
 		System.out.println("root login!");
 		return "redirect:/home.action";
 	}
 	
-
 }
