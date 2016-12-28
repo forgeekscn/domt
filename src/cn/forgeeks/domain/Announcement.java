@@ -1,13 +1,12 @@
 package cn.forgeeks.domain;
 
-import java.util.Date;
 
 public class Announcement {
 
 	private String announcementId;
 	private String title;
 	private String content;
-	private Date createTime;
+	private String createTime;
 	
 	public String getAnnouncementId() {
 		return announcementId;
@@ -27,10 +26,10 @@ public class Announcement {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 	

@@ -25,7 +25,6 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 
 	@Override
 	public List<Announcement> findPage(Page page) {
-		
 		return announcementDao.findPage(page);
 	}
 

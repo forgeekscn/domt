@@ -12,35 +12,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="find" parameterType="map" resultMap="announcementRM">
-	 
-		select * 
-<!-- 		announcement_id,title,content -->
-<!-- 		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME -->
+
+		select
+		announcement_id,title,content
+		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
 		from announcement
+		order by create_time desc
 	</select>
 
 	<select id="get" parameterType="string" resultMap="announcementRM">
-		select *
-		from announcement
+		select 
+		announcement_id,title,content
+		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
+		from
+		announcement
 		where announcement_id=#{announcementId}
 	</select>
 	<insert id="insert" parameterType="cn.forgeeks.domain.Announcement">
 		insert into announcement
-		(announcement_id,title,content)
+		(announcement_id,title,content,create_time)
 		values
-		(#{announcementId},#{title},#{content})
+ 		(#{announcementId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
+ 		#{content,jdbcType=VARCHAR} ,sysdate 
+ 		) 
 	</insert>
 	<update id="update" parameterType="cn.forgeeks.domain.Announcement">
-		update announcement 
+		update announcement
 		<set>
-			<if test="#{title!=null}">title='#{title}'</if>
-			<if test="#{content!=null}">content=#{content}</if>
+			<if test="#{title!=null}">title=#{title,jdbcType=VARCHAR},</if> 
+			<if test="#{content!=null}">content=#{content,jdbcType=VARCHAR},</if>
+			create_time=sysdate
 		</set>
-		where announcement_id=#{announcementId}
+		where announcement_id=#{announcementId,jdbcType=VARCHAR}
 	</update>
+	<delete id="deleteById" parameterType="string">
+		delete from announcement
+		where
+		announcement_id=#{annoId}
+	</delete>
 	<delete id="delete" parameterType="string">
 		delete from announcement
-		where announcement_id=#{announcementId}
+		where announcement_id in
+		<foreach collection="array" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
 	</delete>
-	
+
 </mapper>

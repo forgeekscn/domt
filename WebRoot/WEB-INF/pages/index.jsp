@@ -25,11 +25,11 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span></strong></div>
   <h2><span class="icon-user"></span>基本管理</h2>
   <ul style="display:block">
-    <li><a href="pass.html" target="right"><span class="icon-caret-right"></span>公告管理</a></li>
-    <li><a href="pass.html" target="right"><span class="icon-caret-right"></span>宿舍管理</a></li>
+    <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>公告管理</a></li>
+    <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>宿舍管理</a></li>
     <li><a href="${ctx}/student/get.action" target="right"><span class="icon-caret-right"></span>学生管理</a></li>  
-    <li><a href="adv.html" target="right"><span class="icon-caret-right"></span>出入管理</a></li>   
-    <li><a href="column.html" target="right"><span class="icon-caret-right"></span>统计查询</a></li>
+    <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>出入管理</a></li>   
+    <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>统计查询</a></li>
     
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>系统管理</h2>

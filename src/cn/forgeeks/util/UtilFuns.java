@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.text.DecimalFormat;
-
 import java.net.URLEncoder;
 import java.net.URLDecoder;
 import java.util.Date;
@@ -1537,5 +1536,11 @@ public static String getQQString( String strvalue ) {
 	}
 	public String getClassRootPath(){
 		return this.getClass().getResource("/").getPath();
+	}
+
+
+	public static String getStrFromNow() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd HH:MM:ss");//设置日期格式
+		return df.format(new Date());
 	}
 }
