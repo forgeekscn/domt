@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.StudentMapper">
+	<resultMap type="cn.forgeeks.domain.Student" id="studentRM">
+		<id property="studentId" column="STUDENT_ID" />
+		<result property="studentName" column="STUDENT_NAME" />
+		<result property="studentPassword" column="STUDENT_PASSWORD" />
+		<result property="sex" column="SEX" />
+		<result property="status" column="STATUS" />
+		<result property="classId" column="CLASS_ID" />
+		<result property="bedroomId" column="BEDROOM_ID" />
+	</resultMap>
+
+	<select id="find" resultMap="studentRM">
+		select * from
+		student
+		where 1=1
+	</select>
+
+	<select id="get" parameterType="string" resultMap="studentRM">
+		select * from
+		student
+		where student_id=#{studentId}
+	</select>
+
+</mapper>
