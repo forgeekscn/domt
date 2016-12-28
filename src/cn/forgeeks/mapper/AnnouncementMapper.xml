@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.AnnouncementMapper">
+	<resultMap type="cn.forgeeks.domain.Announcement" id="announcementRM">
+		<id property="announcementId" column="ANNOUNCEMENT_ID" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="announcementRM">
+	 
+		select * 
+<!-- 		announcement_id,title,content -->
+<!-- 		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME -->
+		from announcement
+	</select>
+
+	<select id="get" parameterType="string" resultMap="announcementRM">
+		select *
+		from announcement
+		where announcement_id=#{announcementId}
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.Announcement">
+		insert into announcement
+		(announcement_id,title,content)
+		values
+		(#{announcementId},#{title},#{content})
+	</insert>
+	<update id="update" parameterType="cn.forgeeks.domain.Announcement">
+		update announcement 
+		<set>
+			<if test="#{title!=null}">title='#{title}'</if>
+			<if test="#{content!=null}">content=#{content}</if>
+		</set>
+		where announcement_id=#{announcementId}
+	</update>
+	<delete id="delete" parameterType="string">
+		delete from announcement
+		where announcement_id=#{announcementId}
+	</delete>
+	
+</mapper>
