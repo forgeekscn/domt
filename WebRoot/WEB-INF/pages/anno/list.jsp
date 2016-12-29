@@ -50,18 +50,19 @@
 
 				<c:forEach items="${dataList}" var="obj" varStatus="status">
 					<tr>
-						<td style="text-align:left; padding-left:20px;">
-						<input
-							type="checkbox" name="announcementId" value="${obj.announcementId}" class="sb"/></td>
+						<td style="text-align:left; padding-left:20px;"><input
+							type="checkbox" name="announcementId"
+							value="${obj.announcementId}" class="sb" /></td>
 						<td>${obj.createTime}</td>
 						<td width="10%">${obj.title}</td>
 						<td>${obj.content}</td>
 						<td><div class="button-group">
-								<a class="button border-main" href="${ctx}/anno/toupdate.action?annoId=${obj.announcementId}"><span
+								<a class="button border-main"
+									href="${ctx}/anno/toupdate.action?annoId=${obj.announcementId}"><span
 									class="icon-edit"></span> 修改</a> <a class="button border-red"
 									href="${ctx}/anno/deletebyid.action?annoId=${obj.announcementId}"
-									 onclick="return del(1,1,1)"><span
-									class="icon-trash-o"></span> 删除</a>
+									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
+									删除</a>
 							</div></td>
 					</tr>
 				</c:forEach>
@@ -69,10 +70,10 @@
 
 				<tr>
 					<td style="text-align:left; padding:19px 0;padding-left:20px;"><input
-						type="checkbox" id="checkall" /> </td>
+						type="checkbox" id="checkall" /></td>
 					<td colspan="7" style="text-align:left;padding-left:20px;"><a
 						href="" class="button border-red icon-trash-o"
-						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a> 
+						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
 				</tr>
 				<tr>
 					<td colspan="8"><div class="pagelist">
@@ -98,7 +99,7 @@
 
 		//全选
 		$("#checkall").click(function() {
-			$("input[name='id[]']").each(function() {
+			$("input[name='announcementId']").each(function() {
 				if (this.checked) {
 					this.checked = false;
 				} else {
@@ -110,55 +111,29 @@
 		//批量删除
 		function DelSelect() {
 			var Checkbox = false;
-			var ff="";
-			$("input[name='announcementId']").each(function(x,y) {
+			var ff = "";
+			$("input[name='announcementId']").each(function(x, y) {
 				if (this.checked == true) {
 					Checkbox = true;
-					ff+=$(this).val()+",";  //你要不在后台分割演 恩 [1,2,3]zhe
-						//
-					 //等下  想想。。你每一行也有删除的操作吗？ 恩 那都是用的这个函数？不是 url get 所以这个函数只是批量的删除？恩
+					ff += $(this).val() + ",";
 				}
-				//.....是不是我刚刚服务器没重启啊 
-				else{
-				}//shishi
-				//keyile
-				//那哪里还有问题
-				
 			});
-			
 			if (Checkbox) {
 				var t = confirm("您确认要删除选中的内容吗？");
-				if (t == false){//这个我经常用 
-					return false;}
-					
-					
-					//你先把错误改掉好不好  看着烦。。。nmb 还没搞好 日你大爷 你这个框架问题打了。。。
-					//你如果用ajax做 代码多不多
-				//$("${ctx}/anno/delete.action").submit(); //这是啥  这里必须要按这种格式？不知道别人都这么些。。。
-				//${ctx}/anno/delete.action  我就搞不懂这是啥 那你说怎么写 我就换一参数没带到请求去
-			//。。。不知道 模板这是
-				//这里直接传到后台 没问题吗  这个submit()函数  我也没见 就是提交是吧..。。。
-				//怎么才能看下这个请求的post参数 你要干啥 试试 人呢似是什么
-	
-				
-				/* $.ajax({
-				   type:"POST",
-				   url:"",
-				   data:Checkbox   
-				     //我突然发现一个问题  你这个Checkbox是循环里的  你传这个干嘛？再说 你传的参数 参数在哪里  .
-				     //上面啊 annoouncementid ${obj.announcementId}这个啊恩
-				}); */ 
-				//我直接复制过来 等下
-		$.ajax({
-            type: 'post',
-            url: '${ctx}/anno/delete.action', //是不是这个路径 宝贝没毛病darly
-            data:{sb:ff},  //利用getContent()获取到的内容，传给name="con_text",提交到数据库里 ok
-            
-            success:function (msg) {
-                
-            }
-        }); //好了 取出sb和msg看看。。。。
-        
+				if (t == false) {
+					return false;
+				}
+				$.ajax({
+					type : 'post',
+					url : '${ctx}/anno/delete.action', //是不是这个路径 宝贝没毛病darly
+					data : {
+						sb : ff
+					}, //利用getContent()获取到的内容，传给name="con_text",提交到数据库里 ok
+					success : function(msg) {
+				 		window.opener.document.location.reload();
+					}
+				});
+				 //window.location.reload();
 				
 			} else {
 				alert("请选择您要删除的内容!");

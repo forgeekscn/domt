@@ -61,18 +61,10 @@ public class AnnouncementController {
 	}
 
 	@RequestMapping("/anno/delete.action")
-	public String delete(String sb, String msg) {
-		
+	public String delete(String sb, String msg,Model model) {
 		String[] ids=sb.split(",");
 		announcementService.delete(ids);
-		// meimaobing!!!sb zai 再把
-		// sb应该有两个值吧 我知道 6666666
-		return "redirect:/anno/list.action";
+		return annolist(model);
 	}
-	// 有请求是吧？恩 就是delete
-	// qiantaizhinengzheyang ma
-	// 再就是后台的毛病了
-	// 你那个表dan的其他数据能够传过去吗能 你在前台指我看看 本来这个地方传值就有点麻烦 这里还要按springmvc规则来穿
-	// 你这个完全不可不用表单传啊 利用ajax 怎么搞 就写js啊 你把想传的赋个class js获得就可以了
 
 }
