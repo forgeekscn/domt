@@ -62,6 +62,7 @@ public class AnnouncementController {
 
 	@RequestMapping("/anno/delete.action")
 	public String delete(String sb, String msg) {
+		
 		String[] ids=sb.split(",");
 		announcementService.delete(ids);
 		// meimaobing!!!sb zai 再把

@@ -14,7 +14,7 @@
 <title></title>
 </head>
 <body>
-	<form method="post" action="${ctx}/anno/delete.action" id="listform">
+	<form method="post" action="" id="listform">
 		<div class="panel admin-panel">
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:10px;">
@@ -71,7 +71,7 @@
 					<td style="text-align:left; padding:19px 0;padding-left:20px;"><input
 						type="checkbox" id="checkall" /> </td>
 					<td colspan="7" style="text-align:left;padding-left:20px;"><a
-						href="${ctx}/anno/delete.action" class="button border-red icon-trash-o"
+						href="" class="button border-red icon-trash-o"
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a> 
 				</tr>
 				<tr>
