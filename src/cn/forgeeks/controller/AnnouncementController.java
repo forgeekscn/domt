@@ -22,8 +22,14 @@ public class AnnouncementController {
 	AnnouncementService announcementService;
 
 	@RequestMapping("/anno/list.action")
-	public String annolist(Model model) {
+	public String annolist(String date,String search,Model model) {
 		Map map = new HashMap();
+		if(date!=null){
+			map.put("date", date);
+		}
+		if(search!=null){
+			map.put("search", search);
+		}
 		List<Announcement> dataList = announcementService.list(map);
 		model.addAttribute("dataList", dataList);
 		return "/anno/list.jsp";
@@ -64,7 +70,7 @@ public class AnnouncementController {
 	public String delete(String sb, String msg,Model model) {
 		String[] ids=sb.split(",");
 		announcementService.delete(ids);
-		return annolist(model);
+		return "redirect:/anno/list.action";
 	}
 
 }

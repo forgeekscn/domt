@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
 <%@ include file="../basic/base.jsp"%>
 <!DOCTYPE html>
@@ -14,27 +13,26 @@
 <title></title>
 </head>
 <body>
-	<form method="post" action="" id="listform">
+	<form method="post" action="${ctx}/anno/list.action" id="listform">
 		<div class="panel admin-panel">
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:10px;">
 					<li><a class="button border-main icon-plus-square-o"
 						href="${ctx}/anno/tocreate.action"> 添加内容</a></li>
-					<li>&nbsp;搜索：</li>
-					</li>
 					<if condition="$iscid eq 1">
-					<li><select name="cid" class="input"
-						style="width:200px; line-height:17px;" onchange="changesearch()">
-							<option value="">请选择分类</option>
-							<option value="">产品分类</option>
-							<option value="">产品分类</option>
-							<option value="">产品分类</option>
-							<option value="">产品分类</option>
-					</select></li>
+					<li>
+						<select name="date" class="input"
+							style="margin-left:30px;width:250px; line-height:17px;" onchange="changesearch()">
+								<option value="">按日期分类</option>
+								<option value="3" onclick="selectdate(this.value)">三天内</option>
+								<option value="7" onclick="selectdate(this.value)">一周内</option>
+								<option value="30" onclick="selectdate(this.value)">一个月内</option>
+						</select>
+					</li>
 					</if>
 					<li><input type="text" placeholder="请输入搜索关键字" name="keywords"
 						class="input"
-						style="width:250px; line-height:17px;display:inline-block" /> <a
+						style="width:250px; margin-left:20px;line-height:17px;display:inline-block" /> <a
 						href="javascript:void(0)" class="button border-main icon-search"
 						onclick="changesearch()"> 搜索</a></li>
 				</ul>
@@ -67,10 +65,9 @@
 					</tr>
 				</c:forEach>
 
-
 				<tr>
-					<td style="text-align:left; padding:19px 0;padding-left:20px;"><input
-						type="checkbox" id="checkall" /></td>
+					<td style="text-align:left; padding:19px 0;padding-left:20px;">
+					<input	type="checkbox" id="checkall" /></td>
 					<td colspan="7" style="text-align:left;padding-left:20px;"><a
 						href="" class="button border-red icon-trash-o"
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
@@ -84,7 +81,43 @@
 			</table>
 		</div>
 	</form>
+	
+	
 	<script type="text/javascript">
+	
+	/* $.ajax({
+                cache: true,
+                type: "POST",
+                url:ajaxCallUrl,
+                data:$('#yourformid').serialize(),// 你的formid
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    $("#commonLayout_appcreshi").parent().html(data);
+                }
+            }); */
+	
+		//下拉列表 分类
+		function selectdate(arg){
+			window.location.href='${ctx}/anno/list.action?date='+arg; 
+		/* 	if(arg!=null){
+				$.ajax({
+					type : 'post',
+					url : '${ctx}/anno/list.action', 
+					data : {
+						date:arg		
+					},
+					success : function(msg) {
+					}
+				});
+			
+			}
+		 */		
+		}									
+		
+	
 		//搜索
 		function changesearch() {
 

@@ -17,6 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		announcement_id,title,content
 		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
 		from announcement
+		where 1=1
+		<if test="date!=null">and create_time  >= ( sysdate - #{date,jdbcType=VARCHAR}) </if>
 		order by create_time desc
 	</select>
 
