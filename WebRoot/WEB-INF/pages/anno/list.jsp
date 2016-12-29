@@ -22,7 +22,7 @@
 					<if condition="$iscid eq 1">
 					<li>
 						<select name="date" class="input"
-							style="margin-left:30px;width:250px; line-height:17px;" onchange="changesearch()">
+							style="margin-left:30px;width:250px; line-height:17px;">
 								<option value="">按日期分类</option>
 								<option value="3" onclick="selectdate(this.value)">三天内</option>
 								<option value="7" onclick="selectdate(this.value)">一周内</option>
@@ -30,11 +30,10 @@
 						</select>
 					</li>
 					</if>
-					<li><input type="text" placeholder="请输入搜索关键字" name="keywords"
-						class="input"
-						style="width:250px; margin-left:20px;line-height:17px;display:inline-block" /> <a
-						href="javascript:void(0)" class="button border-main icon-search"
-						onclick="changesearch()"> 搜索</a></li>
+					<li><input type="text" placeholder="请输入搜索关键字" id="key"
+						class="input"	style="width:250px; margin-left:20px;line-height:17px;display:inline-block" /> 
+						<a href="#" class="button border-main icon-search"
+						onclick="Sear()"> 搜索</a></li>
 				</ul>
 			</div>
 			<table class="table table-hover text-center">
@@ -57,7 +56,7 @@
 						<td><div class="button-group">
 								<a class="button border-main"
 									href="${ctx}/anno/toupdate.action?annoId=${obj.announcementId}"><span
-									class="icon-edit"></span> 修改</a> <a class="button border-red"
+									class="icon-edit"></span>修改</a> <a class="button border-red"
 									href="${ctx}/anno/deletebyid.action?annoId=${obj.announcementId}"
 									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
 									删除</a>
@@ -119,8 +118,10 @@
 		
 	
 		//搜索
-		function changesearch() {
-
+		function Sear(){
+			var key=$("#key").val();
+			window.location.href='${ctx}/anno/list.action?key='+encodeURI(encodeURI(key));
+			return false;
 		}
 
 		//单个删除

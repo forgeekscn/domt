@@ -1,5 +1,7 @@
 package cn.forgeeks.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.forgeeks.domain.Announcement;
 import cn.forgeeks.service.AnnouncementService;
+import cn.forgeeks.util.UtilFuns;
 
 @Controller
 public class AnnouncementController {
@@ -22,14 +25,14 @@ public class AnnouncementController {
 	AnnouncementService announcementService;
 
 	@RequestMapping("/anno/list.action")
-	public String annolist(String date,String search,Model model) {
+	public String annolist(String date,String key,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
-		if(date!=null){
+		if(UtilFuns.isNotEmpty(date)){
 			map.put("date", date);
 		}
-		if(search!=null){
-			map.put("search", search);
-		}
+//		 new String(zhongwen.getBytes("iso8859-1"),"GBK");
+		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
+		map.put("key", "%"+key+"%");
 		List<Announcement> dataList = announcementService.list(map);
 		model.addAttribute("dataList", dataList);
 		return "/anno/list.jsp";
