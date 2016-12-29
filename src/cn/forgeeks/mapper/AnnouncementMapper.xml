@@ -15,34 +15,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 		select
 		announcement_id,title,content
-		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
+		,to_char(create_time,'YYYY-mm-dd
+		hh24:MM:ss')as CREATE_TIME
 		from announcement
 		where 1=1
-		<if test="date!=null">and create_time  >= ( sysdate - #{date,jdbcType=VARCHAR}) </if>
-		<if test='key!="%null%"'>and content like #{key,jdbcType=VARCHAR}</if>  
+		<if test="date!=null">and create_time >= ( sysdate - #{date,jdbcType=VARCHAR})
+		</if>
+		<if test='key!="%null%"'>and content like #{key,jdbcType=VARCHAR}</if>
 		order by create_time desc
 	</select>
 
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="announcementRM">
+		
+		
+SELECT r.announcement_id,r.title,r.content,r.create_time  
+ FROM (   SELECT tt.*, ROWNUM AS rowno   
+          FROM (   SELECT announcement_id,title,content, to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as create_time
+                   FROM announcement t   
+                   ORDER BY create_time desc   
+                   )tt   
+                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+                ) r
+   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+
+	</select>
+
+
+
 	<select id="get" parameterType="string" resultMap="announcementRM">
-		select 
-		announcement_id,title,content
-		,to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
-		from
-		announcement
-		where announcement_id=#{announcementId}
+	<!-- 		SELECT -->
+ 		announcement_id,title,content, 
+ 		to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME 
+ 		FROM (SELECT 
+ 		ROWNUM AS rowno, t.* 
+ 		FROM announcement t 
+		WHERE 1=1 AND #{pageSize}*#{pageNo} >=ROWNUM 
+ 		) table_alias 
+ 		WHERE table_alias.rowno >= #{pageSize}*(#{pageNo}-1) +1 
+ 		order by create_time 
+		desc 
+	
 	</select>
 	<insert id="insert" parameterType="cn.forgeeks.domain.Announcement">
 		insert into announcement
 		(announcement_id,title,content,create_time)
 		values
- 		(#{announcementId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
- 		#{content,jdbcType=VARCHAR} ,sysdate 
- 		) 
+		(#{announcementId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR} ,sysdate
+		)
 	</insert>
 	<update id="update" parameterType="cn.forgeeks.domain.Announcement">
 		update announcement
 		<set>
-			<if test="#{title!=null}">title=#{title,jdbcType=VARCHAR},</if> 
+			<if test="#{title!=null}">title=#{title,jdbcType=VARCHAR},</if>
 			<if test="#{content!=null}">content=#{content,jdbcType=VARCHAR},</if>
 			create_time=sysdate
 		</set>
@@ -56,7 +81,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="string">
 		delete from announcement
 		where announcement_id in
-		<foreach collection="array" item="id" open="(" close=")" separator=",">
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
 			#{id}
 		</foreach>
 	</delete>

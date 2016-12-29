@@ -12,9 +12,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.forgeeks.domain.Announcement;
+import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.AnnouncementService;
 import cn.forgeeks.util.UtilFuns;
 
@@ -25,7 +25,7 @@ public class AnnouncementController {
 	AnnouncementService announcementService;
 
 	@RequestMapping("/anno/list.action")
-	public String annolist(String date,String key,Model model) throws UnsupportedEncodingException {
+	public String annolist(String date,String key,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
 		if(UtilFuns.isNotEmpty(date)){
 			map.put("date", date);
@@ -34,7 +34,15 @@ public class AnnouncementController {
 		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
 		map.put("key", "%"+key+"%");
 		List<Announcement> dataList = announcementService.list(map);
-		model.addAttribute("dataList", dataList);
+		
+		Page page= new Page();
+		page.setParams(map);
+		if(pageNo==null) pageNo=1;
+		page.setPageNo(pageNo);
+		page.setPageSize(5);
+		List<Announcement> dataList1=announcementService.findPage(page);
+		
+		model.addAttribute("dataList", dataList1);
 		return "/anno/list.jsp";
 	}
 

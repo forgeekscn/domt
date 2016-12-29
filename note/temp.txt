@@ -1,0 +1,30 @@
+
+<!-- 		SELECT -->
+<!-- 		announcement_id,title,content, -->
+<!-- 		to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME -->
+<!-- 		FROM (SELECT -->
+<!-- 		ROWNUM AS rowno, t.* -->
+<!-- 		FROM announcement t -->
+<!-- 		WHERE 1=1 AND #{pageSize}*#{pageNo} >=ROWNUM -->
+<!-- 		) table_alias -->
+<!-- 		WHERE table_alias.rowno >= #{pageSize}*(#{pageNo}-1) +1 -->
+<!-- 		order by create_time -->
+<!-- 		desc -->
+
+
+		select
+		announcement_id,title,content
+		,to_char(create_time,'YYYY-mm-dd
+		hh24:MM:ss')as CREATE_TIME
+		from
+		announcement
+		where
+		announcement_id=#{announcementId}
+
+
+
+
+
+
+
+
