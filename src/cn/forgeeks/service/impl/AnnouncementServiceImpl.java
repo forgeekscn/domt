@@ -1,4 +1,5 @@
 package cn.forgeeks.service.impl;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,11 @@ import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.AnnouncementService;
 
 @Repository
-public class AnnouncementServiceImpl implements AnnouncementService{
-	
+public class AnnouncementServiceImpl implements AnnouncementService {
+
 	@Resource
 	AnnouncementDao announcementDao;
-	
+
 	@Override
 	public List<Announcement> list(Map paraMap) {
 		return announcementDao.find(paraMap);
@@ -32,6 +33,7 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 	public List<Announcement> find(Map paraMap) {
 		return announcementDao.find(paraMap);
 	}
+
 	@Override
 	public Announcement get(Serializable id) {
 		return announcementDao.get(id);
@@ -57,5 +59,9 @@ public class AnnouncementServiceImpl implements AnnouncementService{
 		announcementDao.delete(ids);
 	}
 
-	
+	@Override
+	public String findResultSize(Page page) {
+		return announcementDao.findResultSize(page);
+	}
+
 }

@@ -72,15 +72,89 @@
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
 				</tr>
 				<tr>
-					<td colspan="8"><div class="pagelist">
-							<a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
-								href="">3</a><a href="">下一页</a><a href="">尾页</a>
+				
+					<td colspan="8">
+						<div class="pagelist">
+							<c:if test="${page.totalPage==4}"> 
+									<a href="#" class="shangye" onclick="Shangye(${page.totalPage},${page.pageNo})">上一页</a> 
+									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=1">1</a> 
+									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=2">2</a>
+									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=3">3</a>
+									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=4">4</a>
+									<a href="#" class="xiaye" onclick="Xiaye(${page.totalPage},${page.pageNo})">下一页</a>
+						     </c:if>
+						     <c:if test="${page.totalPage == 3}"> 
+									<a href="">上一页</a> 
+									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=1">1</a> 
+									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=2">2</a>
+									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=3">3</a>
+									<a href="">下一页</a>
+								
+						     </c:if>
+						     <c:if test="${page.totalPage == 2}"> 
+									<a href="">上一页</a>
+									<a href="${ctx}/anno/list.action?totalPage=2&pageNo=1">1</a> 
+									<a href="${ctx}/anno/list.action?totalPage=2&pageNo=2">2</a>
+									<a href="">下一页</a>
+								
+						     </c:if>
+						     <c:if test="${page.totalPage == 1}"> 
+									<a href="">上一页</a>
+									<a href="${ctx}/anno/list.action?totalPage=1&pageNo=1">1</a> 
+									<a href="">下一页</a>
+								
+						     </c:if>
+						     <c:if test="${page.totalPage == 0}"> 
+									<a href="">上一页</a> 
+									<span class="current">1</span>
+									<a href="">下一页</a>
+								
+						     </c:if>
+						     <c:if test="${page.totalPage > 4}"> 
+									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}">上一页</a> 
+									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}">${page.pageNo}</a>
+									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">${page.pageNo+1}</a>
+									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}">${page.pageNo+2}</a>......
+									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}">${page.totalPage}</a>
+									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">下一页</a>
+								
+						     </c:if>
 						</div></td>
 				</tr>
 			</table>
 		</div>
 	</form>
+
+
+
+	<script type="text/javascript">
+		$(".pagelist a").each(function() {
+			if (${page.pageNo}==this.text) {
+				$(this).css({ 
+					"color":"#FFF",
+					"background-color":"#09F",
+					"border-color": "#09F"
+  				});
+			}
+			if(${page.totalPage}<this.text) {
+				 $(this).attr('href', '#');   
+				$(this).css({ 
+					display:"none"
+  				});
+			}
+			
+		});
 	
+		function Shangye(totalPage,pageNo){
+			window.location.href="${ctx}/anno/list.action?pageNo="+(pageNo-1)+"&totalPage="+totalPage;
+			return false;
+		}	
+		function Xiaye(totalPage,pageNo){
+			window.location.href="${ctx}/anno/list.action?pageNo="+(pageNo+1)+"&totalPage="+totalPage;
+			return false;
+		}	
+		
+	</script>
 	
 	<script type="text/javascript">
 	

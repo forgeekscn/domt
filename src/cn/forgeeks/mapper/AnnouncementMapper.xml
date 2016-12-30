@@ -26,38 +26,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="announcementRM">
-		
-		
-SELECT r.announcement_id,r.title,r.content,r.create_time  
- FROM (   SELECT tt.*, ROWNUM AS rowno   
-          FROM (   SELECT announcement_id,title,content, to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as create_time
-                   FROM announcement t
-                   where 1=1
-                   <if test="params.date!=null">and create_time >= ( sysdate - #{params.date,jdbcType=VARCHAR})</if>   
-                   <if test='params.key!="%null%"'>and content like #{params.key,jdbcType=VARCHAR} </if>   
-                   ORDER BY create_time desc   
-                   )tt   
-                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
-                ) r
-   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
-   
-
+		SELECT r.announcement_id,r.title,r.content,r.create_time  
+		 FROM (   SELECT tt.*, ROWNUM AS rowno   
+		          FROM (   SELECT announcement_id,title,content, to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as create_time
+		                   FROM announcement t
+		                   where 1=1
+		                   <if test="params.date!=null">and create_time >= ( sysdate - #{params.date,jdbcType=VARCHAR})</if>   
+		                   <if test='params.key!="%null%"'>and content like #{params.key,jdbcType=VARCHAR} </if>   
+		                   ORDER BY create_time desc   
+		                   )tt   
+		                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+		                ) r
+		   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+  		   SELECT max(rownum)
+           FROM announcement
+           where 1=1
+           <if test="params.date!=null">and create_time >= ( sysdate - #{params.date,jdbcType=VARCHAR})</if>   
+           <if test='params.key!="%null%"'>and content like #{params.key,jdbcType=VARCHAR} </if>   
 	</select>
 
 
 
 	<select id="get" parameterType="string" resultMap="announcementRM">
-	<!-- 		SELECT -->
- 		announcement_id,title,content, 
- 		to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME 
- 		FROM (SELECT 
- 		ROWNUM AS rowno, t.* 
- 		FROM announcement t 
-		WHERE 1=1 AND #{pageSize}*#{pageNo} >=ROWNUM 
- 		) table_alias 
- 		WHERE table_alias.rowno >= #{pageSize}*(#{pageNo}-1) +1 
- 		order by create_time 
-		desc 
+		SELECT
+ 		announcement_id,title,content, 	to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
+ 		where announcementId = #{announcementId,jdbcType=VARCHAR} 
+ 		FROM announcement  
 	
 	</select>
 	<insert id="insert" parameterType="cn.forgeeks.domain.Announcement">

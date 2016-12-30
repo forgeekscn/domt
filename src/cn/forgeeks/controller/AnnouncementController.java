@@ -25,25 +25,32 @@ public class AnnouncementController {
 	AnnouncementService announcementService;
 
 	@RequestMapping("/anno/list.action")
-	public String annolist(String date,String key,Integer pageNo,Model model) throws UnsupportedEncodingException {
+	public String annolist(String totalPage,String date,String key,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
 		if(UtilFuns.isNotEmpty(date)){
 			map.put("date", date);
 		}
-//		 new String(zhongwen.getBytes("iso8859-1"),"GBK");
 		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
 		map.put("key", "%"+key+"%");
-		List<Announcement> dataList = announcementService.list(map);
 		
 		Page page= new Page();
 		page.setParams(map);
 		if(pageNo==null) pageNo=1;
 		page.setPageNo(pageNo);
 		page.setPageSize(5);
-		List<Announcement> dataList1=announcementService.findPage(page);
+		if(pageNo==1) {
+			getTotalPage(page);
+			page.setTotalPage(page.getTotalRecord()/page.getPageSize()+1);
+		}
+		else page.setTotalPage(Integer.valueOf(totalPage));
+		model.addAttribute("page",page);
 		
-		model.addAttribute("dataList", dataList1);
+		List<Announcement> dataList=announcementService.findPage(page);
+		model.addAttribute("dataList", dataList);
 		return "/anno/list.jsp";
+	}
+	public void getTotalPage(Page page){
+		page.setTotalRecord(Integer.valueOf(announcementService.findResultSize(page)));
 	}
 
 	@RequestMapping("/anno/tocreate.action")
