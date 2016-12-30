@@ -40,7 +40,12 @@ public class AnnouncementController {
 		page.setPageSize(5);
 		if(pageNo==1) {
 			getTotalPage(page);
-			page.setTotalPage(page.getTotalRecord()/page.getPageSize()+1);
+			if(  page.getTotalRecord()*1.0/page.getPageSize()-
+				 page.getTotalRecord()/page.getPageSize() <0.000001 )
+				page.setTotalPage(page.getTotalRecord()/page.getPageSize());
+			else {
+					page.setTotalPage(page.getTotalRecord()/page.getPageSize()+1);
+			}
 		}
 		else page.setTotalPage(Integer.valueOf(totalPage));
 		model.addAttribute("page",page);
@@ -79,16 +84,16 @@ public class AnnouncementController {
 	}
 
 	@RequestMapping("/anno/deletebyid.action")
-	public String deletebyid(String annoId, Model model) {
+	public String deletebyid(String pageNo,String totalPage,String annoId, Model model) {
 		announcementService.deleteById(annoId);
-		return "redirect:/anno/list.action";
+		return "redirect:/anno/list.action?pageNo="+pageNo+"&totalPage="+totalPage;
 	}
 
 	@RequestMapping("/anno/delete.action")
-	public String delete(String sb, String msg,Model model) {
+	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) {
 		String[] ids=sb.split(",");
 		announcementService.delete(ids);
-		return "redirect:/anno/list.action";
+		return "redirect:/anno/list.action?pageNo="+pageNo+"&totalPage="+totalPage;
 	}
 
 }
