@@ -36,6 +36,8 @@ public class AnnouncementController {
 		Page page= new Page();
 		page.setParams(map);
 		if(pageNo==null) pageNo=1;
+		else if(pageNo<1) pageNo=1;
+		
 		page.setPageNo(pageNo);
 		page.setPageSize(5);
 		if(pageNo==1) {
@@ -55,7 +57,9 @@ public class AnnouncementController {
 		return "/anno/list.jsp";
 	}
 	public void getTotalPage(Page page){
-		page.setTotalRecord(Integer.valueOf(announcementService.findResultSize(page)));
+		String s=announcementService.findResultSize(page);
+		if(s==null) page.setTotalRecord(0); 
+		else page.setTotalRecord(Integer.valueOf(announcementService.findResultSize(page)));
 	}
 
 	@RequestMapping("/anno/tocreate.action")
@@ -84,16 +88,16 @@ public class AnnouncementController {
 	}
 
 	@RequestMapping("/anno/deletebyid.action")
-	public String deletebyid(String pageNo,String totalPage,String annoId, Model model) {
+	public String deletebyid(String pageNo,String totalPage,String annoId, Model model) throws NumberFormatException, UnsupportedEncodingException {
 		announcementService.deleteById(annoId);
-		return "redirect:/anno/list.action?pageNo="+pageNo+"&totalPage="+totalPage;
+		return annolist(totalPage, null, null, Integer.valueOf(pageNo), model);
 	}
 
 	@RequestMapping("/anno/delete.action")
-	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) {
+	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) throws NumberFormatException, UnsupportedEncodingException {
 		String[] ids=sb.split(",");
 		announcementService.delete(ids);
-		return "redirect:/anno/list.action?pageNo="+pageNo+"&totalPage="+totalPage;
+		return annolist(totalPage, null, null, Integer.valueOf(pageNo), model);
 	}
 
 }

@@ -46,7 +46,7 @@
 				</tr>
 
 				<c:forEach items="${dataList}" var="obj" varStatus="status">
-					<tr>
+					<tr class="leirong">
 						<td style="text-align:left; padding-left:20px;"><input
 							type="checkbox" name="announcementId"
 							value="${obj.announcementId}" class="sb" /></td>
@@ -56,14 +56,16 @@
 						<td><div class="button-group">
 								<a class="button border-main"
 									href="${ctx}/anno/toupdate.action?annoId=${obj.announcementId}"><span
-									class="icon-edit"></span>修改</a> <a class="button border-red"
+									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"
 									href="${ctx}/anno/deletebyid.action?annoId=${obj.announcementId}&pageNo=${page.pageNo}&totalPage=${page.totalPage}"
 									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
 									删除</a>
+									
+									
 							</div></td>
 					</tr>
 				</c:forEach>
-
+	
 				<tr>
 					<td style="text-align:left; padding:19px 0;padding-left:20px;">
 					<input	type="checkbox" id="checkall" /></td>
@@ -84,39 +86,35 @@
 									<a href="#" class="xiaye" onclick="Xiaye(${page.totalPage},${page.pageNo})">下一页</a>
 						     </c:if>
 						     <c:if test="${page.totalPage == 3}"> 
-									<a href="">上一页</a> 
+									<a class="shangye" href="${ctx}/anno/list.action?totalPage=3&pageNo=${page.pageNo-1}">上一页</a> 
 									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=1">1</a> 
 									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=2">2</a>
 									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=3">3</a>
-									<a href="">下一页</a>
+									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=3&pageNo=${page.pageNo+1}">下一页</a>
 								
 						     </c:if>
 						     <c:if test="${page.totalPage == 2}"> 
-									<a href="">上一页</a>
+									<a class="shangye" href="${ctx}/anno/list.action?totalPage=2&pageNo=${page.pageNo-1}">上一页</a>
 									<a href="${ctx}/anno/list.action?totalPage=2&pageNo=1">1</a> 
 									<a href="${ctx}/anno/list.action?totalPage=2&pageNo=2">2</a>
-									<a href="">下一页</a>
+									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=2&pageNo=${page.pageNo+1}">下一页</a>
 								
 						     </c:if>
 						     <c:if test="${page.totalPage == 1}"> 
-									<a href="">上一页</a>
 									<a href="${ctx}/anno/list.action?totalPage=1&pageNo=1">1</a> 
-									<a href="">下一页</a>
 								
 						     </c:if>
 						     <c:if test="${page.totalPage == 0}"> 
-									<a href="">上一页</a> 
-									<span class="current">1</span>
-									<a href="">下一页</a>
+									<span class="current">空</span>
 								
 						     </c:if>
 						     <c:if test="${page.totalPage > 4}"> 
-									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}">上一页</a> 
+									<a class="shangye" href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}">上一页</a> 
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}">${page.pageNo}</a>
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">${page.pageNo+1}</a>
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}">${page.pageNo+2}</a>......
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}">${page.totalPage}</a>
-									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">下一页</a>
+									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">下一页</a>
 								
 						     </c:if>
 						</div></td>
@@ -142,8 +140,19 @@
 					display:"none"
   				});
 			}
-			
 		});
+
+		if(${page.pageNo}==${page.totalPage}) {
+			$(".pagelist .xiaye").css({ 
+				display:"none"
+ 			});
+		}
+		if(${page.pageNo}==1) {
+			$(".pagelist .shangye").css({ 
+				display:"none"
+ 			});
+		}
+
 	
 		function Shangye(totalPage,pageNo){
 			window.location.href="${ctx}/anno/list.action?pageNo="+(pageNo-1)+"&totalPage="+totalPage;
@@ -201,7 +210,16 @@
 		//单个删除
 		function del(id, mid, iscid) {
 			if (confirm("您确定要删除吗?")) {
-				
+				var a=0;
+				$(".leirong").each(function(){
+					a++;
+				});
+				if(a==1){
+					var id=$(".sb").val();
+					window.location.href="${ctx}/anno/deletebyid.action?annoId="+id+"&pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
+					return false;
+				}
+					
 			}else {
 				return false;
 			}
@@ -221,12 +239,14 @@
 		//批量删除
 		function DelSelect() {
 			var Checkbox = false;
+			var quanshan=true; 
 			var ff = "";
 			$("input[name='announcementId']").each(function(x, y) {
 				if (this.checked == true) {
 					Checkbox = true;
 					ff += $(this).val() + ",";
 				}
+				else quanshan=false;
 			});
 			if (Checkbox) {
 				var t = confirm("您确认要删除选中的内容吗？");
@@ -235,16 +255,21 @@
 				}
 				$.ajax({
 					type : 'post',
-					url : '${ctx}/anno/delete.action', //是不是这个路径 宝贝没毛病darly
+					url : '${ctx}/anno/delete.action',
+					dateTye:'text',
 					data : {
 						sb : ff,
 						pageNo : ${page.pageNo-1},
 						totalPage : ${page.totalPage-1}
-					}, //利用getContent()获取到的内容，传给name="con_text",提交到数据库里 ok
-					success : function() {
-						alert("${ctx}/anno/delete.action?pageNo="+pageNo+"&totalPage="+totalPage);
-						 window.location.href("${ctx}/anno/delete.action?pageNo="+pageNo+"&totalPage="+totalPage);
+					},
+					success:function(msg){
+					},error:function(){
+							if(quanshan)
+								window.location.href="${ctx}/anno/list.action?pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
+							else	
+							window.location.href="${ctx}/anno/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage}";
 					}
+					
 				});
 				
 			} else {
