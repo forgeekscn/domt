@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.ApartmentMapper">
+	<resultMap type="cn.forgeeks.domain.Apartment" id="apartmentRM">
+		<id property="apartmentId" column="APARTMENT_ID" />
+		<result property="apartmentName" column="APARTMENT_NAME" />
+		<result property="sex" column="SEX" />
+		<result property="managerId" column="MANAGER_ID" />
+		<result property="totalFloor" column="TOTAL_FLOOR" />
+		<result property="totalPeople" column="TOTAL_PEOPLE" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="apartmentRM">
+		 select apartment_id,apartment_name,sex,manager_id,total_floor,total_people
+		 from apartment 
+		 where 1=1
+		 order by apartment_name
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="apartmentRM">
+	
+	
+			SELECT  r.apartment_id, r.apartment_name, r.sex,manager_id, r.total_floor, r.total_people  
+				 FROM (   SELECT tt.*, ROWNUM AS rowno   
+				          FROM (   
+			                    select apartment_id,apartment_name,sex,manager_id,total_floor,total_people
+			                    from apartment 
+			                    where 1=1
+			                    order by apartment_name
+				                 
+			                    )tt   
+				                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+				                ) r
+				   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+   		   SELECT max(rownum)
+           FROM apartment
+           where 1=1
+	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="apartmentRM">
+			
+		 select apartment_id,apartment_name,sex,manager_id,total_floor,total_people
+		 from apartment 
+		 where 1=1
+		       and apartment_id=#{apartmentId,jdbcType=VARCHAR}
+		 order by apartment_name 
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.Apartment">
+			
+		insert into apartment
+		(apartment_id,apartment_name,sex,manager_id,total_floor,total_people)
+		values
+		(#{apartmentId,jdbcType=VARCHAR},#{apartmentName,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR},#{managerId,jdbcType=VARCHAR},#{totalFloor,jdbcType=VARCHAR},
+		#{totalPeople,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="update" parameterType="cn.forgeeks.domain.Apartment">
+		 update apartment 
+		 <set>
+		 		<if test="#{apartmentName!=null}">apartment_name=#{apartmentName,jdbcType=VARCHAR},</if>
+		 		<if test="#{sex!=null}">sex=#{sex,jdbcType=VARCHAR},</if>
+		 		<if test="#{managerId!=null}">manager_id=#{managerId,jdbcType=VARCHAR},</if>
+		 		<if test="#{totalFloor!=null}">total_floor=#{totalFloor,jdbcType=VARCHAR},</if>
+		 		<if test="#{totalPeople!=null}">total_people=#{totalPeople,jdbcType=VARCHAR}</if>
+		 </set>
+		 where    apartment_id=#{apartmentId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteById" parameterType="string">
+		delete from apartment
+		where
+		apartment_id=#{apartmentId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from apartment
+		where apartment_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
