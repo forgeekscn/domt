@@ -24,7 +24,7 @@
 
 		<div>
 		
-				<select id="yjlb" class="input"
+				<select id="yjlb" class="input" name="apartmentId"
 					style="margin-left:30px;width:350px; line-height:17px;" onchange="ejld(this.value)">
 						<option value="">选择公寓</option>
 						 <c:forEach var="s" items="${sList}">
@@ -42,6 +42,7 @@
 				             success:function(data){
 				             	var floor=data['floor'];
 				             	if(floor<1 || floor==null) floor=1;
+									$("#floor").empty();
 								  for(var i=1;i<=floor;i++){  
 										$("#floor").append('<option value="'+i+'">'+i+'楼'+'</option>');					             	
 						        } 
@@ -51,19 +52,10 @@
 				             }
 						});
 						}
-// 						function(){
-// 							type:'json',
-// 							url:'',
-// 							data:'{
-// 							}',
-// 							success:function(msg){
-// 							}
-// 						}
-// 						);
 					
 				</script>
 				<br/>      
-				<select id="floor" class="input"
+				<select id="floor" class="input" name="floor"
 					style="margin-left:30px;width:350px; line-height:17px;">
 						<option value="">选择楼层</option>
 				</select>      

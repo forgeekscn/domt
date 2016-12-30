@@ -23,10 +23,9 @@
 					<li>
 						<select name="date" class="input"
 							style="margin-left:30px;width:250px; line-height:17px;">
-								<option value="">按日期分类</option>
-								<option value="3" onclick="selectdate(this.value)">三天内</option>
-								<option value="7" onclick="selectdate(this.value)">一周内</option>
-								<option value="30" onclick="selectdate(this.value)">一个月内</option>
+								<option value="">按是否住满分类</option>
+								<option value="3" onclick="selectdate(this.value)">没住满</option>
+								<option value="7" onclick="selectdate(this.value)">住满</option>
 						</select>
 					</li>
 					</if>
@@ -59,9 +58,9 @@
 						<td>${obj.status}</td>
 						<td><div class="button-group">
 								<a class="button border-main"
-									href="#"><span
+									href="${ctx}/br/toupdate.action?brId=${obj.bedroomId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"
-									href="#"
+									href="${ctx}/br/deletebyid.action?brId=${obj.bedroomId}&pageNo=${page.pageNo}&totalPage=${page.totalPage}"
 									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
 									删除</a>
 									

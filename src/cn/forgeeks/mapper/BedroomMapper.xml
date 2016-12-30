@@ -61,14 +61,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     #{totalBed,jdbcType=VARCHAR})
 	</insert>
 	
-	<update id="update" parameterType="cn.forgeeks.domain.Apartment">
+	<update id="update" parameterType="cn.forgeeks.domain.Bedroom">
 		
-		update bedroom set
+		update bedroom
 		<set>
 		 		<if test="bedroomName">bedroom_name=#{bedroomName,jdbcType=VARCHAR},</if>
 		 		<if test="apartmentId">apartment_id=#{apartmentId,jdbcType=VARCHAR},</if>
 		 		<if test="status">status=#{status,jdbcType=VARCHAR},</if>
-		 		<if test="totalBed">total_bed=#{totalBed,jdbcType=VARCHAR},</if>
+		 		<if test="totalBed">total_bed=#{totalBed,jdbcType=VARCHAR}</if>
 		</set>
 		where     bedroom_id=#{bedroomId,jdbcType=VARCHAR}
 	</update>

@@ -67,36 +67,36 @@ public class BedroomController {
 	@RequestMapping("/br/create.action")
 	public String create(Bedroom br, Model model) {
 		br.setBedroomId(UUID.randomUUID().toString().substring(0, 8));
+		br.setStatus("N");
 		bedroomService.insert(br);
 		return "redirect:/br/list.action";
 	}
-/*
-
-	@RequestMapping("/anno/update.action")
-	public String update(Announcement anno, Model model) {
-		bedroomService.update(anno);
-		return "redirect:/anno/list.action";
+	
+	@RequestMapping("/br/update.action")
+	public String update(Bedroom br, Model model) {
+		bedroomService.update(br);
+		return "redirect:/br/list.action";
 	}
-
-	@RequestMapping("/anno/toupdate.action")
-	public String toupdate(String annoId, Model model) {
-		Announcement anno = bedroomService.get(annoId);
+	
+	@RequestMapping("/br/toupdate.action")
+	public String toupdate(String brId, Model model) {
+		List<Apartment> sList=apartmentService.list(null);
+		model.addAttribute("sList",sList);
+		Bedroom anno = bedroomService.get(brId);
 		model.addAttribute("obj", anno);
-		return "/anno/update.jsp";
+		return "/br/update.jsp";
 	}
 
-
-	@RequestMapping("/anno/deletebyid.action")
-	public String deletebyid(String pageNo,String totalPage,String annoId, Model model) throws NumberFormatException, UnsupportedEncodingException {
-		bedroomService.deleteById(annoId);
-		return annolist(totalPage, null, null, Integer.valueOf(pageNo), model);
+	@RequestMapping("/br/deletebyid.action")
+	public String deletebyid(String pageNo,String totalPage,String brId, Model model) throws NumberFormatException, UnsupportedEncodingException {
+		bedroomService.deleteById(brId);
+		return annolist(totalPage,Integer.valueOf(pageNo), model);
 	}
 
-	@RequestMapping("/anno/delete.action")
+	@RequestMapping("/br/delete.action")
 	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) throws NumberFormatException, UnsupportedEncodingException {
 		String[] ids=sb.split(",");
 		bedroomService.delete(ids);
-		return annolist(totalPage, null, null, Integer.valueOf(pageNo), model);
+		return annolist(totalPage, Integer.valueOf(pageNo), model);
 	}
-*/
 }
