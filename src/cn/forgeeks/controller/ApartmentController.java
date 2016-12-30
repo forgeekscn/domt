@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +26,18 @@ public class ApartmentController {
 	@Resource
 	ApartmentService apartmentService;
 
+	@RequestMapping("/apm/gettotalfloor.action")
+	public String gettotalfloor(String apartmentId,Model model) throws Exception{
+		String floor=apartmentService.get(apartmentId).getTotalFloor();
+		JSONObject json=new JSONObject();
+		json.put("status", "200");
+		json.put("floor", floor);
+		String data=json.toString();
+		model.addAttribute("data",data);
+		return "/apm/getdata.jsp";
+	}
+	
+	
 	@RequestMapping("/apm/list.action")
 	public String apmlist(String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();

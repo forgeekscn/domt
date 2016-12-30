@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.BedroomMapper">
+	<resultMap type="cn.forgeeks.domain.Bedroom" id="bedroomRM">
+		<id property="bedroomId" column="BEDROOM_ID" />
+		<result property="bedroomName" column="BEDROOM_NAME" />
+		<result property="apartmentId" column="APARTMENT_ID" />
+		<result property="status" column="STATUS" />
+		<result property="totalBed" column="TOTAL_BED" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="bedroomRM">
+				 
+		 select bedroom_id , apartment_id ,  bedroom_name,status,total_bed
+		 from bedroom          
+		 where 1=1
+		 order by bedroom_name
+		 
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="bedroomRM">
+
+
+ 
+ 			SELECT r.bedroom_id , r.apartment_id ,  r.bedroom_name,r.status,r.total_bed  
+				 FROM (   SELECT tt.*, ROWNUM AS rowno   
+				          FROM (   
+                           select bedroom_id , apartment_id ,  bedroom_name,status,total_bed
+                           from bedroom          
+                           where 1=1
+                           order by bedroom_name
+				                 
+			                    )tt   
+				                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+				                ) r
+				   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+           SELECT max(rownum)
+           FROM bedroom
+           where 1=1
+	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="bedroomRM">
+         select bedroom_id , apartment_id ,  bedroom_name,status,total_bed
+                  from bedroom          
+                  where 1=1 and bedroom_id=#{bedroomId,jdbcType=VARCHAR} 
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.Bedroom">
+		insert into   bedroom
+	    (bedroom_id,bedroom_name,apartment_id,status,total_bed)
+	    values
+	    (#{bedroomId,jdbcType=VARCHAR},#{bedroomName,jdbcType=VARCHAR},
+	     #{apartmentId,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},
+	     #{totalBed,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="update" parameterType="cn.forgeeks.domain.Apartment">
+		
+		update bedroom set
+		<set>
+		 		<if test="bedroomName">bedroom_name=#{bedroomName,jdbcType=VARCHAR},</if>
+		 		<if test="apartmentId">apartment_id=#{apartmentId,jdbcType=VARCHAR},</if>
+		 		<if test="status">status=#{status,jdbcType=VARCHAR},</if>
+		 		<if test="totalBed">total_bed=#{totalBed,jdbcType=VARCHAR},</if>
+		</set>
+		where     bedroom_id=#{bedroomId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteById" parameterType="string">
+		delete from bedroom
+		where
+		bedroom_id=#{bedroomId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from bedroom
+		where bedroom_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
