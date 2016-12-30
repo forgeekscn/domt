@@ -31,12 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 SELECT r.announcement_id,r.title,r.content,r.create_time  
  FROM (   SELECT tt.*, ROWNUM AS rowno   
           FROM (   SELECT announcement_id,title,content, to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as create_time
-                   FROM announcement t   
+                   FROM announcement t
+                   where 1=1
+                   <if test="params.date!=null">and create_time >= ( sysdate - #{params.date,jdbcType=VARCHAR})</if>   
+                   <if test='params.key!="%null%"'>and content like #{params.key,jdbcType=VARCHAR} </if>   
                    ORDER BY create_time desc   
                    )tt   
                 WHERE #{pageSize}*#{pageNo} >=ROWNUM   
                 ) r
    WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+   
 
 	</select>
 
