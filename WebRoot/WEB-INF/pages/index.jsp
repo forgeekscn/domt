@@ -29,6 +29,7 @@
     <li><a href="${ctx}/apm/list.action" target="right"><span class="icon-caret-right"></span>公寓管理</a></li>
     <li><a href="${ctx}/br/list.action" target="right"><span class="icon-caret-right"></span>宿舍管理</a></li>
     <li><a href="${ctx}/student/get.action" target="right"><span class="icon-caret-right"></span>学生管理</a></li>  
+    <li><a href="${ctx}/cl/list.action" target="right"><span class="icon-caret-right"></span>学院管理</a></li>  
     <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>出入管理</a></li>   
     <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>统计查询</a></li>
     

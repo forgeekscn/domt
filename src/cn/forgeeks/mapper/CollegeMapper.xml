@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.CollegeMapper">
+	<resultMap type="cn.forgeeks.domain.College" id="collegeRM">
+		<id property="collegeId" column="college_ID" />
+		<result property="collegeName" column="college_NAME" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="collegeRM">
+				 
+		select college_id,college_name
+		from college
+		where 1=1
+		order by college_name
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="collegeRM">
+
+			SELECT  r.college_id, r.college_name
+				 FROM (   SELECT tt.*, ROWNUM AS rowno   
+				          FROM (   
+			                    select college_id,college_name
+			                    from college
+			                    where 1=1
+			                    order by college_name
+				                 
+			                    )tt   
+				                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+				                ) r
+					WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+   		   SELECT max(rownum)
+           FROM college
+           where 1=1
+	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="collegeRM">
+ 
+         select college_id,college_name
+         from college		 
+		 where 1=1
+		       and college_id=#{collegeId,jdbcType=VARCHAR}
+		 order by college_name 
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.College">
+			
+		insert into college
+		(college_id,college_name)
+		values
+		(#{collegeId,jdbcType=VARCHAR},#{collegeName,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.forgeeks.domain.College">
+		 update college 
+		 <set>
+		 		<if test="collegeName!=null">college_name=#{collegeName,jdbcType=VARCHAR},</if>
+		 </set>
+		 where    college_id=#{collegeId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteById" parameterType="string">
+		delete from college
+		where
+		college_id=#{collegeId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from college
+		where college_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
