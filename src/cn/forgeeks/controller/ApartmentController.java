@@ -1,6 +1,7 @@
 package cn.forgeeks.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class ApartmentController {
 		if(sex!=null){
 			if(sex.equals("b"))	map.put("sex", "男"); else if(sex.equals("g")) map.put("sex", "女"); else map.put("sex", null); 
 		}else map.put("sex", null);
+		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
 		map.put("key","%"+key+"%");
 
 		model.addAttribute("sex",sex);

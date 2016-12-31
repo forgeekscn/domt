@@ -27,12 +27,19 @@
 								<option value="b" onclick="selectdate(this.value)">男生宿舍</option>
 								<option value="g" onclick="selectdate(this.value)">女生宿舍</option>
 						</select>
+						<script type="text/javascript">
+							$("select[name='sex']").val("${sex}");
+						</script>
 					</li>
 					</if>
+					
 					<li><input type="text" placeholder="请输入搜索关键字" id="key"
-						class="input"	style="width:250px; margin-left:20px;line-height:17px;display:inline-block" /> 
+						class="input"	style="width:250px; margin-left:20px;line-height:17px;display:inline-block" value="${key}"/> 
 						<a href="#" class="button border-main icon-search"
 						onclick="Sear()"> 搜索</a></li>
+					<script type="text/javascript">
+					</script>
+					
 				</ul>
 			</div>
 			<table class="table table-hover text-center">
@@ -79,46 +86,47 @@
 				
 					<td colspan="8">
 						<div class="pagelist">
-									<a  class="shangye" href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}&sex=${sex}">上一页</a> 
-									<a  href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}&sex=${sex}">${page.pageNo}</a>
-									<a  onclick="fanye()" href="#">${page.pageNo+1}</a>
-									<a  href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}&sex=${sex}">${page.pageNo+2}</a>......
-									<a  href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}&sex=${sex}">${page.totalPage}</a>
-									<a class="xiaye" href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&sex=${sex}">下一页</a>
+									<a  onclick="fanye('1')" class="shangye" href="#">上一页</a> 
+									<a  onclick="fanye('2')" href="#">${page.pageNo}</a>
+									<a  onclick="fanye('3')" href="#">${page.pageNo+1}</a>
+									<a  onclick="fanye('4')" href="#">${page.pageNo+2}</a>......
+									<a  onclick="fanye('5')" href="#">${page.totalPage}</a>
+									<a onclick="fanye('6')" class="xiaye" href="#">下一页</a>
 						</div></td>
 				</tr>
 			</table>
 		</div>
 	</form>
 	<script type="text/javascript">
-		
-		function fanye(){
-			var url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}";
-			var pageNo=${page.pageNo}+1;
-			var totalPage=${page.totalPage};
-			url+="";
+			/* var key="${key}";
+			alert(key);
+		$("input[name='sex']").each(function(){
+			if($(this).val()==${sex}){
+				alert("pipei");
+				$(this).attr("selected","selected");
+			}
+		}); */
+		function fanye(id){
+			var url;
+			if(id=='1'){
+				url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}&sex=${sex}";
+			}else if(id=='2'){
+				url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}&sex=${sex}";
+			}else if(id=='3'){
+				url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&sex=${sex}";
+			}else if(id=='4'){
+				url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}&sex=${sex}";
+			}else if(id=='5'){
+				url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}&sex=${sex}";
+			}else if(id=='6'){
+				url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&sex=${sex}";
+			}
+			var key=encodeURI(encodeURI("${key}"));
+			url+=("&key="+key);
 			window.location.href=url;
-			/* 		
-				if(yema=='a1'){
-				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}";
-			}else if(yema='a2'){
-				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}";
-			}else if(yema='a3'){
-				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}";
-			}else if(yema='a4'){
-				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}";
-			}else if(yema='a5'){
-				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}";
-			}else if(yema='a6'){
-				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}";
-			}else {return false;} */
-// 			url+="?sex="+${sex}+"&key="+${key};
-// 			alert(url);
-// 			window.location.href(url);
 		}
-	
-	
-	
+		
+		
 		$(".pagelist a").each(function() {
 			if (${page.pageNo}==this.text) {
 				$(this).css({ 
