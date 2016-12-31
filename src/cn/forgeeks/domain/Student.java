@@ -7,8 +7,52 @@ public class Student {
 	private String studentPassword;
 	private String status;
 	private String sex;
+	private String className;
 	private String classId;
 	private String bedroomId;
+	private String bedroomName;
+	private String studentNo;
+	private String grade;
+	private String collegeId;
+	private String collegeName;
+	
+	
+	public String getStudentNo() {
+		return studentNo;
+	}
+	public void setStudentNo(String studentNo) {
+		this.studentNo = studentNo;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getCollegeId() {
+		return collegeId;
+	}
+	public void setCollegeId(String collegeId) {
+		this.collegeId = collegeId;
+	}
+	public String getCollegeName() {
+		return collegeName;
+	}
+	public void setCollegeName(String collegeName) {
+		this.collegeName = collegeName;
+	}
+	public String getBedroomName() {
+		return bedroomName;
+	}
+	public void setBedroomName(String bedroomName) {
+		this.bedroomName = bedroomName;
+	}
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
 	public String getStudentId() {
 		return studentId;
 	}

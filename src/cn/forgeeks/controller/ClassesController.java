@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,20 @@ public class ClassesController {
 	ClassesService classesService;
 	@Resource
 	CollegeService collegeService;
+	
+ 	@RequestMapping("/cla/getdata.action")
+	public String getdata(String collegeId,Model model){
+ 		Map map= new HashMap();
+ 		map.put("collegeId",collegeId);
+ 		List<Classes> list = classesService.find(map);
+ 		
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		System.out.println(data);
+ 		model.addAttribute("data",data);
+ 		return "/cla/getdata.jsp";
+ 	}
  	
 	@RequestMapping("/cla/list.action")
 	public String clalist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {

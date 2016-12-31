@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 select apartment_id,apartment_name,sex,manager_id,total_floor,total_people
 		 from apartment 
 		 where 1=1
+		  <if test="sex!=null"> and sex=#{sex,jdbcType=VARCHAR}</if>
 		 order by apartment_name
 	</select>
 

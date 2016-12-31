@@ -9,24 +9,112 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="studentName" column="STUDENT_NAME" />
 		<result property="studentPassword" column="STUDENT_PASSWORD" />
 		<result property="sex" column="SEX" />
-		<result property="status" column="STATUS" />
 		<result property="classId" column="CLASS_ID" />
+		<result property="className" column="CLASS_NAME" />
+		<result property="status" column="STATUS" />
 		<result property="bedroomId" column="BEDROOM_ID" />
+		<result property="bedroomName" column="BEDROOM_NAME" />
+		<result property="studentNo" column="STUDENT_NO" />
+		<result property="grade" column="GRADE" />
+		<result property="collegeId" column="COLLEGE_ID" />
+		<result property="collegeName" column="COLLEGE_NAME" />
 	</resultMap>
 
 	<select id="find" parameterType="map" resultMap="studentRM">
-		select * from
-		student
-		where 1=1
-		<if test="classId!=null">
-			and class_id=#{classId}
-		</if>
-		
+		 select student_id,student_name,student_password,sex,class_id,class_name,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
+		 from student 
+		 where 1=1
+		 order by class_name
 	</select>
 
-	<select id="get" parameterType="string" resultMap="studentRM">
-		select * from
-		student
-		where student_id=#{studentId}
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="studentRM">
+	
+	
+			SELECT  r.student_id,r.student_name,r.sex,r.class_id,r.class_name,r.status,r.bedroom_id  ,r.student_password,
+					r.bedroom_name,r.student_no,r.grade,r.college_id,r.college_name
+				 FROM (   SELECT tt.*, ROWNUM AS rowno   
+				          FROM (   
+			                    select student_id,student_name,sex,class_id,class_name,student_password,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
+			                    from student 
+			                    where 1=1
+			                    <if test="params.arg!=null"> and class_name=#{params.arg,jdbcType=VARCHAR}</if>
+			                    <if test="params.key!='%null%'"> and ( student_name like #{params.key,jdbcType=VARCHAR} 
+			                    								or  class_name like #{params.key,jdbcType=VARCHAR}   
+			                    								or  student_no like #{params.key,jdbcType=VARCHAR}   
+			                    								or bedroom_name like #{params.key,jdbcType=VARCHAR} )</if>
+			                    order by class_name
+				                 
+			                    )tt   
+				                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+				                ) r
+				   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+   		   SELECT max(rownum)
+           FROM student
+           where 1=1
+                  <if test="params.arg!=null"> and arg=#{params.arg,jdbcType=VARCHAR}</if>
+                   <if test="params.key!='%null%'"> and ( student_name like #{params.key,jdbcType=VARCHAR} 
+                    								or  class_name like #{params.key,jdbcType=VARCHAR}   
+                 										or  student_no like #{params.key,jdbcType=VARCHAR}
+                    								or bedroom_name like #{params.key,jdbcType=VARCHAR} )</if>
 	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="studentRM">
+		 select student_id,student_name,sex,class_id,class_name,student_password,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
+		 from student 
+		 where 1=1
+		      and student_id=#{studentId,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert" parameterType="cn.forgeeks.domain.Student">
+			
+		insert into student
+		(student_id,student_name,sex,class_id,student_password,class_name,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name)
+		values
+			(#{studentId,jdbcType=VARCHAR},#{studentName,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},
+			#{classId,jdbcType=VARCHAR},#{studentPassword,jdbcType=VARCHAR},#{className,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},
+			#{bedroomId,jdbcType=VARCHAR},#{bedroomName,jdbcType=VARCHAR}, 
+			#{studentNo,jdbcType=VARCHAR},#{grade,jdbcType=VARCHAR},#{collegeId,jdbcType=VARCHAR} ,
+			#{collegeName,jdbcType=VARCHAR} 
+		 )
+	</insert>
+	
+	<update id="update" parameterType="cn.forgeeks.domain.Student">
+		 update student 
+		 <set>
+		 		<if test="studentName!=null">student_name=#{studentName,jdbcType=VARCHAR},</if>
+		 		<if test="studentPassword!=null">student_password=#{studentPassword,jdbcType=VARCHAR},</if>
+		 		<if test="sex!=null">sex=#{sex,jdbcType=VARCHAR},</if>
+		 		<if test="classId!=null">class_id=#{classId,jdbcType=VARCHAR},</if>
+		 		<if test="className!=null">class_name=#{className,jdbcType=VARCHAR},</if>
+		 		<if test="status!=null">status=#{status,jdbcType=VARCHAR},</if>
+		 		<if test="bedroomId!=null">bedroom_id=#{bedroomId,jdbcType=VARCHAR},</if>
+		 		<if test="bedroomName!=null">bedroom_name=#{bedroomName,jdbcType=VARCHAR},</if>
+		 		<if test="studentNo!=null">student_no=#{student_no,jdbcType=VARCHAR},</if>
+		 		<if test="collegeId!=null">college_id=#{collegeId,jdbcType=VARCHAR},</if>
+		 		<if test="collegeName!=null">college_name=#{collegeName,jdbcType=VARCHAR},</if>
+		 		<if test="grade!=null">grade=#{grade,jdbcType=VARCHAR}</if>
+		 </set>
+		 where    student_id=#{studentId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteById" parameterType="string">
+		delete from student
+		where
+		student_id=#{studentId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from student
+		where student_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+
 </mapper>

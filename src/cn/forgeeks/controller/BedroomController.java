@@ -9,6 +9,8 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,21 @@ public class BedroomController {
 	@Resource
 	ApartmentService apartmentService;
 	
+	@RequestMapping("/br/getdata.action")
+	public String getdata(String apmId,Model model) throws UnsupportedEncodingException{
+		Map map = new HashMap();
+		if(UtilFuns.isEmpty(apmId)) apmId=null;
+		map.put("apmId", apmId);
+		List<Bedroom> list=bedroomService.find(map);
+
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		System.out.println(data);
+ 		model.addAttribute("data",data);
+		
+		return "/cla/getdata.jsp";
+	}
 	@RequestMapping("/br/list.action")
 	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();

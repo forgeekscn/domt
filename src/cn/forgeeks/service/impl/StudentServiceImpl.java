@@ -17,10 +17,11 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Resource 
 	StudentDao studentDao;
-	
-	public  List<Student> list(Map paraMap){
+	@Override
+	public List<Student> list(Map paraMap) {
 		return studentDao.find(paraMap);
 	}
+
 	@Override
 	public List<Student> findPage(Page page) {
 		return studentDao.findPage(page);
@@ -37,13 +38,13 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public void insert(Student student) {
-		studentDao.insert(student);
+	public void insert(Student factory) {
+		studentDao.insert(factory);
 	}
 
 	@Override
-	public void update(Student student) {
-		studentDao.update(student);
+	public void update(Student factory) {
+		studentDao.update(factory);
 	}
 
 	@Override
@@ -53,8 +54,12 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public void delete(Serializable[] ids) {
-		studentDao.deleteById(ids);
+		studentDao.delete(ids);
 	}
-	
+
+	@Override
+	public String findResultSize(Page page) {
+		return studentDao.findResultSize(page);
+	}
 	
 }

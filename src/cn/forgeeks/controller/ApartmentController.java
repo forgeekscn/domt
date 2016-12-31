@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cn.forgeeks.domain.Apartment;
 import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.ApartmentService;
+import cn.forgeeks.util.UtilFuns;
 
 @Controller
 public class ApartmentController {
 
 	@Resource
 	ApartmentService apartmentService;
+
+
+	@RequestMapping("/apm/getdata.action")
+	public String getdata(String sex,Model model) throws Exception{
+		if(UtilFuns.isNotEmpty(sex)) {
+			if(sex.equals("b")) sex="男";
+			else sex="女";	
+		}
+		else sex=null;
+		Map paraMap= new HashMap();
+		paraMap.put("sex", sex);
+		List<Apartment> list =apartmentService.find(paraMap);
+		
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		System.out.println(data);
+ 		model.addAttribute("data",data);
+ 		
+		return "/cla/getdata.jsp";
+	}
 
 	@RequestMapping("/apm/gettotalfloor.action")
 	public String gettotalfloor(String apartmentId,Model model) throws Exception{
