@@ -32,7 +32,8 @@ public class AnnouncementController {
 		}
 		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
 		map.put("key", "%"+key+"%");
-		
+		model.addAttribute("date",date);
+		model.addAttribute("key",key);
 		Page page= new Page();
 		page.setParams(map);
 		if(pageNo==null) pageNo=1;

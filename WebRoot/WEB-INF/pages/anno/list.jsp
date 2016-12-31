@@ -28,9 +28,12 @@
 								<option value="7" onclick="selectdate(this.value)">一周内</option>
 								<option value="30" onclick="selectdate(this.value)">一个月内</option>
 						</select>
+						<script type="text/javascript">
+							$("select[name='date']").val("${date}");
+						</script>
 					</li>
 					</if>
-					<li><input type="text" placeholder="请输入搜索关键字" id="key"
+					<li><input type="text" placeholder="请输入搜索关键字" id="key" value="${key}"
 						class="input"	style="width:250px; margin-left:20px;line-height:17px;display:inline-block" /> 
 						<a href="#" class="button border-main icon-search"
 						onclick="Sear()"> 搜索</a></li>
@@ -78,12 +81,12 @@
 					<td colspan="8">
 						<div class="pagelist">
 						
-									<a class="shangye" href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}">上一页</a> 
-									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}">${page.pageNo}</a>
-									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">${page.pageNo+1}</a>
-									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}">${page.pageNo+2}</a>......
-									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}">${page.totalPage}</a>
-									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">下一页</a>
+									<a  onclick="fanye('1')" class="shangye" href="#">上一页</a> 
+									<a  onclick="fanye('2')" href="#">${page.pageNo}</a>
+									<a  onclick="fanye('3')" href="#">${page.pageNo+1}</a>
+									<a  onclick="fanye('4')" href="#">${page.pageNo+2}</a>......
+									<a  onclick="fanye('5')" href="#">${page.totalPage}</a>
+									<a onclick="fanye('6')" class="xiaye" href="#">下一页</a>
 								
 						</div></td>
 				</tr>
@@ -94,6 +97,29 @@
 
 
 	<script type="text/javascript">
+	
+		function fanye(id){
+			var url;
+			if(id=='1'){
+				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}&date=${date}";
+			}else if(id=='2'){
+				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}&date=${date}";
+			}else if(id=='3'){
+				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&date=${date}";
+			}else if(id=='4'){
+				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}&date=${date}";
+			}else if(id=='5'){
+				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}&date=${date}";
+			}else if(id=='6'){
+				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&date=${date}";
+			}
+			var key=encodeURI(encodeURI("${key}"));
+			url+=("&key="+key);
+			window.location.href=url;
+		}
+		
+	
+	
 		$(".pagelist a").each(function() {
 			if (${page.pageNo}==this.text) {
 				$(this).css({ 
