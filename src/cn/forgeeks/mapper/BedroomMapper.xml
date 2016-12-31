@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 from bedroom          
 		 where 1=1
 		 <if test="apmId!=null">and apartment_id=#{apmId,jdbcType=VARCHAR}</if>
+		 <if test="status!=null">and status=#{status,jdbcType=VARCHAR}</if>
 		 order by bedroom_name
 		 
 	</select>

@@ -16,94 +16,139 @@
 	<form method="post" action="${ctx}/stu/list.action" id="listform">
 		<div class="panel admin-panel">
 			<div class="padding border-bottom">
-				<ul class="search" style="padding-left:10px;">
+				<ul class="search" style="padding-left:5px;">
 					<li><a class="button border-main icon-plus-square-o"
 						href="${ctx}/stu/tocreate.action"> 添加内容</a></li>
 					<if condition="$iscid eq 1">
 					<li>
-						<select  name="arg" class="input"
-							style="margin-left:10px;width:150px; line-height:17px;">
-								<option value="">按所在公寓筛选</option>
-							<option onclick="selectdate(this.value)" value="大一">大一</option>
-							<option value="大二" onclick="selectdate(this.value)">大二</option>
-							<option value="大三" onclick="selectdate(this.value)">大三</option>
-							<option value="大四" onclick="selectdate(this.value)">大四</option>
-							<option value="研一" onclick="selectdate(this.value)">研一</option>
-							<option value="研二" onclick="selectdate(this.value)">研二</option>
-							<option value="研三" onclick="selectdate(this.value)">研三</option>
-						</select>
-						<script type="text/javascript">
-							$("select[name='arg']").val("${arg}");
-						</script>
-					</li>				<li>
-						<select  name="arg2" class="input"
-							style="margin-left:10px;width:150px; line-height:17px;">
-								<option value="">按年级筛选</option>
-							<option onclick="selectdate(this.value)" value="大一">大一</option>
-							<option value="大二" onclick="selectdate(this.value)">大二</option>
-							<option value="大三" onclick="selectdate(this.value)">大三</option>
-							<option value="大四" onclick="selectdate(this.value)">大四</option>
-							<option value="研一" onclick="selectdate(this.value)">研一</option>
-							<option value="研二" onclick="selectdate(this.value)">研二</option>
-							<option value="研三" onclick="selectdate(this.value)">研三</option>
-						</select>
-						<script type="text/javascript">
-							$("select[name='arg']").val("${arg}");
-						</script>
-					</li>				<li>
-						<select  name="arg3" class="input"
-							style="margin-left:10px;width:170px; line-height:17px;">
+						<select  id="status" class="input"
+							style="margin-left:0px;width:150px; line-height:17px;">
 								<option value="">按是否分配宿舍筛选</option>
-							<option onclick="selectdate(this.value)" value="大一">大一</option>
-							<option value="大二" onclick="selectdate(this.value)">大二</option>
-							<option value="大三" onclick="selectdate(this.value)">大三</option>
-							<option value="大四" onclick="selectdate(this.value)">大四</option>
-							<option value="研一" onclick="selectdate(this.value)">研一</option>
-							<option value="研二" onclick="selectdate(this.value)">研二</option>
-							<option value="研三" onclick="selectdate(this.value)">研三</option>
+							<option  value="N">未分配宿舍</option>
+							<option value="Y" >已分配宿舍</option>
 						</select>
-						<script type="text/javascript">
-							$("select[name='arg']").val("${arg}");
-						</script>
-					</li>		<li>
-						<select  name="arg3" class="input"
-							style="margin-left:10px;width:170px; line-height:17px;">
+					</li>				<li>
+						<select  id="college" class="input"
+							style="margin-left:0px;width:110px; line-height:17px;">
 								<option value="">按学院筛选</option>
-							<option onclick="selectdate(this.value)" value="大一">大一</option>
-							<option value="大二" onclick="selectdate(this.value)">大二</option>
-							<option value="大三" onclick="selectdate(this.value)">大三</option>
-							<option value="大四" onclick="selectdate(this.value)">大四</option>
-							<option value="研一" onclick="selectdate(this.value)">研一</option>
-							<option value="研二" onclick="selectdate(this.value)">研二</option>
-							<option value="研三" onclick="selectdate(this.value)">研三</option>
 						</select>
-						<script type="text/javascript">
-							$("select[name='arg']").val("${arg}");
-						</script>
+					</li>				<li>
+						<select  id="grade" class="input"
+							style="margin-left:0px;width:110px; line-height:17px;">
+								<option value="">按年级筛选</option>
+							<option  value="大一">大一</option>
+							<option value="大二" >大二</option>
+							<option value="大三" >大三</option>
+							<option value="大四" >大四</option>
+							<option value="研一" >研一</option>
+							<option value="研二" >研二</option>
+							<option value="研三" >研三</option>
+						</select>
+					</li>		<li>
+						<select  id="sex" class="input"
+							style="margin-left:0px;width:110px; line-height:17px;">
+								<option value="">按性别筛选</option>
+								<option value="男">男</option>
+								<option value="女">女</option>
+						</select>
+					
 					</li>
 					</if>
-					
-					<li><input type="text" placeholder="请输入搜索关键字" id="key"
-						class="input"	style="width:140px; margin-left:10px;line-height:17px;display:inline-block" value="${key}"/> 
+					<li><input type="text" placeholder="模糊查询" id="key"
+						class="input"	style="width:100px; margin-left:0px;line-height:17px;display:inline-block" value="${key}"/> 
 						<a href="#" class="button border-main icon-search"
-						onclick="Sear()"> 搜索</a></li>
-					<script type="text/javascript">
-					</script>
+						onclick="Sear()">搜索</a></li>
+						<a href="#" class="button border-main icon-search"
+						onclick="Reset()">重置</a>					
+						<a href="#" class="button border-main icon-search" style="margin-left:80px;"
+						onclick="FinalSearch()">综合查询</a>					
 					
 				</ul>
 			</div>
+
+
+			<script type="text/javascript">
+				
+				var status="${status}";
+				var college="${college}";
+				var grade="${grade}";
+				var sex="${sex}";
+
+				$("#status").val(status);				
+				$("#college").val(college);				
+				$("#grade").val(grade);				
+				$("#sex").val(sex);				
+				
+			
+			
+				 /* $.ajax({
+					 type: "GET",
+		             url: "${ctx}/cl/getdata.action",
+		             data: {},
+		             dataType: "json",
+		             success:function(data){
+		             	alert(data);
+		             	$("#college").empty();
+	             		$("#college").append('<option>按学院筛选</option>');
+		             	$.each(data,function(index,item){
+		             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
+		             	});
+		             },
+		             error:function(){
+		             	alert("eeror json");
+		             }
+				});  */
+ 				$.ajax({
+					type: "GET",
+					url: "${ctx}/cl/getdata.action",
+					data: {},
+					dataType:"json",
+					success:function(data){
+		             	$("#college").empty();
+	             		$("#college").append('<option value="">按学院筛选</option>');
+		             	$.each(data,function(index,item){
+		             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
+		             	});
+					},error:function(){
+					}
+				});
+ 				if("${college}"!=null)	$("#college").val("${college}");
+				function FinalSearch(){
+					var status=$("#status").val();
+					
+					var college;
+					if($("#college").val()!=null){
+						college=$("#college").val();
+					}else {
+						college=null;
+					}
+					var grade=encodeURI(encodeURI($("#grade").val()));
+					var sex="";
+					if($("#sex").val()!=null){
+						sex=encodeURI(encodeURI($("#sex").val()));
+					}else{
+						sex=null;
+					} 
+					window.location.href="${ctx}/stu/list.action?status="+status+"&college="+college+"&grade="+grade+"&sex="+sex;
+					
+				}
+				
+				
+			</script>
+
+
 			<table class="table table-hover text-center">
 				<tr>
-					<th width="5%"></th>
-					<th width="5%">姓名</th>
-					<th width="15%">学号</th>
-					<th width="10%">性别</th>
-					<th width="10%">是否分配宿舍</th>
-					<th width="10%">所在宿舍</th>
-					<th width="15%">班级</th>
-					<th width="15%">年级</th>
-					<th width="15%">学院</th>
-					<th width="10%"></th>
+					<th width="10"></th>
+					<th width="50">姓名</th>
+					<th width="7%">学号</th>
+					<th width="5%">性别</th>
+					<th width="70">是否分配宿舍</th>
+					<th width="80">所在宿舍</th>
+					<th width="50">班级</th>
+					<th width="50">年级</th>
+					<th width="50">学院</th>
+					<th width="100"></th>
 				</tr>
 
 				<c:forEach items="${dataList}" var="obj" varStatus="status">
@@ -117,6 +162,8 @@
 						<td>${obj.status}</td>
 						<td>${obj.bedroomName}</td>
 						<td>${obj.className}</td>
+						<td>${obj.grade}</td>
+						
 						<td>${obj.collegeName}</td>
 						<td><div class="button-group">
 								<a class="button border-main"
@@ -178,9 +225,14 @@
 				url="${ctx}/stu/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&";
 			}
 			
+			var status="${status}";
+			var college="${college}";
+			var grade=encodeURI(encodeURI("${grade}"));
+			var sex=encodeURI(encodeURI("${sex}"));
+			
 			var arg=encodeURI(encodeURI("${arg}"));
 			var key=encodeURI(encodeURI("${key}"));
-			url+=("arg="+arg+"&key="+key);
+			url+=("arg="+arg+"&key="+key+"&status="+status+"&college="+college+"&grade="+grade+"&sex="+sex);
 			window.location.href=url;
 		}
 		

@@ -18,6 +18,7 @@ import cn.forgeeks.domain.College;
 import cn.forgeeks.domain.Student;
 import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.ApartmentService;
+import cn.forgeeks.service.BedroomService;
 import cn.forgeeks.service.ClassesService;
 import cn.forgeeks.service.CollegeService;
 import cn.forgeeks.service.StudentService;
@@ -35,15 +36,34 @@ public class StudentController {
 	@Resource 
 	ApartmentService apartmentService;
 
+	@Resource
+	BedroomService bedroomService;
+	
 	@RequestMapping("/stu/list.action")
-	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
+	public String annolist(String status,String college, String grade,String sex, String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
 		if(UtilFuns.isEmpty(arg)) map.put("arg", null); else map.put("arg", arg);
-		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
+		if(UtilFuns.isNotEmpty(key)) key=URLDecoder.decode(key, "UTF-8");	else key=null;
+
+		if(UtilFuns.isEmpty(status))  status=null;
+		if(UtilFuns.isEmpty(college)) college=null;
+		if(UtilFuns.isNotEmpty(grade)) grade=URLDecoder.decode(grade, "UTF-8");	else grade=null;
+		if(UtilFuns.isNotEmpty(sex)) sex=URLDecoder.decode(sex, "UTF-8");	else sex=null;
+
+		map.put("status",status);
+		map.put("college",college);
+		map.put("grade",grade);
+		map.put("sex",sex);
+		
 		map.put("key","%"+key+"%");
 		
 		model.addAttribute("arg",arg);
 		model.addAttribute("key",key);
+
+		model.addAttribute("status",status);
+		model.addAttribute("college",college);
+		model.addAttribute("grade",grade);
+		model.addAttribute("sex",sex);
 		
 		Page page= new Page();
 		page.setParams(map);
@@ -89,32 +109,35 @@ public class StudentController {
 	
 	@RequestMapping("/stu/update.action")
 	public String update(Student stu, Model model) {
+		if(stu.getBedroomId()!=null)stu.setStatus("Y");
 		studentService.update(stu);
 		return "redirect:/stu/list.action";
 	}
 	
 	@RequestMapping("/stu/toupdate.action")
 	public String toupdate(String stuId, Model model) {
-//		List<Apartment> sList=apartmentService.list(null);
-//		model.addAttribute("sList",sList);
-//		Student anno = studentService.get(stuId);
-//		model.addAttribute("obj", anno);
-		List<College> sList=collegeService.find(null);
-		model.addAttribute("sList",sList);
+		List<College> sList1=collegeService.find(null);
+		model.addAttribute("sList1",sList1);
+		Student student=studentService.get(stuId);
+		model.addAttribute("obj",student);
+		
+		model.addAttribute("sList2",bedroomService.find(null));
+
+		
 		return "/stu/update.jsp";
 	}
 
 	@RequestMapping("/stu/deletebyid.action")
 	public String deletebyid(String pageNo,String totalPage,String stuId, Model model) throws NumberFormatException, UnsupportedEncodingException {
 		studentService.deleteById(stuId);
-		return annolist(null,null,totalPage,Integer.valueOf(pageNo), model);
+		return annolist(null,null,null,null,null,null,totalPage,Integer.valueOf(pageNo), model);
 	}
 
 	@RequestMapping("/stu/delete.action")
 	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) throws NumberFormatException, UnsupportedEncodingException {
 		String[] ids=sb.split(",");
 		studentService.delete(ids);
-		return annolist(null,null,totalPage, Integer.valueOf(pageNo), model);
+		return annolist(null,null,null,null,null,null,totalPage, Integer.valueOf(pageNo), model);
 	}
 
 }

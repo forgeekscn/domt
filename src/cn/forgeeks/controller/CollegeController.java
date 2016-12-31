@@ -9,12 +9,14 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.forgeeks.domain.Classes;
 import cn.forgeeks.domain.College;
 import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.CollegeService;
@@ -25,8 +27,17 @@ public class CollegeController {
 	@Resource
 	CollegeService collegeService;
 
-	
-	
+ 	@RequestMapping("/cl/getdata.action")
+	public String getdata(Model model){
+ 		List<College> list = collegeService.find(null);
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		System.out.println(data);
+ 		model.addAttribute("data",data);
+ 		return "/cla/getdata.jsp";
+ 	}
+ 	
 	@RequestMapping("/cl/list.action")
 	public String cllist(String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();

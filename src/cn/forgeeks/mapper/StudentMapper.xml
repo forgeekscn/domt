@@ -24,6 +24,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 select student_id,student_name,student_password,sex,class_id,class_name,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
 		 from student 
 		 where 1=1
+            <if test="status!=null"> and status=#{status,jdbcType=VARCHAR}</if>
+            <if test="college !=null"> and college_id=#{college,jdbcType=VARCHAR}</if>
+            <if test="grade!=null"> and grade=#{grade,jdbcType=VARCHAR}</if>
+            <if test="sex!=null"> and sex=#{sex,jdbcType=VARCHAR}</if>
+
+            <if test="key!='%null%'"> and key like #{key,jdbcType=VARCHAR}</if>
+
+
+		 
 		 order by class_name
 	</select>
 
@@ -37,6 +46,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			                    select student_id,student_name,sex,class_id,class_name,student_password,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
 			                    from student 
 			                    where 1=1
+			                    <if test="params.status!=null"> and status=#{params.status,jdbcType=VARCHAR}</if>
+					            <if test="params.college !=null"> and college_id=#{params.college,jdbcType=VARCHAR}</if>
+					            <if test="params.grade!=null"> and grade=#{params.grade,jdbcType=VARCHAR}</if>
+					            <if test="params.sex!=null"> and sex=#{params.sex,jdbcType=VARCHAR}</if>
+					
+								                    
+			                    
 			                    <if test="params.arg!=null"> and class_name=#{params.arg,jdbcType=VARCHAR}</if>
 			                    <if test="params.key!='%null%'"> and ( student_name like #{params.key,jdbcType=VARCHAR} 
 			                    								or  class_name like #{params.key,jdbcType=VARCHAR}   
@@ -54,6 +70,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		   SELECT max(rownum)
            FROM student
            where 1=1
+  		        <if test="params.status!=null"> and status=#{params.status,jdbcType=VARCHAR}</if>
+	            <if test="params.college !=null"> and college_id=#{params.college,jdbcType=VARCHAR}</if>
+	            <if test="params.grade!=null"> and grade=#{params.grade,jdbcType=VARCHAR}</if>
+	            <if test="params.sex!=null"> and sex=#{params.sex,jdbcType=VARCHAR}</if>
+		
+			
                   <if test="params.arg!=null"> and arg=#{params.arg,jdbcType=VARCHAR}</if>
                    <if test="params.key!='%null%'"> and ( student_name like #{params.key,jdbcType=VARCHAR} 
                     								or  class_name like #{params.key,jdbcType=VARCHAR}   
@@ -94,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 		<if test="status!=null">status=#{status,jdbcType=VARCHAR},</if>
 		 		<if test="bedroomId!=null">bedroom_id=#{bedroomId,jdbcType=VARCHAR},</if>
 		 		<if test="bedroomName!=null">bedroom_name=#{bedroomName,jdbcType=VARCHAR},</if>
-		 		<if test="studentNo!=null">student_no=#{student_no,jdbcType=VARCHAR},</if>
+		 		<if test="studentNo!=null">student_no=#{studentNo,jdbcType=VARCHAR},</if>
 		 		<if test="collegeId!=null">college_id=#{collegeId,jdbcType=VARCHAR},</if>
 		 		<if test="collegeName!=null">college_name=#{collegeName,jdbcType=VARCHAR},</if>
 		 		<if test="grade!=null">grade=#{grade,jdbcType=VARCHAR}</if>

@@ -29,12 +29,14 @@ public class BedroomController {
 	BedroomService bedroomService;
 	@Resource
 	ApartmentService apartmentService;
+
 	
 	@RequestMapping("/br/getdata.action")
 	public String getdata(String apmId,Model model) throws UnsupportedEncodingException{
 		Map map = new HashMap();
 		if(UtilFuns.isEmpty(apmId)) apmId=null;
 		map.put("apmId", apmId);
+		map.put("status", "N");
 		List<Bedroom> list=bedroomService.find(map);
 
  		JSONArray jsonArray=new JSONArray();
