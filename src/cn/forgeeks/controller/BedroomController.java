@@ -1,6 +1,7 @@
 package cn.forgeeks.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import cn.forgeeks.domain.Bedroom;
 import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.ApartmentService;
 import cn.forgeeks.service.BedroomService;
+import cn.forgeeks.util.UtilFuns;
 
 @Controller
 public class BedroomController {
@@ -27,9 +29,15 @@ public class BedroomController {
 	ApartmentService apartmentService;
 	
 	@RequestMapping("/br/list.action")
-	public String annolist(String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
+	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
-
+		if(UtilFuns.isEmpty(arg)) map.put("arg", null); else map.put("arg", arg);
+		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
+		map.put("key","%"+key+"%");
+		
+		model.addAttribute("arg",arg);
+		model.addAttribute("key",key);
+		
 		Page page= new Page();
 		page.setParams(map);
 		if(pageNo==null) pageNo=1;
@@ -90,13 +98,13 @@ public class BedroomController {
 	@RequestMapping("/br/deletebyid.action")
 	public String deletebyid(String pageNo,String totalPage,String brId, Model model) throws NumberFormatException, UnsupportedEncodingException {
 		bedroomService.deleteById(brId);
-		return annolist(totalPage,Integer.valueOf(pageNo), model);
+		return annolist(null,null,totalPage,Integer.valueOf(pageNo), model);
 	}
 
 	@RequestMapping("/br/delete.action")
 	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) throws NumberFormatException, UnsupportedEncodingException {
 		String[] ids=sb.split(",");
 		bedroomService.delete(ids);
-		return annolist(totalPage, Integer.valueOf(pageNo), model);
+		return annolist(null,null,totalPage, Integer.valueOf(pageNo), model);
 	}
 }

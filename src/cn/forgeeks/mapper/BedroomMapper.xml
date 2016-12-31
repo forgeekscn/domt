@@ -31,6 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                            select bedroom_id , apartment_id ,  bedroom_name,status,total_bed
                            from bedroom          
                            where 1=1
+                           <if test="params.arg!=null">and status=#{params.arg,jdbcType=VARCHAR}</if>
+                           <if test="params.key!='%null%'">and bedroom_name like #{params.key,jdbcType=VARCHAR}</if>
                            order by bedroom_name
 				                 
 			                    )tt   
@@ -43,6 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
            SELECT max(rownum)
            FROM bedroom
            where 1=1
+             <if test="params.arg!=null">and status=#{params.arg,jdbcType=VARCHAR}</if>
+             <if test="params.key!='%null%'">and bedroom_name like #{params.key,jdbcType=VARCHAR}</if>
 	</select>
 
 
