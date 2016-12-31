@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
@@ -39,9 +37,15 @@ public class ApartmentController {
 	
 	
 	@RequestMapping("/apm/list.action")
-	public String apmlist(String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
+	public String apmlist(String sex,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
-		
+		if(sex!=null){
+			if(sex.equals("b"))	map.put("sex", "男"); else if(sex.equals("g")) map.put("sex", "女"); else map.put("sex", null); 
+		}else map.put("sex", null);
+		map.put("key","%"+key+"%");
+
+		model.addAttribute("sex",sex);
+		model.addAttribute("key",key);
 		Page page= new Page();
 		page.setParams(map);
 		if(pageNo==null) pageNo=1;
@@ -98,14 +102,14 @@ public class ApartmentController {
 	public String deletebyid(String pageNo,String totalPage,String apmId, Model model) 
 			throws NumberFormatException, UnsupportedEncodingException {
 		apartmentService.deleteById(apmId);
-		return apmlist(totalPage, Integer.valueOf(pageNo), model);
+		return apmlist(null,null,totalPage, Integer.valueOf(pageNo), model);
 	}
 	
 	@RequestMapping("/apm/delete.action")
 	public String delete(String pageNo,String totalPage,String sb, String msg,Model model) throws NumberFormatException, UnsupportedEncodingException {
 		String[] ids=sb.split(",");
 		apartmentService.delete(ids);
-		return apmlist(totalPage,Integer.valueOf(pageNo), model);
+		return apmlist(null,null,totalPage,Integer.valueOf(pageNo), model);
 	}
 	/*	
 

@@ -29,6 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			                    select apartment_id,apartment_name,sex,manager_id,total_floor,total_people
 			                    from apartment 
 			                    where 1=1
+			                    <if test="params.sex!=null"> and sex=#{params.sex,jdbcType=VARCHAR}</if>
+			                    <if test="params.key!='%null%'"> and apartment_name like #{params.key,jdbcType=VARCHAR}</if>
 			                    order by apartment_name
 				                 
 			                    )tt   
@@ -41,6 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		   SELECT max(rownum)
            FROM apartment
            where 1=1
+                  <if test="params.sex!=null"> and sex=#{params.sex,jdbcType=VARCHAR}</if>
+                  <if test="params.key!='%null%'"> and apartment_name like #{params.key,jdbcType=VARCHAR}</if>
 	</select>
 
 
@@ -66,11 +70,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="update" parameterType="cn.forgeeks.domain.Apartment">
 		 update apartment 
 		 <set>
-		 		<if test="#{apartmentName!=null}">apartment_name=#{apartmentName,jdbcType=VARCHAR},</if>
-		 		<if test="#{sex!=null}">sex=#{sex,jdbcType=VARCHAR},</if>
-		 		<if test="#{managerId!=null}">manager_id=#{managerId,jdbcType=VARCHAR},</if>
-		 		<if test="#{totalFloor!=null}">total_floor=#{totalFloor,jdbcType=VARCHAR},</if>
-		 		<if test="#{totalPeople!=null}">total_people=#{totalPeople,jdbcType=VARCHAR}</if>
+		 		<if test="apartmentName!=null">apartment_name=#{apartmentName,jdbcType=VARCHAR},</if>
+		 		<if test="sex!=null">sex=#{sex,jdbcType=VARCHAR},</if>
+		 		<if test="managerId!=null">manager_id=#{managerId,jdbcType=VARCHAR},</if>
+		 		<if test="totalFloor!=null">total_floor=#{totalFloor,jdbcType=VARCHAR},</if>
+		 		<if test="totalPeople!=null">total_people=#{totalPeople,jdbcType=VARCHAR}</if>
 		 </set>
 		 where    apartment_id=#{apartmentId,jdbcType=VARCHAR}
 	</update>

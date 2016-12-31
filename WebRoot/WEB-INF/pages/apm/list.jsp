@@ -21,12 +21,11 @@
 						href="${ctx}/apm/tocreate.action"> 添加内容</a></li>
 					<if condition="$iscid eq 1">
 					<li>
-						<select name="date" class="input"
+						<select  name="sex" class="input"
 							style="margin-left:30px;width:250px; line-height:17px;">
-								<option value="">按入住率筛选</option>
-								<option value="3" onclick="selectdate(this.value)">入住率大于80%</option>
-								<option value="7" onclick="selectdate(this.value)">入住率大于50%</option>
-								<option value="30" onclick="selectdate(this.value)">入住率小于50%</option>
+								<option value="">按公寓类型筛选</option>
+								<option value="b" onclick="selectdate(this.value)">男生宿舍</option>
+								<option value="g" onclick="selectdate(this.value)">女生宿舍</option>
 						</select>
 					</li>
 					</if>
@@ -80,55 +79,46 @@
 				
 					<td colspan="8">
 						<div class="pagelist">
-							<c:if test="${page.totalPage==4}"> 
-									<a href="#" class="shangye" onclick="Shangye(${page.totalPage},${page.pageNo})">上一页</a> 
-									<a href="${ctx}/apm/list.action?totalPage=4&pageNo=1">1</a> 
-									<a href="${ctx}/apm/list.action?totalPage=4&pageNo=2">2</a>
-									<a href="${ctx}/apm/list.action?totalPage=4&pageNo=3">3</a>
-									<a href="${ctx}/apm/list.action?totalPage=4&pageNo=4">4</a>
-									<a href="#" class="xiaye" onclick="Xiaye(${page.totalPage},${page.pageNo})">下一页</a>
-						     </c:if>
-						     <c:if test="${page.totalPage == 3}"> 
-									<a class="shangye" href="${ctx}/apm/list.action?totalPage=3&pageNo=${page.pageNo-1}">上一页</a> 
-									<a href="${ctx}/apm/list.action?totalPage=3&pageNo=1">1</a> 
-									<a href="${ctx}/apm/list.action?totalPage=3&pageNo=2">2</a>
-									<a href="${ctx}/apm/list.action?totalPage=3&pageNo=3">3</a>
-									<a class="xiaye" href="${ctx}/apm/list.action?totalPage=3&pageNo=${page.pageNo+1}">下一页</a>
-								
-						     </c:if>
-						     <c:if test="${page.totalPage == 2}"> 
-									<a class="shangye" href="${ctx}/apm/list.action?totalPage=2&pageNo=${page.pageNo-1}">上一页</a>
-									<a href="${ctx}/apm/list.action?totalPage=2&pageNo=1">1</a> 
-									<a href="${ctx}/apm/list.action?totalPage=2&pageNo=2">2</a>
-									<a class="xiaye" href="${ctx}/apm/list.action?totalPage=2&pageNo=${page.pageNo+1}">下一页</a>
-								
-						     </c:if>
-						     <c:if test="${page.totalPage == 1}"> 
-									<a href="${ctx}/apm/list.action?totalPage=1&pageNo=1">1</a> 
-								
-						     </c:if>
-						     <c:if test="${page.totalPage == 0}"> 
-									<span class="current">空</span>
-								
-						     </c:if>
-						     <c:if test="${page.totalPage > 4}"> 
-									<a class="shangye" href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}">上一页</a> 
-									<a href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}">${page.pageNo}</a>
-									<a href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">${page.pageNo+1}</a>
-									<a href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}">${page.pageNo+2}</a>......
-									<a href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}">${page.totalPage}</a>
-									<a class="xiaye" href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">下一页</a>
-								
-						     </c:if>
+									<a  class="shangye" href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}&sex=${sex}">上一页</a> 
+									<a  href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}&sex=${sex}">${page.pageNo}</a>
+									<a  onclick="fanye()" href="#">${page.pageNo+1}</a>
+									<a  href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}&sex=${sex}">${page.pageNo+2}</a>......
+									<a  href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}&sex=${sex}">${page.totalPage}</a>
+									<a class="xiaye" href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&sex=${sex}">下一页</a>
 						</div></td>
 				</tr>
 			</table>
 		</div>
 	</form>
-
-
-
 	<script type="text/javascript">
+		
+		function fanye(){
+			var url="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}";
+			var pageNo=${page.pageNo}+1;
+			var totalPage=${page.totalPage};
+			url+="";
+			window.location.href=url;
+			/* 		
+				if(yema=='a1'){
+				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}";
+			}else if(yema='a2'){
+				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}";
+			}else if(yema='a3'){
+				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}";
+			}else if(yema='a4'){
+				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}";
+			}else if(yema='a5'){
+				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}";
+			}else if(yema='a6'){
+				window.location.href="${ctx}/apm/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}";
+			}else {return false;} */
+// 			url+="?sex="+${sex}+"&key="+${key};
+// 			alert(url);
+// 			window.location.href(url);
+		}
+	
+	
+	
 		$(".pagelist a").each(function() {
 			if (${page.pageNo}==this.text) {
 				$(this).css({ 
@@ -186,20 +176,7 @@
 	
 		//下拉列表 分类
 		function selectdate(arg){
-			window.location.href='${ctx}/apm/list.action?date='+arg; 
-		/* 	if(arg!=null){
-				$.ajax({
-					type : 'post',
-					url : '${ctx}/anno/list.action', 
-					data : {
-						date:arg		
-					},
-					success : function(msg) {
-					}
-				});
-			
-			}
-		 */		
+			window.location.href='${ctx}/apm/list.action?sex='+arg; 
 		}									
 		
 	

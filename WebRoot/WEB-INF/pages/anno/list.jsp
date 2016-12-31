@@ -77,38 +77,7 @@
 				
 					<td colspan="8">
 						<div class="pagelist">
-							<c:if test="${page.totalPage==4}"> 
-									<a href="#" class="shangye" onclick="Shangye(${page.totalPage},${page.pageNo})">上一页</a> 
-									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=1">1</a> 
-									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=2">2</a>
-									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=3">3</a>
-									<a href="${ctx}/anno/list.action?totalPage=4&pageNo=4">4</a>
-									<a href="#" class="xiaye" onclick="Xiaye(${page.totalPage},${page.pageNo})">下一页</a>
-						     </c:if>
-						     <c:if test="${page.totalPage == 3}"> 
-									<a class="shangye" href="${ctx}/anno/list.action?totalPage=3&pageNo=${page.pageNo-1}">上一页</a> 
-									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=1">1</a> 
-									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=2">2</a>
-									<a href="${ctx}/anno/list.action?totalPage=3&pageNo=3">3</a>
-									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=3&pageNo=${page.pageNo+1}">下一页</a>
-								
-						     </c:if>
-						     <c:if test="${page.totalPage == 2}"> 
-									<a class="shangye" href="${ctx}/anno/list.action?totalPage=2&pageNo=${page.pageNo-1}">上一页</a>
-									<a href="${ctx}/anno/list.action?totalPage=2&pageNo=1">1</a> 
-									<a href="${ctx}/anno/list.action?totalPage=2&pageNo=2">2</a>
-									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=2&pageNo=${page.pageNo+1}">下一页</a>
-								
-						     </c:if>
-						     <c:if test="${page.totalPage == 1}"> 
-									<a href="${ctx}/anno/list.action?totalPage=1&pageNo=1">1</a> 
-								
-						     </c:if>
-						     <c:if test="${page.totalPage == 0}"> 
-									<span class="current">空</span>
-								
-						     </c:if>
-						     <c:if test="${page.totalPage > 4}"> 
+						
 									<a class="shangye" href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}">上一页</a> 
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}">${page.pageNo}</a>
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">${page.pageNo+1}</a>
@@ -116,7 +85,6 @@
 									<a href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}">${page.totalPage}</a>
 									<a class="xiaye" href="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}">下一页</a>
 								
-						     </c:if>
 						</div></td>
 				</tr>
 			</table>
