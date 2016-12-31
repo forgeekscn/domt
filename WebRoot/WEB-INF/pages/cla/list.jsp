@@ -13,54 +13,65 @@
 <title></title>
 </head>
 <body>
-	<form method="post" action="${ctx}/anno/list.action" id="listform">
+	<form method="post" action="${ctx}/cla/list.action" id="listform">
 		<div class="panel admin-panel">
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:10px;">
 					<li><a class="button border-main icon-plus-square-o"
-						href="${ctx}/anno/tocreate.action"> 添加内容</a></li>
+						href="${ctx}/cla/tocreate.action"> 添加内容</a></li>
 					<if condition="$iscid eq 1">
 					<li>
-						<select name="date" class="input"
+						<select  name="arg" class="input"
 							style="margin-left:30px;width:250px; line-height:17px;">
-								<option value="">按日期分类</option>
-								<option value="3" onclick="selectdate(this.value)">三天内</option>
-								<option value="7" onclick="selectdate(this.value)">一周内</option>
-								<option value="30" onclick="selectdate(this.value)">一个月内</option>
+								<option value="">按年级筛选</option>
+							<option onclick="selectdate(this.value)" value="大一">大一</option>
+							<option value="大二" onclick="selectdate(this.value)">大二</option>
+							<option value="大三" onclick="selectdate(this.value)">大三</option>
+							<option value="大四" onclick="selectdate(this.value)">大四</option>
+							<option value="研一" onclick="selectdate(this.value)">研一</option>
+							<option value="研二" onclick="selectdate(this.value)">研二</option>
+							<option value="研三" onclick="selectdate(this.value)">研三</option>
 						</select>
 						<script type="text/javascript">
-							$("select[name='date']").val("${date}");
+							$("select[name='arg']").val("${arg}");
 						</script>
 					</li>
 					</if>
-					<li><input type="text" placeholder="请输入搜索关键字" id="key" value="${key}"
-						class="input"	style="width:250px; margin-left:20px;line-height:17px;display:inline-block" /> 
+					
+					<li><input type="text" placeholder="请输入搜索关键字" id="key"
+						class="input"	style="width:250px; margin-left:20px;line-height:17px;display:inline-block" value="${key}"/> 
 						<a href="#" class="button border-main icon-search"
 						onclick="Sear()"> 搜索</a></li>
+					<script type="text/javascript">
+					</script>
+					
 				</ul>
 			</div>
 			<table class="table table-hover text-center">
 				<tr>
 					<th width="20"></th>
-					<th width="20%">时间</th>
-					<th width="25%">标题</th>
-					<th width="30%">内容</th>
-					<th width="200">操作</th>
+					<th width="15%">班级名称</th>
+					<th width="15%">辅导员</th>
+					<th width="100">辅导员电话</th>
+					<th width="100">所属学院</th>
+					<th width="100">年级</th>
 				</tr>
 
 				<c:forEach items="${dataList}" var="obj" varStatus="status">
 					<tr class="leirong">
 						<td style="text-align:left; padding-left:20px;"><input
 							type="checkbox" name="announcementId"
-							value="${obj.announcementId}" class="sb" /></td>
-						<td>${obj.createTime}</td>
-						<td width="10%">${obj.title}</td>
-						<td>${obj.content}</td>
+							value="${obj.classId}" class="sb" /></td>
+						<td>${obj.className}</td>
+						<td>${obj.coach}</td>
+						<td width="10%">${obj.coachCall}</td>
+						<td>${obj.collegeId}</td>
+						<td>${obj.grade}</td>
 						<td><div class="button-group">
 								<a class="button border-main"
-									href="${ctx}/anno/toupdate.action?annoId=${obj.announcementId}"><span
+									href="${ctx}/cla/toupdate.action?claId=${obj.classId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"
-									href="${ctx}/anno/deletebyid.action?annoId=${obj.announcementId}&pageNo=${page.pageNo}&totalPage=${page.totalPage}"
+									href="${ctx}/cla/deletebyid.action?claId=${obj.classId}&pageNo=${page.pageNo}&totalPage=${page.totalPage}"
 									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
 									删除</a>
 									
@@ -80,46 +91,49 @@
 				
 					<td colspan="8">
 						<div class="pagelist">
-						
 									<a  onclick="fanye('1')" class="shangye" href="#">上一页</a> 
 									<a  onclick="fanye('2')" href="#">${page.pageNo}</a>
 									<a  onclick="fanye('3')" href="#">${page.pageNo+1}</a>
 									<a  onclick="fanye('4')" href="#">${page.pageNo+2}</a>......
 									<a  onclick="fanye('5')" href="#">${page.totalPage}</a>
 									<a onclick="fanye('6')" class="xiaye" href="#">下一页</a>
-								
 						</div></td>
 				</tr>
 			</table>
 		</div>
 	</form>
-
-
-
 	<script type="text/javascript">
-	
+			/* var key="${key}";
+			alert(key);
+		$("input[name='arg']").each(function(){
+			if($(this).val()==${arg}){
+				alert("pipei");
+				$(this).attr("selected","selected");
+			}
+		}); */
 		function fanye(id){
 			var url;
 			if(id=='1'){
-				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}&date=${date}";
+				url="${ctx}/cla/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo-1}&";
 			}else if(id=='2'){
-				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}&date=${date}";
+				url="${ctx}/cla/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo}&";
 			}else if(id=='3'){
-				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&date=${date}";
+				url="${ctx}/cla/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&";
 			}else if(id=='4'){
-				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}&date=${date}";
+				url="${ctx}/cla/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+2}&";
 			}else if(id=='5'){
-				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}&date=${date}";
+				url="${ctx}/cla/list.action?totalPage=${page.totalPage}&pageNo=${page.totalPage}&";
 			}else if(id=='6'){
-				url="${ctx}/anno/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&date=${date}";
+				url="${ctx}/cla/list.action?totalPage=${page.totalPage}&pageNo=${page.pageNo+1}&";
 			}
+			
+			var arg=encodeURI(encodeURI("${arg}"));
 			var key=encodeURI(encodeURI("${key}"));
-			url+=("&key="+key);
+			url+=("arg="+arg+"&key="+key);
 			window.location.href=url;
 		}
 		
-	
-	
+		
 		$(".pagelist a").each(function() {
 			if (${page.pageNo}==this.text) {
 				$(this).css({ 
@@ -149,11 +163,11 @@
 
 	
 		function Shangye(totalPage,pageNo){
-			window.location.href="${ctx}/anno/list.action?pageNo="+(pageNo-1)+"&totalPage="+totalPage;
+			window.location.href="${ctx}/cla/list.action?pageNo="+(pageNo-1)+"&totalPage="+totalPage;
 			return false;
 		}	
 		function Xiaye(totalPage,pageNo){
-			window.location.href="${ctx}/anno/list.action?pageNo="+(pageNo+1)+"&totalPage="+totalPage;
+			window.location.href="${ctx}/cla/list.action?pageNo="+(pageNo+1)+"&totalPage="+totalPage;
 			return false;
 		}	
 		
@@ -177,27 +191,14 @@
 	
 		//下拉列表 分类
 		function selectdate(arg){
-			window.location.href='${ctx}/anno/list.action?date='+arg; 
-		/* 	if(arg!=null){
-				$.ajax({
-					type : 'post',
-					url : '${ctx}/anno/list.action', 
-					data : {
-						date:arg		
-					},
-					success : function(msg) {
-					}
-				});
-			
-			}
-		 */		
+			window.location.href='${ctx}/cla/list.action?arg='+encodeURI(encodeURI(arg)); 
 		}									
 		
 	
 		//搜索
 		function Sear(){
 			var key=$("#key").val();
-			window.location.href='${ctx}/anno/list.action?key='+encodeURI(encodeURI(key));
+			window.location.href='${ctx}/cla/list.action?key='+encodeURI(encodeURI(key));
 			return false;
 		}
 
@@ -210,7 +211,7 @@
 				});
 				if(a==1){
 					var id=$(".sb").val();
-					window.location.href="${ctx}/anno/deletebyid.action?annoId="+id+"&pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
+					window.location.href="${ctx}/cla/deletebyid.action?claId="+id+"&pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
 					return false;
 				}
 					
@@ -249,7 +250,7 @@
 				}
 				$.ajax({
 					type : 'post',
-					url : '${ctx}/anno/delete.action',
+					url : '${ctx}/cla/delete.action',
 					dateTye:'text',
 					data : {
 						sb : ff,
@@ -259,11 +260,11 @@
 					success:function(msg){
 					},error:function(){
 							if(quanshan){
-								if("${page.pageNo}"!='1') window.location.href="${ctx}/anno/list.action?pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
-								else  window.location.href="${ctx}/anno/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage-1}";
+								if("${page.pageNo}"!='1') window.location.href="${ctx}/cla/list.action?pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
+								else  window.location.href="${ctx}/cla/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage-1}";
 							}
 							else	
-							window.location.href="${ctx}/anno/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage}";
+							window.location.href="${ctx}/cla/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage}";
 					}
 					
 				});

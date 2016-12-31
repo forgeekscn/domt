@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.ClassesMapper">
+	<resultMap type="cn.forgeeks.domain.Classes" id="ClassesRM">
+		<id property="classId" column="CLASS_ID" />
+		<result property="className" column="CLASS_NAME" />
+		<result property="coach" column="COACH" />
+		<result property="coachCall" column="COACH_CALL" />
+		<result property="collegeId" column="COLLEGE_ID" />
+		<result property="grade" column="GRADE" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="ClassesRM">
+				 
+		select class_id,class_name,coach,coach_call,college_id,grade
+		from classes
+		where 1=1
+		order by class_name
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="ClassesRM">
+
+			SELECT  r.class_id, r.class_name,r.coach,r.coach_call,r.college_id,r.grade
+				 FROM (   SELECT tt.*, ROWNUM AS rowno   
+				          FROM (   
+			                    select class_id,class_name,coach,coach_call,college_id,grade
+			                    from classes
+			                    where 1=1
+					                <if test="params.arg!=null">and grade = #{params.arg,jdbcType=VARCHAR}</if>
+			 						<if test="params.key!='%null%'">and ( class_name like #{params.key,jdbcType=VARCHAR} 
+				 													  or coach like #{params.key,jdbcType=VARCHAR} 
+				 													  or coach_call like #{params.key,jdbcType=VARCHAR} ) </if>
+			                    order by class_name
+			                    )tt   
+				                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+				                ) r
+					WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+   		   SELECT max(rownum)
+           FROM classes
+           where 1=1
+            <if test="params.arg!=null">and grade = #{params.arg,jdbcType=VARCHAR}</if>
+			<if test="params.key!='%null%'">and ( class_name like #{params.key,jdbcType=VARCHAR} 
+											  or coach like #{params.key,jdbcType=VARCHAR} 
+											  or coach_call like #{params.key,jdbcType=VARCHAR} ) </if>
+	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="ClassesRM">
+ 
+         select class_id,class_name,coach,coach_call,college_id,grade
+         from classes		 
+		 where 1=1
+		       and class_id=#{classId,jdbcType=VARCHAR}
+		 order by class_name 
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.Classes">
+			
+		insert into Classes
+		(class_id,class_name,coach,coach_call,college_id,grade)
+		values
+		(#{classId,jdbcType=VARCHAR},#{className,jdbcType=VARCHAR},
+		#{coach,jdbcType=VARCHAR},#{coachCall,jdbcType=VARCHAR},
+		#{collegeId,jdbcType=VARCHAR},#{grade,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="update" parameterType="cn.forgeeks.domain.Classes">
+		 update classes 
+		 <set>
+		 		<if test="className!=null">class_name=#{className,jdbcType=VARCHAR},</if>
+		 		<if test="coach!=null">coach=#{coach,jdbcType=VARCHAR},</if>
+		 		<if test="coachCall!=null">coach_call=#{coachCall,jdbcType=VARCHAR},</if>
+		 		<if test="collegeId!=null">college_id=#{collegeId,jdbcType=VARCHAR},</if>
+		 		<if test="grade!=null">grade=#{grade,jdbcType=VARCHAR},</if>
+		 </set>
+		 where    class_id=#{classId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteById" parameterType="string">
+		delete from classes
+		where
+		class_id=#{classId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from classes
+		where class_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

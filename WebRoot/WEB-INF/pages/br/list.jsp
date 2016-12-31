@@ -259,8 +259,10 @@
 					},
 					success:function(msg){
 					},error:function(){
-							if(quanshan)
-								window.location.href="${ctx}/br/list.action?pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
+							if(quanshan){
+								if("${page.pageNo}"!='1') window.location.href="${ctx}/br/list.action?pageNo=${page.pageNo-1}&totalPage=${page.totalPage-1}";
+								else  window.location.href="${ctx}/br/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage-1}";
+							}
 							else	
 							window.location.href="${ctx}/br/list.action?pageNo=${page.pageNo}&totalPage=${page.totalPage}";
 					}
