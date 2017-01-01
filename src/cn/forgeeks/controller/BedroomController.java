@@ -46,6 +46,17 @@ public class BedroomController {
  		model.addAttribute("data",data);
 		
 		return "/cla/getdata.jsp";
+	}	
+	@RequestMapping("/br/getdata1.action")
+	public String getdata1(Model model) throws UnsupportedEncodingException{
+		List<Bedroom> list=bedroomService.find(null);
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		System.out.println(data);
+ 		model.addAttribute("data",data);
+		
+		return "/cla/getdata.jsp";
 	}
 	@RequestMapping("/br/list.action")
 	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {

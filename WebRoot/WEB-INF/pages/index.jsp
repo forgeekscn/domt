@@ -33,6 +33,7 @@
     <li><a href="${ctx}/cla/list.action" target="right"><span class="icon-caret-right"></span>班级管理</a></li>  
     <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>出入管理</a></li>   
     <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>统计查询</a></li>
+    <li><a href="${ctx}/visit/list.action" target="right"><span class="icon-caret-right"></span>访客登记管理</a></li>
     
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>系统管理</h2>
