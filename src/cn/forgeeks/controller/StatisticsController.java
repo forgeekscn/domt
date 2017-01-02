@@ -43,6 +43,137 @@ public class StatisticsController {
 	BedroomService bedroomService;
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping("/statis/disbycollege.action")
+	public String distributebycollege(String classId,String sex1,String apartmentId,
+			String sex2,String apartmentId2,Model model){
+		Map<String, String> map= new HashMap<String,String>();
+		
+		if(UtilFuns.isNotEmpty(classId)) {  map.put("classId", classId); } else classId=null;
+		if(UtilFuns.isNotEmpty(sex1)) {  
+			if(sex1.equals("b")) map.put("sex1", "男");
+			else if(sex1.equals("g")) map.put("sex1", "女");
+		} else sex1=null;
+		if(UtilFuns.isNotEmpty(sex2)) {  
+			if(sex2.equals("b")) map.put("sex2", "男");
+			else if(sex2.equals("g")) map.put("sex2", "女");
+		} else sex2=null;
+		
+		if(UtilFuns.isNotEmpty(apartmentId)) {  map.put("apartmentId", apartmentId); } else apartmentId=null;
+		if(UtilFuns.isNotEmpty(apartmentId2)) {  map.put("apartmentId2", apartmentId2); } else apartmentId2=null;
+		
+		String info="<br/>宿舍分配情况<br/><br/>";
+		int forBrIndex=-1;
+		int studentIndex=0;
+		
+		if(sex1!=null && apartmentId!=null){}
+		if(sex2!=null && apartmentId2!=null){}
+		
+		Map paraMap=new HashMap();
+		paraMap.put("collegeId",classId);
+		paraMap.put("status","N");
+		paraMap.put("sex","男");
+		List<Student> boyStudentList=studentService.find(paraMap);
+		int studentNum=boyStudentList.size(); 
+		int forBrNum=( (studentNum*1.0/5-studentNum/5)<0.0001?studentNum/5:studentNum/5+1);
+		System.out.println("该学院未分配宿舍的男生人数:"+studentNum);
+		System.out.println("至少需要宿舍间数:"+forBrNum);
+		
+		info+="男生：\n<br/>";
+		
+		Map paraMap1=new HashMap();
+		paraMap1.put("status","N");
+		paraMap1.put("apmId",apartmentId);
+		List<Bedroom> bedroomList1= bedroomService.find(paraMap1);
+		
+		for(Student student:boyStudentList){
+			studentIndex++;
+			if(studentIndex%5==1) forBrIndex++;
+			Bedroom br;
+			if(forBrIndex==bedroomList1.size()-1 || bedroomList1.size()==0 ) {
+				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+//				apartmentService.get(apartmentId).set
+				break;
+			}else{
+				br=bedroomList1.get(forBrIndex);
+			}
+			student.setBedroomId(br.getBedroomId());
+			student.setBedroomName(br.getBedroomName());
+			student.setStatus("Y");
+			studentService.update(student);
+			br.setStatus("Y");
+			br.setTotalBed( (studentIndex%5==0?5:studentIndex%5)+"/5");
+			bedroomService.update(br);
+			info+=student.getClassName()+" : "+student.getStudentName()+"   分配的宿舍    "+br.getBedroomName()+"<br/>";
+		}
+		
+		
+		
+		info+="<br/> 女生：<br/>";
+		
+		forBrIndex=-1;
+		studentIndex=0;
+		
+		Map paraMap11=new HashMap();
+		paraMap11.put("collegeId",classId);
+		paraMap11.put("status","N");
+		paraMap11.put("sex","女");
+		List<Student> girlStudentList=studentService.find(paraMap11);
+		int studentNum2=girlStudentList.size(); 
+		int forBrNum2=( (studentNum2*1.0/5-studentNum2/5)<0.0001?studentNum2/5:studentNum2/5+1);
+		System.out.println("该学院未分配宿舍的女生人数:"+studentNum2);
+		System.out.println("至少需要宿舍间数:"+forBrNum2);
+		
+		Map paraMap2=new HashMap();
+		paraMap2.put("status","N");
+		paraMap2.put("apmId",apartmentId2);
+		List<Bedroom> bedroomList2= bedroomService.find(paraMap2);
+		
+		
+		for(Student student:girlStudentList){
+			studentIndex++;
+			if(studentIndex%5==1) forBrIndex++;
+			Bedroom br;
+			if(forBrIndex==bedroomList2.size()-1  || bedroomList2.size()==0  ) {
+				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+				break;
+			}else{
+				br=bedroomList2.get(forBrIndex);
+			}
+			student.setBedroomId(br.getBedroomId());
+			student.setBedroomName(br.getBedroomName());
+			student.setStatus("Y");
+			studentService.update(student);
+			br.setStatus("Y");
+			br.setTotalBed((studentIndex%5==0?5:studentIndex%5)+"/5");
+			bedroomService.update(br);
+			info+=student.getClassName()+" : "+student.getStudentName()+"   分配的宿舍     "+br.getBedroomName()+"<br/>";
+		}
+		
+		info+="<br/>以上同学成功分配到宿舍<br/><br/>";
+		System.out.println(info);		
+		model.addAttribute("info",info);
+		
+		return "/statis/info.jsp";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("/statis/disbycla.action")
 	public String distributebyclass(String classId,String sex1,String apartmentId,
 			String sex2,String apartmentId2,Model model){
@@ -61,9 +192,12 @@ public class StatisticsController {
 		if(UtilFuns.isNotEmpty(apartmentId)) {  map.put("apartmentId", apartmentId); } else apartmentId=null;
 		if(UtilFuns.isNotEmpty(apartmentId2)) {  map.put("apartmentId2", apartmentId2); } else apartmentId2=null;
 
-		String info="";
+		String info="<br/>宿舍分配情况<br/><br/>";
 		int forBrIndex=-1;
 		int studentIndex=0;
+		
+		if(sex1!=null && apartmentId!=null){}
+		if(sex2!=null && apartmentId2!=null){}
 		
 		Map paraMap=new HashMap();
 		paraMap.put("classId",classId);
@@ -85,7 +219,14 @@ public class StatisticsController {
 		for(Student student:boyStudentList){
 			studentIndex++;
 			if(studentIndex%5==1) forBrIndex++;
-			Bedroom br=bedroomList1.get(forBrIndex);
+			Bedroom br;
+			if(forBrIndex==studentNum-1) {
+				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+//				apartmentService.get(apartmentId).set
+				break;
+			}else{
+				br=bedroomList1.get(forBrIndex);
+			}
 			student.setBedroomId(br.getBedroomId());
 			student.setBedroomName(br.getBedroomName());
 			student.setStatus("Y");
@@ -122,7 +263,13 @@ public class StatisticsController {
 		for(Student student:girlStudentList){
 			studentIndex++;
 			if(studentIndex%5==1) forBrIndex++;
-			Bedroom br=bedroomList2.get(forBrIndex);
+			Bedroom br;
+			if(forBrIndex==studentNum2-1) {
+				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+				break;
+			}else{
+				br=bedroomList2.get(forBrIndex);
+			}
 			student.setBedroomId(br.getBedroomId());
 			student.setBedroomName(br.getBedroomName());
 			student.setStatus("Y");
@@ -133,7 +280,7 @@ public class StatisticsController {
 			info+=student.getStudentName()+" 分配的宿舍 "+br.getBedroomName()+"<br/>";
 		}
 		
-		info+="<br/>该班级所有同学都成功分配到宿舍";
+		info+="<br/>以上同学成功分配到宿舍<br/><br/>";
 		System.out.println(info);		
 		model.addAttribute("info",info);
 		
@@ -302,6 +449,12 @@ public class StatisticsController {
 		List<College> collegeList=collegeService.find(null);
 		model.addAttribute("collegeList",collegeList);
 		return "/statis/disbycla.jsp";
+	}
+	@RequestMapping("/statis/todisbycollege.action")
+	public String todistributebycollege(Model model){
+		List<College> collegeList=collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/disbycollege.jsp";
 	}
 	
 }

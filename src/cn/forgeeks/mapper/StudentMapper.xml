@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 from student 
 		 where 1=1
             <if test="classId!=null"> and class_id=#{classId,jdbcType=VARCHAR}</if>
+            <if test="collegeId!=null"> and college_id=#{collegeId,jdbcType=VARCHAR}</if>
             
             <if test="status!=null"> and status=#{status,jdbcType=VARCHAR}</if>
             <if test="college !=null"> and college_id=#{college,jdbcType=VARCHAR}</if>
