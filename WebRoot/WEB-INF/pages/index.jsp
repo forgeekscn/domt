@@ -35,7 +35,13 @@
     <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>统计查询</a></li>
     <li><a href="${ctx}/visit/list.action" target="right"><span class="icon-caret-right"></span>访客登记管理</a></li>
     
-  </ul>   
+  </ul>
+     
+  <h2><span class="icon-pencil-square-o"></span>快速分配宿舍</h2>
+  <ul>
+    <li><a href="${ctx}/statis/todisbycla.action" target="right"><span class="icon-caret-right"></span>按班级分配</a></li>
+    <li><a href="${ctx}/statis/todisbycol.action" target="right"><span class="icon-caret-right"></span>按学院分配</a></li>
+  </ul>     
   <h2><span class="icon-pencil-square-o"></span>系统管理</h2>
   <ul>
     <li><a href="${ctx}/man/list.action" target="right"><span class="icon-caret-right"></span>查看管理员</a></li>
