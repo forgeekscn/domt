@@ -101,7 +101,7 @@ public class StatisticsController {
 			if(studentIndex%5==1) forBrIndex++;
 			Bedroom br;
 			if(forBrIndex==bedroomList1.size()-1 || bedroomList1.size()==0 ) {
-				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+				info+="由于该公寓宿舍已分配满，该学院部分男同学未分配到宿舍 ，稍后请再次为他们分配宿舍!<br/>";
 //				apartmentService.get(apartmentId).set
 				break;
 			}else{
@@ -145,7 +145,7 @@ public class StatisticsController {
 			if(studentIndex%5==1) forBrIndex++;
 			Bedroom br;
 			if(forBrIndex==bedroomList2.size()-1  || bedroomList2.size()==0  ) {
-				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+				info+="由于该公寓宿舍已分配满，该学院部分男同学未分配到宿舍 ，稍后请再次为他们分配宿舍!<br/>";
 				break;
 			}else{
 				br=bedroomList2.get(forBrIndex);
@@ -221,7 +221,7 @@ public class StatisticsController {
 			if(studentIndex%5==1) forBrIndex++;
 			Bedroom br;
 			if(forBrIndex==studentNum-1) {
-				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+				info+="由于该公寓宿舍已分配满，该班级部分男同学未分配到宿舍 ，稍后请再次为他们分配宿舍!<br/>";
 //				apartmentService.get(apartmentId).set
 				break;
 			}else{
@@ -265,7 +265,7 @@ public class StatisticsController {
 			if(studentIndex%5==1) forBrIndex++;
 			Bedroom br;
 			if(forBrIndex==studentNum2-1) {
-				info+=student.getStudentName()+" 未分配到宿舍  ！ 原因：该公寓所有宿舍已住满,请选择其他宿舍!<br/>";
+				info+="由于该公寓宿舍已分配满，该学院部分女同学未分配到宿舍 ，稍后请再次为他们分配宿舍!<br/>";
 				break;
 			}else{
 				br=bedroomList2.get(forBrIndex);
