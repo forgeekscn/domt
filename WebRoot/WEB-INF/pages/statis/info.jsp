@@ -12,6 +12,7 @@
 <title></title>
 </head>
 <body>
-
-${info}
+	<a href="#" class="button border-main icon-search"	onclick="Sear()">导出Excel</a><br/>
+	<hr/>
+	${info}
 </body></html>

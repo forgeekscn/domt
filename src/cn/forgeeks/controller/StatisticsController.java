@@ -44,11 +44,133 @@ public class StatisticsController {
 	
 	
 	
+	@RequestMapping("/statis/toviewdisbycollege.action")
+	public String toviewdisbycollege(Model model){
+		List<College> collegeList=collegeService.find(null);
+		model.addAttribute("collegeList" , collegeList);
+		return "/statis/viewdisbycollege.jsp";
+	}
+	
+	@RequestMapping("/statis/viewdisbycollege.action")
+	public String viewdisbycollege(String classId,Model model){
+		Map<String,String> map= new HashMap<String,String>();
+		map.put("collegeId", classId);
+		List<Student> stuList= studentService.find(map);
+		String info="";
+		int numB=0,disB=0;
+		int numG=0,disG=0;
+		
+		for(Student student:stuList){
+			if(student.getSex().equals("男")) numB++;else numG++; 
+			if(student.getStatus().equals("Y")) {
+				if(student.getSex().equals("男")) disB++;else disG++;
+			}else {
+			}
+		}
+		info+="该学院共有"+(numB+numG)+"人，其中男生"+numB+"人，女生"+numG+"人 <br/>";
+		info+="其中已经分配到宿舍的有"+(disB+disG)+"人，其中男生"+disB+"人，女生"+disG+"人 <br/>";
+		info+="其中没有分配宿舍的有"+(numB+numG-disB-disG)+"人，其中男生"+(numB-disB)+"人，女生"+(numG-disG)+"人 <br/>";
+		
+		model.addAttribute("infoList",stuList);
+		model.addAttribute("info",info);
+		return "/statis/sInfo1.jsp";
+	}
 	
 	
 	
 	
+	@RequestMapping("/statis/toviewdisbycla.action")
+	public String toviewdisbycla(Model model){
+		List<College> collegeList=collegeService.find(null);
+		model.addAttribute("collegeList" , collegeList);
+		return "/statis/viewdisbycla.jsp";
+	}
 	
+	@RequestMapping("/statis/viewdisbycla.action")
+	public String viewdisbycla(String classId,Model model){
+		Map<String,String> map= new HashMap<String,String>();
+		map.put("classId", classId);
+		List<Student> stuList= studentService.find(map);
+		String info="";
+		int numB=0,disB=0;
+		int numG=0,disG=0;
+		
+		for(Student student:stuList){
+			if(student.getSex().equals("男")) numB++;else numG++; 
+			if(student.getStatus().equals("Y")) {
+				if(student.getSex().equals("男")) disB++;else disG++;
+			}else {
+			}
+		}
+		info+="该班级共有"+(numB+numG)+"人，其中男生"+numB+"人，女生"+numG+"人 <br/>";
+		info+="其中已经分配到宿舍的有"+(disB+disG)+"人，其中男生"+disB+"人，女生"+disG+"人 <br/>";
+		info+="其中没有分配宿舍的有"+(numB+numG-disB-disG)+"人，其中男生"+(numB-disB)+"人，女生"+(numG-disG)+"人 <br/>";
+		
+		model.addAttribute("infoList",stuList);
+		model.addAttribute("info",info);
+		return "/statis/sInfo1.jsp";
+	}
+	
+	
+	
+	@RequestMapping("/statis/tostatisstubycollege.action")
+	public String toStatisstubycollege(Model model){
+		List<College> collegeList= collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/statisstubycollege.jsp";
+	}
+	
+	@RequestMapping("/statis/statisstubycollege.action")
+	public String statisstubycollege(String classId,Model model){
+		String info="";
+		Map<String,String> map= new HashMap<String,String>();
+		map.put("collegeId",classId);
+		List<Student> stuList= studentService.find(map);
+		
+		int numBoy=0;
+		int numGirl=0;
+				
+		for(Student student:stuList){
+			if(student.getSex().equals("男")) numBoy++;else numGirl++;
+		}
+		
+		info+="该学院共有"+(numBoy+numGirl)+"人，其中男生"+numBoy+"人，女生"+numGirl+"人<br/>";
+		
+		model.addAttribute("info",info);
+		model.addAttribute("infoList",stuList);
+		return "/statis/sInfo.jsp";
+	}
+	
+	
+	
+	@RequestMapping("/statis/tostatisstubycla.action")
+	public String toStatisstubycla(Model model){
+		List<College> collegeList= collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/statisstubycla.jsp";
+	}
+
+	@RequestMapping("/statis/statisstubycla.action")
+	public String statisstubycla(String classId,Model model){
+		String info="";
+
+		Map<String,String> map= new HashMap<String,String>();
+		map.put("classId",classId);
+		List<Student> stuList= studentService.find(map);
+		
+		int numBoy=0;
+		int numGirl=0;
+				
+		for(Student student:stuList){
+			if(student.getSex().equals("男")) numBoy++;else numGirl++;
+		}
+		
+		info+="该班级共有"+(numBoy+numGirl)+"人，其中男生"+numBoy+"人，女生"+numGirl+"人<br/>";
+		
+		model.addAttribute("info",info);
+		model.addAttribute("infoList",stuList);
+		return "/statis/sInfo.jsp";
+	}
 	
 	
 	
@@ -167,13 +289,6 @@ public class StatisticsController {
 		return "/statis/info.jsp";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping("/statis/disbycla.action")
 	public String distributebyclass(String classId,String sex1,String apartmentId,
 			String sex2,String apartmentId2,Model model){
@@ -288,22 +403,6 @@ public class StatisticsController {
 	}
 	
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping("/statis/pushclassdata.action")
 	public void pushclassdata(){
 		List<College> collegelist= collegeService.find(null);
@@ -379,10 +478,6 @@ public class StatisticsController {
 		System.out.println("");
 		
 	}
-	
-	
-	
-	
 
 	@RequestMapping("/statis/pushapmdata.action")
 	public void pushapmdata(){
@@ -441,8 +536,6 @@ public class StatisticsController {
 			}
 		}
 	}
-	
-	
 	
 	@RequestMapping("/statis/todisbycla.action")
 	public String todistributebyclass(Model model){

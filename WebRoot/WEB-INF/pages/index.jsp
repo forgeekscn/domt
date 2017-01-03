@@ -24,7 +24,8 @@
 
   <div class="leftnav-title"><strong><span class="icon-list"></span></strong></div>
   <h2><span class="icon-user"></span>基本管理</h2>
-  <ul style="display:block">
+<!--   <ul style="display:block"> -->
+  <ul>
     <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>公告管理</a></li>
     <li><a href="${ctx}/apm/list.action" target="right"><span class="icon-caret-right"></span>公寓管理</a></li>
     <li><a href="${ctx}/br/list.action" target="right"><span class="icon-caret-right"></span>宿舍管理</a></li>
@@ -41,13 +42,23 @@
   <ul>
     <li><a href="${ctx}/statis/todisbycla.action" target="right"><span class="icon-caret-right"></span>按班级分配</a></li>
     <li><a href="${ctx}/statis/todisbycollege.action" target="right"><span class="icon-caret-right"></span>按学院分配</a></li>
-  </ul>     
+  </ul>
+       
   <h2><span class="icon-pencil-square-o"></span>系统管理</h2>
+  
   <ul>
     <li><a href="${ctx}/man/list.action" target="right"><span class="icon-caret-right"></span>查看管理员</a></li>
     <li><a href="add.html" target="right"><span class="icon-caret-right"></span>角色管理</a></li>
     <li><a href="list.html" target="right"><span class="icon-caret-right"></span>权限管理</a></li>
     <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>数据管理</a></li>        
+  </ul>  
+       
+  <h2><span class="icon-pencil-square-o"></span>统计打印</h2>
+  <ul>
+    <li><a href="${ctx}/statis/tostatisstubycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生名单</a></li>
+    <li><a href="${ctx}/statis/tostatisstubycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生名单</a></li>
+    <li><a href="${ctx}/statis/toviewdisbycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生宿舍分配</a></li>
+    <li><a href="${ctx}/statis/toviewdisbycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生宿舍分配</a></li>
   </ul>  
 </div>
 <script type="text/javascript">
