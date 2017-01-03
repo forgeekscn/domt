@@ -13,8 +13,19 @@
 </head>
 <body>
 	<div style="float:right;">
-		<a href="#" class="button border-main icon-search" style="margin-right:60px;"	onclick="Sear()">导出Excel</a><br/>
+		<a href="#" class="button border-main icon-search" style="margin-right:60px;"	onclick="Print()">导出Excel</a><br/>
 	</div>
+	
+	<script type="text/javascript">
+		function Print(){
+			if("${infoList.size()}"<50){
+				window.location.href="${ctx}/print.action?code=disbycla&arg="+"${infoList[0].classId}";
+			}else {
+				window.location.href="${ctx}/print.action?code=disbycol&arg="+"${infoList[0].collegeId}";
+			}
+		}
+	</script>
+	
 	<div>
 		<br/><label id="info" style="font-size:16px;color:#00c;">${info}</label><br/>
 	</div>

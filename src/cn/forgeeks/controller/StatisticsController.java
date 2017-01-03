@@ -1,12 +1,26 @@
 package cn.forgeeks.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +37,7 @@ import cn.forgeeks.service.ClassesService;
 import cn.forgeeks.service.CollegeService;
 import cn.forgeeks.service.StudentService;
 import cn.forgeeks.service.VisitorService;
+import cn.forgeeks.util.DownloadUtil;
 import cn.forgeeks.util.UtilFuns;
 
 @Controller
@@ -41,6 +56,174 @@ public class StatisticsController {
 	ApartmentService apartmentService;
 	@Resource 
 	BedroomService bedroomService;
+	
+	
+	
+	
+	
+	@RequestMapping("/print.action")
+	public String print( HttpServletResponse response, String code,String arg,Model model) throws IOException{
+		Map<String,String> map= new HashMap<String,String>();
+		
+		if(code.equals("disbycla")){
+			map.put("classId", arg);
+		}else if(code.equals("disbycol")){
+			map.put("collegeId", arg);
+		}else if(code.equals("statisbycla")){
+			map.put("classId", arg);
+		}else if(code.equals("statisbycol")){
+			map.put("collegeId", arg);
+		}
+		List<Student> studentlist= studentService.find(map);
+		String[] strs={"", "姓名", "宿舍", "是否分配宿舍(Y/N)", "性别","学号", "班级", "学院", "年级" };
+		toExcel(response, "宿舍分配情况表",strs,	studentlist);
+		return "";
+	}
+	
+	
+	
+	public void toExcel( HttpServletResponse response, String tableName,String[] tableHeads,
+			List<Student> dataList) throws IOException{
+		
+		Workbook wb = new HSSFWorkbook();
+		Sheet sheet = wb.createSheet();
+//		sheet.setColumnWidth(1, 256 * 15);
+//		sheet.setColumnWidth(2, 256 * 15);
+//		sheet.setColumnWidth(3, 256 * 15);
+//		sheet.setColumnWidth(4, 256 * 15);
+//		sheet.setColumnWidth(5, 256 * 15);
+//		sheet.setColumnWidth(6, 256 * 25);
+//		sheet.setColumnWidth(7, 256 * 25);
+		// sheet.setColumnWidth(0, 80);
+//		sheet.setAutoFilter(new CellRangeAddress(1, 1, 7, 7));
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 7));
+		int rowIndex = 1;
+		int cellIndex = 1;
+		Row row = sheet.createRow(1);
+		row.setHeightInPoints(40);
+		Cell cell = row.createCell(1);
+		cell.setCellValue(tableName);
+		cell.setCellStyle(this.setTableNameStyle(wb));
+		rowIndex++;
+		String[] heads =tableHeads;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(36);
+		// row.setRowStyle(this.setTitleStyle(wb));
+		for (int i = 1; i <= 7; i++) {
+			cellIndex = i;
+			cell = row.createCell(cellIndex);
+//			cell.setCellStyle(this.setTitleStyle(wb));
+			cell.setCellValue(heads[i]);
+		}
+		for (int i = 0; i < dataList.size(); i++) {
+			row = sheet.createRow(++rowIndex);
+			row.setHeightInPoints(33);
+			Student obj = dataList.get(i);
+			for (int j = 1; j <= 7; j++) {
+				cellIndex = j;
+				cell = row.createCell(cellIndex);
+//				cell.setCellStyle(this.setTextStyle(wb));
+				switch (j) {
+				case 1:
+					cell.setCellValue(obj.getStudentName() != null ? obj
+							.getStudentName() + "" : "空");
+					break;
+				case 2:
+					cell.setCellValue(obj.getBedroomName() != null ? obj.getBedroomName()
+							+ "" : "空");
+					break;
+				case 3:
+					cell.setCellValue(obj.getStatus() != null ? obj.getStatus()
+							+ "" : "空");
+					break;
+				case 4:
+					cell.setCellValue(obj.getSex() != null ? obj
+							.getSex() + "" : "空");
+					break;
+				case 5:
+					cell.setCellValue(obj.getStudentNo() != null ? obj
+							.getStudentNo() + "" : "空");
+					break;
+				case 6:
+					cell.setCellValue(obj.getClassName() != null ? obj
+							.getClassName() + "" : "空");
+					break;
+				case 7:
+					cell.setCellValue(obj.getCollegeName() != null ? obj.getCollegeName() + ""
+							: "空");
+					break;
+				case 8:
+					cell.setCellValue(obj.getGrade() != null ? obj.getGrade() + ""
+							: "空");
+					break;
+				}
+			}
+
+		}
+
+		DownloadUtil du = new DownloadUtil();
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		wb.write(os);
+		du.download(os, response, tableName+".xls");
+
+//		 OutputStream os=new FileOutputStream(new File("./note/"+tableName+".xls"));
+//		 wb.write(os);
+//		 os.close();
+
+		
+	}
+
+
+	public CellStyle setTitleStyle(Workbook wb) {
+		CellStyle style = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setFontName("Microsoft JhengHei UI");
+		font.setFontHeightInPoints((short) 10);
+		font.setBoldweight((short) 10);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		style.setBorderTop(CellStyle.BORDER_THIN);
+		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBorderLeft(CellStyle.BORDER_THIN);
+		style.setBorderRight(CellStyle.BORDER_THIN);
+		return style;
+	}
+
+	public CellStyle setTableNameStyle(Workbook wb) {
+		CellStyle style = wb.createCellStyle();
+		Font font = wb.createFont();
+		font.setFontName("Microsoft JhengHei UI");
+		font.setFontHeightInPoints((short) 12);
+		font.setBoldweight((short) 20);
+		font.setColor((short) 30);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		return style;
+	}
+
+	public CellStyle setTextStyle(Workbook wb) {
+		CellStyle style = wb.createCellStyle();
+//		style.setWrapText(true);
+		Font font = wb.createFont();
+		font.setFontName("Microsoft JhengHei UI");
+		font.setFontHeightInPoints((short) 10);
+		font.setBoldweight((short) 10);
+		style.setFont(font);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+		style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		style.setBorderTop(CellStyle.BORDER_THIN);
+		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBorderLeft(CellStyle.BORDER_THIN);
+		style.setBorderRight(CellStyle.BORDER_THIN);
+		return style;
+	}
+
+	
+	
+	
+	
 	
 	
 	
