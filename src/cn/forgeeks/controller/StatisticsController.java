@@ -61,6 +61,35 @@ public class StatisticsController {
 	
 	
 	
+	@RequestMapping("/toprintstu.action")
+	public String  toprintstu(Model model){
+		model.addAttribute("info","数量庞大，请下载excel文件查看");
+		model.addAttribute("code","printstu");
+		return "/statis/sInfo2.jsp";
+	}
+	@RequestMapping("/printstu.action")
+	public String  printstu( HttpServletResponse response) throws IOException{
+		List<Student> list= studentService.find(null);
+		String[] strs={"", "姓名", "宿舍", "是否分配宿舍(Y/N)", "性别","学号", "班级", "学院", "年级" };
+		toExcel(response, "所有学生信息", strs, list);
+		return "";
+	}
+	
+	@RequestMapping("/toprintbr.action")
+	public String  toprintbr(Model model){
+		model.addAttribute("info","数量庞大，请下载excel文件查看");
+		model.addAttribute("code","printbr");
+		return "/statis/sInfo2.jsp";
+	}
+	@RequestMapping("/printbr.action")
+	public String  printbr( HttpServletResponse response) throws IOException{
+		List<Bedroom> list= bedroomService.find(null);
+		String[] strs={"", "宿舍名称", "入住情况", "所在公寓","宿舍分配状态" };
+		toBrExcel(response, "所有宿舍信息", strs, list);
+		return "";
+	}
+	
+	
 	@RequestMapping("/print.action")
 	public String print( HttpServletResponse response, String code,String arg,Model model) throws IOException{
 		Map<String,String> map= new HashMap<String,String>();
@@ -81,6 +110,70 @@ public class StatisticsController {
 	}
 	
 	
+	
+	public void toBrExcel( HttpServletResponse response, String tableName,String[] tableHeads,
+			List<Bedroom> dataList) throws IOException{
+		
+		Workbook wb = new HSSFWorkbook();
+		Sheet sheet = wb.createSheet();
+		sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 5));
+		int rowIndex = 1;
+		int cellIndex = 1;
+		Row row = sheet.createRow(1);
+		row.setHeightInPoints(40);
+		Cell cell = row.createCell(1);
+		cell.setCellValue(tableName);
+		cell.setCellStyle(this.setTableNameStyle(wb));
+		rowIndex++;
+		String[] heads =tableHeads;
+		row = sheet.createRow(rowIndex);
+		row.setHeightInPoints(36);
+		// row.setRowStyle(this.setTitleStyle(wb));
+		for (int i = 1; i <= 4; i++) {
+			cellIndex = i;
+			cell = row.createCell(cellIndex);
+//			cell.setCellStyle(this.setTitleStyle(wb));
+			cell.setCellValue(heads[i]);
+		}
+		for (int i = 0; i < dataList.size(); i++) {
+			row = sheet.createRow(++rowIndex);
+//			row.setHeightInPoints(33);
+			Bedroom obj = dataList.get(i);
+			for (int j = 1; j <= 7; j++) {
+				cellIndex = j;
+				cell = row.createCell(cellIndex);
+//				cell.setCellStyle(this.setTextStyle(wb));
+				switch (j) {
+				case 1:
+					cell.setCellValue(obj.getBedroomName() != null ? obj
+							.getBedroomName() + "" : "空");
+					break;
+				case 2:
+					cell.setCellValue(obj.getTotalBed() != null ? obj.getTotalBed()
+							+ "" : "空");
+					break;
+				case 3:
+					cell.setCellValue( obj.getBedroomName()!= null ? obj.getBedroomName().substring(0,2)+"栋" : "空");
+					break;
+				case 4:
+					cell.setCellValue(obj.getStatus() != null ? obj
+							.getStatus() + "" : "空");
+					break;
+			}
+			}			
+		}
+		
+		DownloadUtil du = new DownloadUtil();
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		wb.write(os);
+		du.download(os, response, tableName+".xls");
+		
+//		 OutputStream os=new FileOutputStream(new File("./note/"+tableName+".xls"));
+//		 wb.write(os);
+//		 os.close();
+		
+		
+	}
 	
 	public void toExcel( HttpServletResponse response, String tableName,String[] tableHeads,
 			List<Student> dataList) throws IOException{
@@ -117,7 +210,7 @@ public class StatisticsController {
 		}
 		for (int i = 0; i < dataList.size(); i++) {
 			row = sheet.createRow(++rowIndex);
-			row.setHeightInPoints(33);
+//			row.setHeightInPoints(33);
 			Student obj = dataList.get(i);
 			for (int j = 1; j <= 7; j++) {
 				cellIndex = j;
@@ -307,6 +400,7 @@ public class StatisticsController {
 	public String statisstubycollege(String classId,Model model){
 		String info="";
 		Map<String,String> map= new HashMap<String,String>();
+		if(UtilFuns.isEmpty(classId)) classId=null;
 		map.put("collegeId",classId);
 		List<Student> stuList= studentService.find(map);
 		

@@ -70,12 +70,10 @@
 			<script type="text/javascript">
 				
 				var status="${status}";
-				var college="${college}";
 				var grade="${grade}";
 				var sex="${sex}";
 
 				$("#status").val(status);				
-				$("#college").val(college);				
 				$("#grade").val(grade);				
 				$("#sex").val(sex);				
 				
@@ -108,11 +106,21 @@
 	             		$("#college").append('<option value="">按学院筛选</option>');
 		             	$.each(data,function(index,item){
 		             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
-		             	});
+		             	}             	
+		             	);
+		 				if("${college}"!=null)	$("#college").val("${college}");
 					},error:function(){
 					}
 				});
- 				if("${college}"!=null)	$("#college").val("${college}");
+				
+				function Reset(){
+						
+					$("#status").val("");				
+					$("#grade").val("");				
+					$("#sex").val("");				
+					$("#college").val("");				
+											
+				}
 				function FinalSearch(){
 					var status=$("#status").val();
 					
