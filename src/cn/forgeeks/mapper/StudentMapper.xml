@@ -32,6 +32,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="grade!=null"> and grade=#{grade,jdbcType=VARCHAR}</if>
             <if test="sex!=null"> and sex=#{sex,jdbcType=VARCHAR}</if>
 
+            <if test="name!=null"> and student_no=#{name,jdbcType=VARCHAR}</if>
+            <if test="password!=null"> and student_password=#{password,jdbcType=VARCHAR}</if>
+
             <if test="key!='%null%'">
             	<if test="key!=null"> 	and student_name like #{key,jdbcType=VARCHAR}</if>
              </if>
@@ -80,6 +83,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	            <if test="params.grade!=null"> and grade=#{params.grade,jdbcType=VARCHAR}</if>
 	            <if test="params.sex!=null"> and sex=#{params.sex,jdbcType=VARCHAR}</if>
 		
+				<if test="params.name != null">and student_name=#{params.name,jdbcType=VARCHAR}</if>
+		      	<if test="params.password != null">and student_password=#{params.password,jdbcType=VARCHAR}</if>
+		      
+		
 			
                   <if test="params.arg!=null"> and arg=#{params.arg,jdbcType=VARCHAR}</if>
                    <if test="params.key!='%null%'"> and ( student_name like #{params.key,jdbcType=VARCHAR} 
@@ -90,11 +97,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<select id="get" parameterType="string" resultMap="studentRM">
+	<select id="get" parameterType="String" resultMap="studentRM">
 		 select student_id,student_name,sex,class_id,class_name,student_password,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
 		 from student 
 		 where 1=1
 		      and student_id=#{studentId,jdbcType=VARCHAR}
+		      
 	</select>
 	
 	<insert id="insert" parameterType="cn.forgeeks.domain.Student">

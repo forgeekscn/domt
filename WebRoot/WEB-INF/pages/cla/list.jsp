@@ -17,8 +17,13 @@
 		<div class="panel admin-panel">
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:10px;">
-					<li><a class="button border-main icon-plus-square-o"
-						href="${ctx}/cla/tocreate.action"> 添加内容</a></li>
+					<li>
+					<c:if test="${sessionScope.type=='root'}">
+						<a class="button border-main icon-plus-square-o"
+						href="${ctx}/cla/tocreate.action"> 添加内容</a>
+					</c:if>
+						</li>
+						
 					<if condition="$iscid eq 1">
 					<li>
 						<select  name="arg" class="input"
@@ -67,13 +72,16 @@
 						<td width="10%">${obj.coachCall}</td>
 						<td>${obj.collegeId}</td>
 						<td>${obj.grade}</td>
-						<td><div class="button-group">
+						<td><div class="button-group" style="height:50px;">
+						
+					<c:if test="${sessionScope.type=='root'}">
 								<a class="button border-main"
 									href="${ctx}/cla/toupdate.action?claId=${obj.classId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"
 									href="${ctx}/cla/deletebyid.action?claId=${obj.classId}&pageNo=${page.pageNo}&totalPage=${page.totalPage}"
 									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
 									删除</a>
+					</c:if>
 									
 									
 							</div></td>
@@ -81,11 +89,15 @@
 				</c:forEach>
 	
 				<tr>
-					<td style="text-align:left; padding:19px 0;padding-left:20px;">
-					<input	type="checkbox" id="checkall" /></td>
-					<td colspan="7" style="text-align:left;padding-left:20px;"><a
-						href="" class="button border-red icon-trash-o"
-						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
+				
+					<c:if test="${sessionScope.type=='root'}">
+						<td style="text-align:left; padding:19px 0;padding-left:20px;">
+						
+						<input	type="checkbox" id="checkall" /></td>
+						<td colspan="7" style="text-align:left;padding-left:20px;"><a
+							href="" class="button border-red icon-trash-o"
+							style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
+					</c:if>
 				</tr>
 				<tr>
 				

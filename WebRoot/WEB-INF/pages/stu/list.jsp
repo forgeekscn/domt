@@ -17,8 +17,12 @@
 		<div class="panel admin-panel">
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:5px;">
-					<li><a class="button border-main icon-plus-square-o"
-						href="${ctx}/stu/tocreate.action"> 添加内容</a></li>
+					<li>
+				<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+					<a class="button border-main icon-plus-square-o"
+						href="${ctx}/stu/tocreate.action"> 添加内容</a>
+				</c:if>
+					</li>
 					<if condition="$iscid eq 1">
 					<li>
 						<select  id="status" class="input"
@@ -173,15 +177,17 @@
 						<td>${obj.grade}</td>
 						
 						<td>${obj.collegeName}</td>
-						<td><div class="button-group">
+						<td><div class="button-group" style="height:48px;">
+							
+							<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
 								<a class="button border-main"
 									href="${ctx}/stu/toupdate.action?stuId=${obj.studentId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"
 									href="${ctx}/stu/deletebyid.action?stuId=${obj.studentId}&pageNo=${page.pageNo}&totalPage=${page.totalPage}"
 									onclick="return del(1,1,1)"><span class="icon-trash-o"></span>
 									删除</a>
-									
-									
+							</c:if>
+							
 							</div></td>
 					</tr>
 				</c:forEach>
@@ -189,9 +195,11 @@
 				<tr>
 					<td style="text-align:left; padding:19px 0;padding-left:20px;">
 					<input	type="checkbox" id="checkall" /></td>
-					<td colspan="7" style="text-align:left;padding-left:20px;"><a
-						href="" class="button border-red icon-trash-o"
+					<td colspan="7" style="text-align:left;padding-left:20px;">
+					<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+						<a	href="" class="button border-red icon-trash-o"
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
+					</c:if>
 				</tr>
 				<tr>
 				

@@ -80,7 +80,6 @@
 				             data: {collegeId: apmId },
 				             dataType: "json",
 				             success:function(data){
-				             	alert(data);
 				             	$("#class").empty();
 			             		$("#class").append('<option>选择班级</option>');
 				             	$.each(data,function(index,item){

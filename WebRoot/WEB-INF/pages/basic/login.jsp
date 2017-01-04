@@ -22,7 +22,7 @@
 			<div class="xs6 xm4 xs3-move xm4-move">
 				<div style="height:150px;"></div>
 				<div class="media media-y margin-big-bottom"></div>
-				<form action="login.action" method="post">
+				<form action="${ctx}/login.action" method="post">
 					<div class="panel loginbox">
 						<div class="text-center margin-big padding-big-top">
 							<h1>纺大宿舍管理平台 V1.0</h1>

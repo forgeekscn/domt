@@ -3,7 +3,7 @@
 <head>
 </head>
 <script type="text/javascript">
-window.location.href = "home.action";		//javascript页面跳转
+window.location.href = "tologin.action";		//javascript页面跳转
 </script>
 <body>
 </body>
