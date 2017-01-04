@@ -18,136 +18,144 @@
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:5px;">
 					<li>
-				<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+				<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 					<a class="button border-main icon-plus-square-o"
 						href="${ctx}/stu/tocreate.action"> 添加内容</a>
 				</c:if>
 					</li>
 					<if condition="$iscid eq 1">
-					<li>
-						<select  id="status" class="input"
-							style="margin-left:0px;width:150px; line-height:17px;">
-								<option value="">按是否分配宿舍筛选</option>
-							<option  value="N">未分配宿舍</option>
-							<option value="Y" >已分配宿舍</option>
-						</select>
-					</li>				<li>
-						<select  id="college" class="input"
-							style="margin-left:0px;width:110px; line-height:17px;">
-								<option value="">按学院筛选</option>
-						</select>
-					</li>				<li>
-						<select  id="grade" class="input"
-							style="margin-left:0px;width:110px; line-height:17px;">
-								<option value="">按年级筛选</option>
-							<option  value="大一">大一</option>
-							<option value="大二" >大二</option>
-							<option value="大三" >大三</option>
-							<option value="大四" >大四</option>
-							<option value="研一" >研一</option>
-							<option value="研二" >研二</option>
-							<option value="研三" >研三</option>
-						</select>
-					</li>		<li>
-						<select  id="sex" class="input"
-							style="margin-left:0px;width:110px; line-height:17px;">
-								<option value="">按性别筛选</option>
-								<option value="男">男</option>
-								<option value="女">女</option>
-						</select>
 					
-					</li>
-					</if>
-					<li><input type="text" placeholder="模糊查询" id="key"
-						class="input"	style="width:100px; margin-left:0px;line-height:17px;display:inline-block" value="${key}"/> 
-						<a href="#" class="button border-main icon-search"
-						onclick="Sear()">搜索</a></li>
-						<a href="#" class="button border-main icon-search"
-						onclick="Reset()">重置</a>					
-						<a href="#" class="button border-main icon-search" style="margin-left:80px;"
-						onclick="FinalSearch()">综合查询</a>					
+					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
+					
+					
+								<li>
+									<select  id="status" class="input"
+										style="margin-left:0px;width:150px; line-height:17px;">
+											<option value="">按是否分配宿舍筛选</option>
+										<option  value="N">未分配宿舍</option>
+										<option value="Y" >已分配宿舍</option>
+									</select>
+								</li>				<li>
+									<select  id="college" class="input"
+										style="margin-left:0px;width:110px; line-height:17px;">
+											<option value="">按学院筛选</option>
+									</select>
+								</li>				<li>
+									<select  id="grade" class="input"
+										style="margin-left:0px;width:110px; line-height:17px;">
+											<option value="">按年级筛选</option>
+										<option  value="大一">大一</option>
+										<option value="大二" >大二</option>
+										<option value="大三" >大三</option>
+										<option value="大四" >大四</option>
+										<option value="研一" >研一</option>
+										<option value="研二" >研二</option>
+										<option value="研三" >研三</option>
+									</select>
+								</li>		<li>
+									<select  id="sex" class="input"
+										style="margin-left:0px;width:110px; line-height:17px;">
+											<option value="">按性别筛选</option>
+											<option value="男">男</option>
+											<option value="女">女</option>
+									</select>
+								
+								</li>
+								</if>
+								<li><input type="text" placeholder="模糊查询" id="key"
+									class="input"	style="width:100px; margin-left:0px;line-height:17px;display:inline-block" value="${key}"/> 
+									<a href="#" class="button border-main icon-search"
+									onclick="Sear()">搜索</a></li>
+									<a href="#" class="button border-main icon-search"
+									onclick="Reset()">重置</a>					
+									<a href="#" class="button border-main icon-search" style="margin-left:80px;"
+									onclick="FinalSearch()">综合查询</a>					
+					
+					</c:if>
+					
 					
 				</ul>
 			</div>
 
-
-			<script type="text/javascript">
+		<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
+				<script type="text/javascript">
+					
+					var status="${status}";
+					var grade="${grade}";
+					var sex="${sex}";
+	
+					$("#status").val(status);				
+					$("#grade").val(grade);				
+					$("#sex").val(sex);				
+					
 				
-				var status="${status}";
-				var grade="${grade}";
-				var sex="${sex}";
-
-				$("#status").val(status);				
-				$("#grade").val(grade);				
-				$("#sex").val(sex);				
 				
-			
-			
-				 /* $.ajax({
-					 type: "GET",
-		             url: "${ctx}/cl/getdata.action",
-		             data: {},
-		             dataType: "json",
-		             success:function(data){
-		             	alert(data);
-		             	$("#college").empty();
-	             		$("#college").append('<option>按学院筛选</option>');
-		             	$.each(data,function(index,item){
-		             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
-		             	});
-		             },
-		             error:function(){
-		             	alert("eeror json");
-		             }
-				});  */
- 				$.ajax({
-					type: "GET",
-					url: "${ctx}/cl/getdata.action",
-					data: {},
-					dataType:"json",
-					success:function(data){
-		             	$("#college").empty();
-	             		$("#college").append('<option value="">按学院筛选</option>');
-		             	$.each(data,function(index,item){
-		             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
-		             	}             	
-		             	);
-		 				if("${college}"!=null)	$("#college").val("${college}");
-					},error:function(){
+					 /* $.ajax({
+						 type: "GET",
+			             url: "${ctx}/cl/getdata.action",
+			             data: {},
+			             dataType: "json",
+			             success:function(data){
+			             	alert(data);
+			             	$("#college").empty();
+		             		$("#college").append('<option>按学院筛选</option>');
+			             	$.each(data,function(index,item){
+			             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
+			             	});
+			             },
+			             error:function(){
+			             	alert("eeror json");
+			             }
+					});  */
+	 				$.ajax({
+						type: "GET",
+						url: "${ctx}/cl/getdata.action",
+						data: {},
+						dataType:"json",
+						success:function(data){
+			             	$("#college").empty();
+		             		$("#college").append('<option value="">按学院筛选</option>');
+			             	$.each(data,function(index,item){
+			             		$("#college").append('<option value="'+item["collegeId"]+'">'+item["collegeName"]+'</option>');
+			             	}             	
+			             	);
+			 				if("${college}"!=null)	$("#college").val("${college}");
+						},error:function(){
+						}
+					});
+					
+					function Reset(){
+							
+						$("#status").val("");				
+						$("#grade").val("");				
+						$("#sex").val("");				
+						$("#college").val("");				
+												
 					}
-				});
-				
-				function Reset(){
+					function FinalSearch(){
+						var status=$("#status").val();
 						
-					$("#status").val("");				
-					$("#grade").val("");				
-					$("#sex").val("");				
-					$("#college").val("");				
-											
-				}
-				function FinalSearch(){
-					var status=$("#status").val();
-					
-					var college;
-					if($("#college").val()!=null){
-						college=$("#college").val();
-					}else {
-						college=null;
+						var college;
+						if($("#college").val()!=null){
+							college=$("#college").val();
+						}else {
+							college=null;
+						}
+						var grade=encodeURI(encodeURI($("#grade").val()));
+						var sex="";
+						if($("#sex").val()!=null){
+							sex=encodeURI(encodeURI($("#sex").val()));
+						}else{
+							sex=null;
+						} 
+						window.location.href="${ctx}/stu/list.action?status="+status+"&college="+college+"&grade="+grade+"&sex="+sex;
+						
 					}
-					var grade=encodeURI(encodeURI($("#grade").val()));
-					var sex="";
-					if($("#sex").val()!=null){
-						sex=encodeURI(encodeURI($("#sex").val()));
-					}else{
-						sex=null;
-					} 
-					window.location.href="${ctx}/stu/list.action?status="+status+"&college="+college+"&grade="+grade+"&sex="+sex;
 					
-				}
-				
-				
-			</script>
+					
+				</script>
 
+			</c:if>
 
 			<table class="table table-hover text-center">
 				<tr>
@@ -196,7 +204,7 @@
 					<td style="text-align:left; padding:19px 0;padding-left:20px;">
 					<input	type="checkbox" id="checkall" /></td>
 					<td colspan="7" style="text-align:left;padding-left:20px;">
-					<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 						<a	href="" class="button border-red icon-trash-o"
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
 					</c:if>
@@ -204,6 +212,8 @@
 				<tr>
 				
 					<td colspan="8">
+
+					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 						<div class="pagelist">
 									<a  onclick="fanye('1')" class="shangye" href="#">上一页</a> 
 									<a  onclick="fanye('2')" href="#">${page.pageNo}</a>
@@ -211,11 +221,17 @@
 									<a  onclick="fanye('4')" href="#">${page.pageNo+2}</a>......
 									<a  onclick="fanye('5')" href="#">${page.totalPage}</a>
 									<a onclick="fanye('6')" class="xiaye" href="#">下一页</a>
-						</div></td>
+						</div>
+					</c:if>
+
+						</td>
+						
 				</tr>
 			</table>
 		</div>
 	</form>
+	<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
+	
 	<script type="text/javascript">
 			/* var key="${key}";
 			alert(key);
@@ -512,5 +528,9 @@
 			}
 		}
 	</script>
+	
+	
+	</c:if>
+	
 </body>
 </html>

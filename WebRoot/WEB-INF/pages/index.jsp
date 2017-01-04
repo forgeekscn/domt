@@ -127,13 +127,12 @@
 			<!--   <ul style="display:block"> -->
 			  <ul>
 			    <li><a href="${ctx}/stu/toupdate.action?stuId=${sessionScope.user.studentId}" target="right">
-			    		<span class="icon-caret-right"></span>个人信息修改</a></li>
+			    		<span class="icon-caret-right"></span>个人信息</a></li>
 			    <li><a href="${ctx}/anno/list.action" target="right"><span class="icon-caret-right"></span>公告查看</a></li>
-			    <li><a href="${ctx}/br/list.action" target="right"><span class="icon-caret-right"></span>宿舍查看</a></li>
-			    <li><a href="${ctx}/stu/list.action" target="right"><span class="icon-caret-right"></span>学生查看</a></li>  
-			    <li><a href="${ctx}/cl/list.action" target="right"><span class="icon-caret-right"></span>学院查看</a></li>  
-			    <li><a href="${ctx}/cla/list.action" target="right"><span class="icon-caret-right"></span>班级查看</a></li>  
-			    <li><a href="${ctx}/visit/list.action" target="right"><span class="icon-caret-right"></span>访客记录查看</a></li>
+			    <li><a href="${ctx}/stu/findbybedroomid.action?bedroomId=${sessionScope.user.bedroomId}" target="right">
+			    		<span class="icon-caret-right"></span>我的室友</a></li>
+			    <li><a href="${ctx}/stu/findbyclassid.action?classId=${sessionScope.user.classId}" target="right"><span class="icon-caret-right"></span>我的同班同学</a></li>  
+			    <li><a href="${ctx}/visit/list.action" target="right"><span class="icon-caret-right"></span>我的宿舍访客记录</a></li>
 			    
 			  </ul>
 			       

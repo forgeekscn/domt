@@ -24,6 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 select student_id,student_name,student_password,sex,class_id,class_name,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
 		 from student 
 		 where 1=1
+            
+            <if test="bedroomId!=null"> and bedroom_id=#{bedroomId,jdbcType=VARCHAR}</if>
+            
             <if test="classId!=null"> and class_id=#{classId,jdbcType=VARCHAR}</if>
             <if test="collegeId!=null"> and college_id=#{collegeId,jdbcType=VARCHAR}</if>
             
@@ -54,6 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			                    select student_id,student_name,sex,class_id,class_name,student_password,status,bedroom_id,bedroom_name,student_no,grade,college_id,college_name
 			                    from student 
 			                    where 1=1
+								<if test="params.bedroomId!=null"> and bedroom_id=#{params.bedroomId,jdbcType=VARCHAR}</if>
+            
+									
 			                    <if test="params.status!=null"> and status=#{params.status,jdbcType=VARCHAR}</if>
 					            <if test="params.college !=null"> and college_id=#{params.college,jdbcType=VARCHAR}</if>
 					            <if test="params.grade!=null"> and grade=#{params.grade,jdbcType=VARCHAR}</if>
@@ -78,6 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		   SELECT max(rownum)
            FROM student
            where 1=1
+				<if test="params.bedroomId!=null"> and bedroom_id=#{params.bedroomId,jdbcType=VARCHAR}</if>
+				
   		        <if test="params.status!=null"> and status=#{params.status,jdbcType=VARCHAR}</if>
 	            <if test="params.college !=null"> and college_id=#{params.college,jdbcType=VARCHAR}</if>
 	            <if test="params.grade!=null"> and grade=#{params.grade,jdbcType=VARCHAR}</if>

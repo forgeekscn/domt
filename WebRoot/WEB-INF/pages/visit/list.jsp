@@ -18,7 +18,7 @@
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:5px;">
 					<li>
-					<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 						<a class="button border-main icon-plus-square-o"
 						href="${ctx}/visit/tocreate.action"> 添加内容</a>
 					</c:if>
@@ -71,7 +71,6 @@
 		             	});
 		             },
 		             error:function(){
-		             	alert("eeror json");
 		             }
 				}); 
 				
@@ -140,7 +139,7 @@
 						<td>${obj.reason}</td>
 						<td>${obj.visitorDate}</td>
 						<td><div class="button-group" style="height:48px;">
-								<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+								<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 									<a class="button border-main"
 									href="${ctx}/visit/toupdate.action?visitorId=${obj.visitorId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"

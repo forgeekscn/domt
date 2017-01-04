@@ -58,7 +58,7 @@
 					<th width="15%">班级名称</th>
 					<th width="15%">辅导员</th>
 					<th width="100">辅导员电话</th>
-					<th width="100">所属学院</th>
+					<th width="100">所属学院</th>	
 					<th width="100">年级</th>
 				</tr>
 
@@ -70,7 +70,7 @@
 						<td>${obj.className}</td>
 						<td>${obj.coach}</td>
 						<td width="10%">${obj.coachCall}</td>
-						<td>${obj.collegeId}</td>
+						<td>数学与计算机学院</td>
 						<td>${obj.grade}</td>
 						<td><div class="button-group" style="height:50px;">
 						

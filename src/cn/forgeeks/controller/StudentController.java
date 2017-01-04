@@ -123,6 +123,25 @@ public class StudentController {
 		return "/stu/create.jsp";
 	}
 
+	@RequestMapping("/stu/findbybedroomid.action")
+	public String findbybedroomid(String bedroomId,String totalPage,	Integer pageNo, Model model) {
+		Map paraMap= new HashMap();
+		paraMap.put("bedroomId",bedroomId);
+		List<Student> dataList=studentService.find(paraMap);
+		model.addAttribute("dataList",dataList);
+		return "/stu/list.jsp";
+	}
+	
+	@RequestMapping("/stu/findbyclassid.action")
+	public String findbyclassid(String classId,Model model) {
+		Map paraMap= new HashMap();
+		paraMap.put("classId",classId);
+		List<Student> dataList=studentService.find(paraMap);
+		model.addAttribute("dataList",dataList);
+		return "/stu/list.jsp";
+	}
+
+	
 	@RequestMapping("/stu/create.action")
 	public String create(Student stu, Model model) {
 		stu.setStudentId(UUID.randomUUID().toString().substring(0, 8));

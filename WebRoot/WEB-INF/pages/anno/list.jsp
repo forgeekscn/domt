@@ -18,7 +18,7 @@
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:10px;">
 					<li>
-					<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 						<a class="button border-main icon-plus-square-o"
 						href="${ctx}/anno/tocreate.action"> 添加内容</a>
 					</c:if>
@@ -61,7 +61,7 @@
 						<td width="10%">${obj.title}</td>
 						<td>${obj.content}</td>
 						<td><div class="button-group" style="height:48px;">
-							<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+							<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 								<a class="button border-main"
 									href="${ctx}/anno/toupdate.action?annoId=${obj.announcementId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"
@@ -79,7 +79,7 @@
 					<td style="text-align:left; padding:19px 0;padding-left:20px;">
 					<input	type="checkbox" id="checkall" /></td>
 					<td colspan="7" style="text-align:left;padding-left:20px;">
-					<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 						<a	href="" class="button border-red icon-trash-o"
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
 					</c:if>
