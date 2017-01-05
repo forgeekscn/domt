@@ -389,6 +389,20 @@ public class StatisticsController {
 	
 	
 	
+	@RequestMapping("/statis/toempbycollege.action")
+	public String toempbycollege(Model model){
+		List<College> collegeList= collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/empbycollege.jsp";
+	}
+	
+	@RequestMapping("/statis/toempbyclass.action")
+	public String toempbyclass(Model model){
+		List<College> collegeList= collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/empbyclass.jsp";
+	}
+
 	@RequestMapping("/statis/tostatisstubycollege.action")
 	public String toStatisstubycollege(Model model){
 		List<College> collegeList= collegeService.find(null);
@@ -451,6 +465,71 @@ public class StatisticsController {
 	
 	
 	
+
+	
+	
+	
+	@RequestMapping("/statis/empbycollege.action")
+	public String empbycollege(String classId,Model model){
+		String info="宿舍腾空情况:<br>";
+		Map<String, String> map= new HashMap<String,String>();
+		if(UtilFuns.isNotEmpty(classId)) {  map.put("collegeId", classId); } else classId=null;
+		map.put("status", "Y");
+		List<Student> studentList= studentService.find(map);
+		if(studentList.size()<1){
+			info+="该学院所有学生都没分配到宿舍<br/>";
+			model.addAttribute("info",info);
+			return "/statis/info.jsp";
+		}
+
+		for(Student student:studentList){
+			info+="< "+student.getStudentName()+" "+student.getClassName()+" "+
+				  student.getCollegeName()+"> 该学生被腾空出"+student.getBedroomName()+"宿舍<br/>";
+			Bedroom bedroom=bedroomService.get(student.getBedroomId());
+			bedroom.setStatus("N");
+			bedroom.setTotalBed("0/5");
+			bedroomService.update(bedroom);
+			
+			student.setStatus("N");
+			student.setBedroomId("");
+			student.setBedroomName("");
+			studentService.update(student);
+		}
+		model.addAttribute("info",info);
+		return "/statis/info.jsp";
+	}
+	
+	@RequestMapping("/statis/empbyclass.action")
+	public String empbyclass(String classId,Model model){
+		String info="宿舍腾空情况:<br>";
+		Map<String, String> map= new HashMap<String,String>();
+		if(UtilFuns.isNotEmpty(classId)) {  map.put("classId", classId); } else classId=null;
+		map.put("status", "Y");
+		
+		List<Student> studentList= studentService.find(map);
+		if(studentList.size()<1){
+			info+="该班级所有学生都没分配到宿舍<br/>";
+			model.addAttribute("info",info);
+			return "/statis/info.jsp";
+		}
+
+		for(Student student:studentList){
+			info+="<"+student.getStudentName()+" "+student.getClassName()+" "+
+				  student.getCollegeName()+"> 该学生被腾空出"+student.getBedroomName()+"宿舍<br/>";
+			Bedroom bedroom=bedroomService.get(student.getBedroomId());
+			bedroom.setStatus("N");
+			bedroom.setTotalBed("0/5");
+			bedroomService.update(bedroom);
+			
+			student.setStatus("N");
+			student.setBedroomId("");
+			student.setBedroomName("");
+			studentService.update(student);
+		}
+		
+		model.addAttribute("info",info);
+		return "/statis/info.jsp";
+	}
 	
 	
 	@RequestMapping("/statis/disbycollege.action")

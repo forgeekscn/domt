@@ -15,13 +15,14 @@
 <body>
 	<form method="post" action="${ctx}/visit/list.action" id="listform">
 		<div class="panel admin-panel">
-			<div class="padding border-bottom">
+			
+				<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
+			
+				<div class="padding border-bottom">
 				<ul class="search" style="padding-left:5px;">
 					<li>
-					<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 						<a class="button border-main icon-plus-square-o"
 						href="${ctx}/visit/tocreate.action"> 添加内容</a>
-					</c:if>
 						</li>
 					<if condition="$iscid eq 1">
 					<li>
@@ -53,7 +54,9 @@
 				</ul>
 			</div>
 
+			</c:if>
 
+	<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 			<script type="text/javascript">
 				$("#arg1").val("${arg1}");
 				$("#arg2").val("${arg2}");
@@ -114,6 +117,7 @@
  */				
 			</script>
 
+	</c:if>
 
 			<table class="table table-hover text-center">
 				<tr>
@@ -153,14 +157,14 @@
 					</tr>
 				</c:forEach>
 	
+				<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
+				
 				<tr>
 					<td style="text-align:left; padding:19px 0;padding-left:20px;">
 					<input	type="checkbox" id="checkall" /></td>
 					<td colspan="7" style="text-align:left;padding-left:20px;">
-					<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
 						<a	href="" class="button border-red icon-trash-o"
 						style="padding:5px 15px;" onclick="DelSelect()"> 删除</a>
-					</c:if>
 				</tr>
 				<tr>
 				
@@ -174,6 +178,9 @@
 									<a onclick="fanye('6')" class="xiaye" href="#">下一页</a>
 						</div></td>
 				</tr>
+				
+				</c:if>
+				
 			</table>
 		</div>
 	</form>

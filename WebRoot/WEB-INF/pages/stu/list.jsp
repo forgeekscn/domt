@@ -187,7 +187,7 @@
 						<td>${obj.collegeName}</td>
 						<td><div class="button-group" style="height:48px;">
 							
-							<c:if test="sessionScope.type=='root' or sessionScope.type=='manager' ">
+							<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager' }">
 								<a class="button border-main"
 									href="${ctx}/stu/toupdate.action?stuId=${obj.studentId}"><span
 									class="icon-edit"></span>修改</a> <a  id="deleteBtn" class="button border-red"

@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.forgeeks.domain.Apartment;
 import cn.forgeeks.domain.College;
 import cn.forgeeks.domain.Student;
 import cn.forgeeks.pagination.Page;
@@ -154,11 +154,16 @@ public class StudentController {
 	}
 
 	@RequestMapping("/stu/update.action")
-	public String update(Student stu, Model model) {
+	public String update(Student stu,HttpSession httpSession, Model model) {
 		if (stu.getBedroomId() != null)
 			stu.setStatus("Y");
 		studentService.update(stu);
-		return "redirect:/stu/list.action";
+		if(httpSession.getAttribute("type").equals("student")){
+			model.addAttribute("info","修改成功!");
+			return "/stu/info.jsp";
+		}else{
+			return "redirect:/stu/list.action";
+		}
 	}
 
 	@RequestMapping("/stu/toupdate.action")

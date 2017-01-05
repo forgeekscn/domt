@@ -29,7 +29,16 @@ public class VisitorController {
 	VisitorService visitorService;
 
 
-	
+	@RequestMapping("/visit/listforstu.action")
+	public String listforstu(String arg2,Model model){
+		Map map = new HashMap();
+		if (UtilFuns.isEmpty(arg2)) arg2 = null;
+		map.put("arg2", arg2);
+		List<Visitor> dataList=visitorService.find(map);
+		model.addAttribute("dataList",dataList);
+		
+		return "/visit/list.jsp";
+	}
 	
 	@RequestMapping("/visit/list.action")
 	public String annolist(String arg1, String arg2, String key,

@@ -15,9 +15,8 @@
 <div class="panel admin-panel">
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改学生信息</strong></div>
   <div class="body-content">
-    <form method="post" class="form-x" action="${ctx}/stu/update.action">  
-      
-      
+  
+	<form method="post" class="form-x" action="${ctx}/stu/update.action">
       
        <div class="form-group">
         <div class="label">
@@ -35,6 +34,20 @@
           <input type="text"  class="input" style="width:250px;" name="studentNo" value="${obj.studentNo}"/>
         </div>
       </div>
+      
+      
+      <c:if test="${sessionScope.type=='student'}">
+	      <div class="form-group">
+	        <div class="label" >
+	          <label>密码：</label>
+	        </div>
+	          <div class="field">
+	          <input type="password"  class="input" style="width:250px;" name="studentPassword" value="${obj.studentPassword}"/>
+	        </div>
+	      </div>
+      </c:if>
+      
+      
 				<input name="studentId" type="hidden" value="${obj.studentId}"/>
 				<input id="sex" name="sex" type="hidden" value="${obj.sex}"/>
 				<input id="className" name="className" type="hidden"value="${obj.className}"/>

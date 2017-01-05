@@ -35,6 +35,8 @@
           <input type="text"  class="input" style="width:250px;" name="studentNo" value=""/>
         </div>
       </div>
+      
+      
 				<input id="sex" name="sex" type="hidden"/>
 				<input id="className" name="className" type="hidden"/>
 				<input id="bedroomName" name="bedroomName" type="hidden"/>

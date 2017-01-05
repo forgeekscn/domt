@@ -17,17 +17,17 @@
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
     <h1><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />
-    <c:if test="${sessionScope.name!=null}">
+    <c:if test="${sessionScope.name!=null and  sessionScope.type!=null}">
 	    ${sessionScope.name}
     </c:if>
-    <c:if test="${sessionScope.name==null}">
+    <c:if test="${sessionScope.name==null or sessionScope.type==null}">
 	    	请先登录
     </c:if>
       </h1>
   </div>
-  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank">
+  <div class="head-l"><a class="button button-little bg-green" href="#" target="_blank">
 	  <span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp;
-	  <a href="##" class="button button-little bg-blue">
+	  <a href="#" class="button button-little bg-blue">
 	  <span class="icon-wrench"></span> 清除缓存</a> &nbsp;&nbsp;
 	  <a class="button button-little bg-red" href="${ctx}/logout.action">
 	  <span class="icon-power-off"></span> 退出登录</a> 
@@ -52,10 +52,16 @@
 			    
 			  </ul>
 			  
-			  <h2><span class="icon-pencil-square-o"></span>快速分配宿舍</h2>
+			  <h2><span class="icon-pencil-square-o"></span>分配宿舍</h2>
 			  <ul>
 			    <li><a href="${ctx}/statis/todisbycla.action" target="right"><span class="icon-caret-right"></span>按班级分配</a></li>
 			    <li><a href="${ctx}/statis/todisbycollege.action" target="right"><span class="icon-caret-right"></span>按学院分配</a></li>
+			  </ul>
+			  
+			  <h2><span class="icon-pencil-square-o"></span>腾空宿舍</h2>
+			  <ul>
+			    <li><a href="${ctx}/statis/toempbyclass.action" target="right"><span class="icon-caret-right"></span>按班级腾空</a></li>
+			    <li><a href="${ctx}/statis/toempbycollege.action" target="right"><span class="icon-caret-right"></span>按学院腾空</a></li>
 			  </ul>
 			       
 			  <h2><span class="icon-pencil-square-o"></span>系统管理</h2>
@@ -98,10 +104,16 @@
 			    
 			  </ul>
 			  
-			  <h2><span class="icon-pencil-square-o"></span>快速分配宿舍</h2>
+			  <h2><span class="icon-pencil-square-o"></span>分配宿舍</h2>
 			  <ul>
 			    <li><a href="${ctx}/statis/todisbycla.action" target="right"><span class="icon-caret-right"></span>按班级分配</a></li>
 			    <li><a href="${ctx}/statis/todisbycollege.action" target="right"><span class="icon-caret-right"></span>按学院分配</a></li>
+			  </ul>
+			  
+			  <h2><span class="icon-pencil-square-o"></span>腾空宿舍</h2>
+			  <ul>
+			    <li><a href="${ctx}/statis/toempbyclass.action" target="right"><span class="icon-caret-right"></span>按班级腾空</a></li>
+			    <li><a href="${ctx}/statis/toempbycollege.action" target="right"><span class="icon-caret-right"></span>按学院腾空</a></li>
 			  </ul>
 			       
 			  <h2><span class="icon-pencil-square-o"></span>统计打印</h2>
@@ -132,19 +144,9 @@
 			    <li><a href="${ctx}/stu/findbybedroomid.action?bedroomId=${sessionScope.user.bedroomId}" target="right">
 			    		<span class="icon-caret-right"></span>我的室友</a></li>
 			    <li><a href="${ctx}/stu/findbyclassid.action?classId=${sessionScope.user.classId}" target="right"><span class="icon-caret-right"></span>我的同班同学</a></li>  
-			    <li><a href="${ctx}/visit/list.action" target="right"><span class="icon-caret-right"></span>我的宿舍访客记录</a></li>
+			    <li><a href="${ctx}/visit/list.action?arg2=${sessionScope.user.bedroomName}" target="right"><span class="icon-caret-right"></span>我的宿舍访客记录</a></li>
 			    
 			  </ul>
-			       
-			  <h2><span class="icon-pencil-square-o"></span>统计打印</h2>
-			  <ul>
-			    <li><a href="${ctx}/statis/tostatisstubycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生名单</a></li>
-			    <li><a href="${ctx}/statis/tostatisstubycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生名单</a></li>
-			    <li><a href="${ctx}/statis/toviewdisbycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生宿舍分配</a></li>
-			    <li><a href="${ctx}/statis/toviewdisbycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生宿舍分配</a></li>
-			    <li><a href="${ctx}/toprintstu.action" target="right"><span class="icon-caret-right"></span>打印所有学生详细信息</a></li>
-			    <li><a href="${ctx}/toprintbr.action" target="right"><span class="icon-caret-right"></span>打印所有宿舍详细信息</a></li>
-			  </ul>  
 			</div>
 			</div>
 </c:if>
