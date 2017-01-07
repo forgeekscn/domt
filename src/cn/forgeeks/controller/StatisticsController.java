@@ -56,7 +56,7 @@ public class StatisticsController {
 	ApartmentService apartmentService;
 	@Resource 
 	BedroomService bedroomService;
-	
+ 
 	@RequestMapping("/statis/todisbystu.action")
 	public String todisbystu(Model model ){
 		List<College> collegeList= collegeService.find(null);
@@ -616,11 +616,7 @@ public class StatisticsController {
 		List<Student> boyStudentList=studentService.find(paraMap);
 		int studentNum=boyStudentList.size(); 
 		int forBrNum=( (studentNum*1.0/5-studentNum/5)<0.0001?studentNum/5:studentNum/5+1);
-		System.out.println("该学院未分配宿舍的男生人数:"+studentNum);
-		System.out.println("至少需要宿舍间数:"+forBrNum);
-		
 		info+="男生：\n<br/>";
-		
 		Map paraMap1=new HashMap();
 		paraMap1.put("status","N");
 		paraMap1.put("apmId",apartmentId);
@@ -630,11 +626,14 @@ public class StatisticsController {
 			studentIndex++;
 			if(studentIndex%5==1) forBrIndex++;
 			Bedroom br;
-			if(forBrIndex==bedroomList1.size()-1 || bedroomList1.size()==0 ) {
+			if(forBrIndex==bedroomList1.size()-1  ) {
 				info+="由于该公寓宿舍已分配满，该学院部分男同学未分配到宿舍 ，稍后请再次为他们分配宿舍!<br/>";
-//				apartmentService.get(apartmentId).set
 				break;
-			}else{
+			}else if (bedroomList1.size()==0){
+				info+="由于该公寓宿舍已分配满，该学院部分男同学未分配到宿舍 ，稍后请再次为他们分配宿舍!<br/>";
+				break;
+			}
+			else{
 				br=bedroomList1.get(forBrIndex);
 			}
 			student.setBedroomId(br.getBedroomId());
