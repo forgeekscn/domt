@@ -77,10 +77,10 @@
 			  <ul>
 			    <li><a href="${ctx}/statis/tostatisstubycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生名单</a></li>
 			    <li><a href="${ctx}/statis/tostatisstubycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生名单</a></li>
-			    <li><a href="${ctx}/statis/toviewdisbycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生宿舍分配</a></li>
-			    <li><a href="${ctx}/statis/toviewdisbycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生宿舍分配</a></li>
-			    <li><a href="${ctx}/toprintstu.action" target="right"><span class="icon-caret-right"></span>打印所有学生详细信息</a></li>
-			    <li><a href="${ctx}/toprintbr.action" target="right"><span class="icon-caret-right"></span>打印所有宿舍详细信息</a></li>
+			    <li><a href="${ctx}/statis/toviewdisbycla.action" target="right"><span class="icon-caret-right"></span>统计班级宿舍分配</a></li>
+			    <li><a href="${ctx}/statis/toviewdisbycollege.action" target="right"><span class="icon-caret-right"></span>统计学院宿舍分配</a></li>
+			    <li><a href="${ctx}/toprintstu.action" target="right"><span class="icon-caret-right"></span>打印所有学生信息</a></li>
+			    <li><a href="${ctx}/toprintbr.action" target="right"><span class="icon-caret-right"></span>打印所有宿舍信息</a></li>
 			  </ul>  
 			</div>
 			</div>
@@ -120,10 +120,10 @@
 			  <ul>
 			    <li><a href="${ctx}/statis/tostatisstubycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生名单</a></li>
 			    <li><a href="${ctx}/statis/tostatisstubycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生名单</a></li>
-			    <li><a href="${ctx}/statis/toviewdisbycla.action" target="right"><span class="icon-caret-right"></span>统计班级学生宿舍分配</a></li>
-			    <li><a href="${ctx}/statis/toviewdisbycollege.action" target="right"><span class="icon-caret-right"></span>统计学院学生宿舍分配</a></li>
-			    <li><a href="${ctx}/toprintstu.action" target="right"><span class="icon-caret-right"></span>打印所有学生详细信息</a></li>
-			    <li><a href="${ctx}/toprintbr.action" target="right"><span class="icon-caret-right"></span>打印所有宿舍详细信息</a></li>
+			    <li><a href="${ctx}/statis/toviewdisbycla.action" target="right"><span class="icon-caret-right"></span>统计班级宿舍分配</a></li>
+			    <li><a href="${ctx}/statis/toviewdisbycollege.action" target="right"><span class="icon-caret-right"></span>统计学院宿舍分配</a></li>
+			    <li><a href="${ctx}/toprintstu.action" target="right"><span class="icon-caret-right"></span>打印所有学生信息</a></li>
+			    <li><a href="${ctx}/toprintbr.action" target="right"><span class="icon-caret-right"></span>打印所有宿舍信息</a></li>
 			  </ul>  
 			</div>
 			</div>
