@@ -41,6 +41,7 @@ import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
  */
 @Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }) })
 public class PageInterceptor implements Interceptor {
+	
 	private String databaseType; // 数据库类型，不同的数据库有不同的分页方法
 
 	// 拦截后要执行的方法

@@ -67,10 +67,7 @@
 			  <h2><span class="icon-pencil-square-o"></span>系统管理</h2>
 			  
 			  <ul>
-			    <li><a href="${ctx}/man/list.action" target="right"><span class="icon-caret-right"></span>查看管理员</a></li>
-			    <li><a href="add.html" target="right"><span class="icon-caret-right"></span>角色管理</a></li>
-			    <li><a href="list.html" target="right"><span class="icon-caret-right"></span>权限管理</a></li>
-			    <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>数据管理</a></li>        
+			    <li><a href="${ctx}/man/list.action" target="right"><span class="icon-caret-right"></span>分配管理员</a></li>
 			  </ul>  
 			       
 			  <h2><span class="icon-pencil-square-o"></span>统计打印</h2>

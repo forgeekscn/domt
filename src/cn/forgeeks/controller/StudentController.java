@@ -10,10 +10,13 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.forgeeks.domain.Bedroom;
 import cn.forgeeks.domain.College;
 import cn.forgeeks.domain.Student;
 import cn.forgeeks.pagination.Page;
@@ -39,6 +42,26 @@ public class StudentController {
 	@Resource
 	BedroomService bedroomService;
 
+	
+	
+	
+	@RequestMapping("/stu/getdata.action")
+	public String getdata(Model model,String cla){
+		Map map = new HashMap();
+		if(UtilFuns.isEmpty(cla)) cla=null;
+		map.put("classId", cla);
+		List<Student> list=studentService.find(map);
+
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		System.out.println(data);
+ 		model.addAttribute("data",data);
+		
+		return "/cla/getdata.jsp";
+	}
+	
+	
 	@RequestMapping("/stu/list.action")
 	public String annolist(String status, String college, String grade,
 			String sex, String arg, String key, String totalPage,

@@ -13,15 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.forgeeks.domain.Apartment;
 import cn.forgeeks.domain.College;
 import cn.forgeeks.domain.Manager;
+import cn.forgeeks.domain.Student;
 import cn.forgeeks.pagination.Page;
 import cn.forgeeks.service.ApartmentService;
 import cn.forgeeks.service.BedroomService;
 import cn.forgeeks.service.ClassesService;
 import cn.forgeeks.service.CollegeService;
 import cn.forgeeks.service.ManagerService;
+import cn.forgeeks.service.StudentService;
 import cn.forgeeks.util.UtilFuns;
 
 @Controller
@@ -38,6 +39,10 @@ public class ManagerController {
 
 	@Resource
 	BedroomService bedroomService;
+	
+	@Resource 
+	StudentService studentService;
+	
 	
 	@RequestMapping("/man/list.action")
 	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
@@ -84,8 +89,13 @@ public class ManagerController {
 		return "/man/create.jsp";
 	}
 	@RequestMapping("/man/create.action")
-	public String create(Manager man, Model model) {
+	public String create(String stuId, Model model) {
+		Manager man= new Manager();
+		Student stu=studentService.get(stuId);
+		man.setManagerName(stu.getStudentName());
+		man.setManagerPassword(stu.getStudentPassword());
 		man.setManagerId(UUID.randomUUID().toString().substring(0, 8));
+		
 		managerService.insert(man);
 		return "redirect:/man/list.action";
 	}

@@ -18,7 +18,7 @@
 			<div class="padding border-bottom">
 				<ul class="search">
 					<li><a class="button border-main icon-plus-square-o"
-						href="${ctx}/man/tocreate.action"> 添加内容</a></li>
+						href="${ctx}/man/tocreate.action">为学生分配管理员权限</a></li>
 						<if condition="$iscid eq 1">
 						<li><input type="text" placeholder="模糊查询" id="key"
 						class="input"	style="width:250px;line-height:17px;display:inline-block" value="${key}"/> 

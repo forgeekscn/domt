@@ -16,34 +16,88 @@
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加管理员</strong></div>
   <div class="body-content">
     <form method="post" class="form-x" action="${ctx}/man/create.action">  
-      
-       <div class="form-group">
-        <div class="label">
-          <label>姓名：</label>
-        </div>
-           <div class="field">
-          <input type="text"  class="input" style="float:left; width:250px;" name="managerName" value=""/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="label" >
-          <label>联系方式：</label>
-        </div>
-           <div class="field">
-          <input type="text"  class="input" style="width:250px;" name="managerCall" value=""/>
-        </div>
-      </div>
-    
-		<div>
-		</div>
      
-     	<div>
+		<div>
+		
+				<!--根据学院取所属班级 http://localhost:8080/domt/cla/getdata.action?collegeId=2f11518b -->
+				<select id="college" class="input" 
+					style="margin-left:60px;width:220px;float:left; line-height:17px;" onchange="ejld1(this.value)">
+						<option value="">选择学院</option>
+						 <c:forEach var="s" items="${sList1}">
+                             <option value="${s.collegeId}">${s.collegeName}</option>
+                         </c:forEach>
+				</select>
+				<select id="class" class="input" name="classId" onchange="ejld2(this.value)"
+					style="margin-left:30px;width:200px; float:left; line-height:17px;">
+						<option value="">选择班级</option>
+				</select>
+				 
+	<select id="stu" name="stuId" class="input" onchange="ejld22()"
+					style="margin-left:30px;width:200px; float:left; line-height:17px;">
+						<option value="">选择学生</option>
+				</select>
+				<br/>
 				<br/>
 				
-				
-				
+				<script type="text/javascript">
+					
+				 
+					function ejld1(apmId){
+						$.ajax({
+							 type: "GET",
+				             url: "${ctx}/cla/getdata.action",
+				             data: {collegeId: apmId },
+				             dataType: "json",
+				             success:function(data){
+				             	$("#class").empty();
+			             		$("#class").append('<option>选择班级</option>');
+				             	$.each(data,function(index,item){
+				             		$("#class").append('<option value="'+item["classId"]+'">'+item["className"]+'</option>');
+				             	});
+				             },
+				             error:function(){
+				             	alert("eeror json");
+				             }
+						});
+						}
+					function ejld2(cla){
+// 						var cla=$("#class").val();
+						$.ajax({
+							 type: "GET",
+				             url: "${ctx}/stu/getdata.action",
+				             data: {"cla":cla},
+				             dataType: "json",
+				             success:function(data){
+				             
+				             	$("#stu").empty();
+				             	
+			             		$("#stu").append('<option>选择学生</option>');
+				             	$.each(data,function(index,item){
+				             		$("#stu").append('<option value="'+item["studentId"]+'">'+item["studentName"]+'</option>');
+				             	});
+				             },
+				             error:function(){
+				             	alert("eeror json");
+				             }
+						});
+						}
+						
+				 
+						
+						
+				</script>      
 		</div>
+
      
+				<br/>            
+				<br/>
+				
+    
+	 
+
+
+
+
 
      
       <div class="form-group">
@@ -51,10 +105,12 @@
           <label></label>
         </div>
         <div class="field">
-          <button style="margin-left:100px;margin-top:30px;width:200px;" class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+          <button style="margin-left:100px;margin-top:30px;width:200px;" class="button bg-main icon-check-square-o" type="submit">为给学生分配 普通管理员权限</button>
         </div>
       </div>
     </form>
+    
+    
   </div>
 </div>
 
