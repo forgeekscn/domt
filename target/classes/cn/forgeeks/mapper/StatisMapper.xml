@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.StatisMapper">
+	<resultMap type="cn.forgeeks.domain.Student" id="studentRM">
+		<id property="studentId" column="STUDENT_ID" />
+		<result property="studentName" column="STUDENT_NAME" />
+		<result property="studentPassword" column="STUDENT_PASSWORD" />
+		<result property="sex" column="SEX" />
+		<result property="classId" column="CLASS_ID" />
+		<result property="className" column="CLASS_NAME" />
+		<result property="status" column="STATUS" />
+		<result property="bedroomId" column="BEDROOM_ID" />
+		<result property="bedroomName" column="BEDROOM_NAME" />
+		<result property="studentNo" column="STUDENT_NO" />
+		<result property="grade" column="GRADE" />
+		<result property="collegeId" column="COLLEGE_ID" />
+		<result property="collegeName" column="COLLEGE_NAME" />
+	</resultMap>
+
+	<update id="updateStuBrByCla" parameterType="map">
+		
+	</update>
+
+
+
+
+
+</mapper>

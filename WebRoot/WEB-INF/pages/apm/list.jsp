@@ -18,10 +18,10 @@
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left:10px;">
 					<li>
-					<c:if test="sessionScope.type=='root'">
-						<a class="button border-main icon-plus-square-o" href="${ctx}/apm/tocreate.action"> 添加内容</a>
-					</c:if>
-						</li>
+						<c:if test="${sessionScope.type=='root'}">
+							<a class="button border-main icon-plus-square-o" href="${ctx}/apm/tocreate.action"> 添加内容</a>
+						</c:if>
+					</li>
 					<if condition="$iscid eq 1">
 					<li>
 						<select  name="sex" class="input"

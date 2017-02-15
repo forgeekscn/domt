@@ -62,7 +62,7 @@ public class BedroomController {
 	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();
 		if(UtilFuns.isEmpty(arg)) map.put("arg", null); else map.put("arg", arg);
-		if(key!=null) key=URLDecoder.decode(key, "UTF-8");
+		if(UtilFuns.isNotEmpty(key)) key=URLDecoder.decode(key, "UTF-8");
 		map.put("key","%"+key+"%");
 		
 		model.addAttribute("arg",arg);

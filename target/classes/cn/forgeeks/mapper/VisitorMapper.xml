@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.VisitorMapper">
+	<resultMap type="cn.forgeeks.domain.Visitor" id="visitorRM">
+		<id property="visitorId" column="VISITOR_ID" />
+		<result property="visitorName" column="VISITOR_NAME" />
+		<result property="visitorSex" column="VISITOR_SEX" />
+		<result property="visitorCall" column="VISITOR_CALL" />
+		<result property="bedroomName" column="BEDROOM_NAME" />
+		<result property="visitorDate" column="VISITOR_DATE" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="visitorRM">
+	
+				
+		select visitor_id,visitor_name,visitor_sex,visitor_call, reason , bedroom_name
+		       , to_char(visitor_date,'YYYY-mm-dd hh24:MM:ss') as visitor_date
+		from visitor
+		where 1=1
+		      <if test="arg1!=null"> and visitor_date >= (sysdate -#{arg1,jdbcType=VARCHAR})</if>
+		       <if test="arg2!=null">and bedroom_name = #{arg2,jdbcType=VARCHAR}</if>
+		         <if test="key!='%null%'">and reason like #{key,jdbcType=VARCHAR}</if>
+		order by visitor_date desc
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="visitorRM">
+		SELECT  r.visitor_id,r.visitor_name,r.visitor_sex,r.visitor_call, r.reason ,
+				 r.bedroom_name , r.visitor_date  
+		 FROM (   SELECT tt.*, ROWNUM AS rowno   
+		          FROM (  
+						select visitor_id,visitor_name,visitor_sex,visitor_call, reason , bedroom_name
+						       , to_char(visitor_date,'YYYY-mm-dd hh24:MM:ss') as visitor_date
+						from visitor
+						where 1=1
+					      <if test="params.arg1!=null"> and visitor_date >= (sysdate -#{params.arg1,jdbcType=VARCHAR})</if>
+					       <if test="params.arg2!=null">and bedroom_name = #{params.arg2,jdbcType=VARCHAR}</if>
+					         <if test="params.key!='%null%'">and reason like #{params.key,jdbcType=VARCHAR}</if>
+						order by visitor_date desc   
+		                   
+		                )tt   
+		                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+		                ) r
+		   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+  		   SELECT max(rownum)
+           FROM visitor
+           where 1=1
+		      <if test="params.arg1!=null"> and visitor_date >= (sysdate -#{params.arg1,jdbcType=VARCHAR})</if>
+		       <if test="params.arg2!=null">and bedroom_name = #{params.arg2,jdbcType=VARCHAR}</if>
+		         <if test="params.key!='%null%'">and reason like #{params.key,jdbcType=VARCHAR}</if>
+   
+	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="visitorRM">
+		
+		select visitor_id,visitor_name,visitor_sex,visitor_call, reason , bedroom_name
+		       , to_char(visitor_date,'YYYY-mm-dd hh24:MM:ss') as visitor_date
+		from visitor
+		where 1=1
+		      and visitor_id = #{visitorId,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.Visitor">
+		insert into visitor
+		(visitor_id,visitor_name,visitor_sex,visitor_call, reason , bedroom_name ,visitor_date)
+		values
+		(#{visitorId,jdbcType=VARCHAR},#{visitorName,jdbcType=VARCHAR},
+		 #{visitorSex,jdbcType=VARCHAR},#{visitorCall,jdbcType=VARCHAR},
+		 #{reason,jdbcType=VARCHAR},#{bedroomName,jdbcType=VARCHAR},sysdate
+		)
+	</insert>
+	<update id="update" parameterType="cn.forgeeks.domain.Visitor">
+		update visitor
+		<set>
+			<if test="#{visitorName!=null}">visitor_name=#{visitorName,jdbcType=VARCHAR},</if>
+			<if test="#{visitorCall!=null}">visitor_call=#{visitorCall,jdbcType=VARCHAR},</if>
+			<if test="#{visitorSex!=null}">visitor_sex=#{visitorSex,jdbcType=VARCHAR},</if>
+			<if test="#{reason!=null}">reason=#{reason,jdbcType=VARCHAR},</if>
+			<if test="#{bedroomName!=null}">bedroom_name=#{bedroomName,jdbcType=VARCHAR}</if>
+		</set>
+		where visitor_id=#{visitorId,jdbcType=VARCHAR}
+	</update>
+	<delete id="deleteById" parameterType="string">
+		delete from visitor
+		where
+		visitor_id=#{visitorId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from visitor
+		where visitor_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

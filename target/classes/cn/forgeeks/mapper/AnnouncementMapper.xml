@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.AnnouncementMapper">
+	<resultMap type="cn.forgeeks.domain.Announcement" id="announcementRM">
+		<id property="announcementId" column="ANNOUNCEMENT_ID" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="announcementRM">
+
+		select
+		announcement_id,title,content
+		,to_char(create_time,'YYYY-mm-dd
+		hh24:MM:ss')as CREATE_TIME
+		from announcement
+		where 1=1
+		<if test="date!=null">and create_time >= ( sysdate - #{date,jdbcType=VARCHAR})
+		</if>
+		<if test='key!="%null%"'>and content like #{key,jdbcType=VARCHAR}</if>
+		order by create_time desc
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="announcementRM">
+		SELECT r.announcement_id,r.title,r.content,r.create_time  
+		 FROM (   SELECT tt.*, ROWNUM AS rowno   
+		          FROM (   SELECT announcement_id,title,content, to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as create_time
+		                   FROM announcement t
+		                   where 1=1
+		                   <if test="params.date!=null">and create_time >= ( sysdate - #{params.date,jdbcType=VARCHAR})</if>   
+		                   <if test='params.key!="%null%"'>and content like #{params.key,jdbcType=VARCHAR} </if>   
+		                   ORDER BY create_time desc   
+		                   )tt   
+		                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+		                ) r
+		   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+  		   SELECT max(rownum)
+           FROM announcement
+           where 1=1
+           <if test="params.date!=null">and create_time >= ( sysdate - #{params.date,jdbcType=VARCHAR})</if>   
+           <if test='params.key!="%null%"'>and content like #{params.key,jdbcType=VARCHAR} </if>   
+	</select>
+
+
+
+	<select id="get" parameterType="string" resultMap="announcementRM">
+		SELECT
+ 		announcement_id,title,content, 	to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
+ 		where announcementId = #{announcementId,jdbcType=VARCHAR} 
+ 		FROM announcement  
+	
+	</select>
+	<insert id="insert" parameterType="cn.forgeeks.domain.Announcement">
+		insert into announcement
+		(announcement_id,title,content,create_time)
+		values
+		(#{announcementId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR} ,sysdate
+		)
+	</insert>
+	<update id="update" parameterType="cn.forgeeks.domain.Announcement">
+		update announcement
+		<set>
+			<if test="#{title!=null}">title=#{title,jdbcType=VARCHAR},</if>
+			<if test="#{content!=null}">content=#{content,jdbcType=VARCHAR},</if>
+			create_time=sysdate
+		</set>
+		where announcement_id=#{announcementId,jdbcType=VARCHAR}
+	</update>
+	<delete id="deleteById" parameterType="string">
+		delete from announcement
+		where
+		announcement_id=#{annoId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from announcement
+		where announcement_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

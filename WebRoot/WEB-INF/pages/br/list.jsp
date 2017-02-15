@@ -25,14 +25,16 @@
 						</li>
 					<if condition="$iscid eq 1">
 					<li>
-						<select name="arg" class="input"
+						<select name="arg" id="arg" class="input"
 							style="margin-left:30px;width:250px; line-height:17px;">
 								<option value="">按是否住满分类</option>
-								<option value="N" onclick="selectdate(this.value)">没住满</option>
-								<option value="Y" onclick="selectdate(this.value)">住满</option>
+								<option value="N" onclick="sel(this.value)">没住满</option>
+								<option value="Y" onclick="sel(this.value)">住满</option>
 						</select>
 						<script type="text/javascript">
-							$("select[name='arg']").val("${arg}");
+							function sel(arg){
+								$("select[name='arg']").val(arg);
+							}
 						</script>
 					</li>
 					</if>
@@ -44,7 +46,7 @@
 			</div>
 			<table class="table table-hover text-center">
 				<tr>
-					<th width="20"></th>
+					<th width="5%"></th>
 					<th width="10%">宿舍名称</th>
 					<th width="15%">所属公寓</th>
 					<th width="15%">已住人数</th>
@@ -205,7 +207,8 @@
 		//搜索
 		function Sear(){
 			var key=$("#key").val();
-			window.location.href='${ctx}/br/list.action?key='+encodeURI(encodeURI(key));
+			var arg=$("#arg").val();
+			window.location.href='${ctx}/br/list.action?key='+encodeURI(encodeURI(key))+'&arg='+arg;
 			return false;
 		}
 

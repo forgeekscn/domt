@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.forgeeks.mapper.ManagerMapper">
+	<resultMap type="cn.forgeeks.domain.Manager" id="managerRM">
+		<id property="managerId" column="MANAGER_ID" />
+		<result property="managerName" column="MANAGER_NAME" />
+		<result property="managerPassword" column="MANAGER_PASSWORD" />
+		<result property="managerCall" column="MANAGER_CALL" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="managerRM">
+		 select manager_id,manager_name,manager_password,manager_call
+		 from manager 
+		 where 1=1
+            <if test="arg!=null"> and manager_id=#{arg,jdbcType=VARCHAR}</if>
+            <if test="key!='%null%'"> and manager_name like #{key,jdbcType=VARCHAR}</if>
+            
+	        <if test="name!=null"> and manager_name=#{name,jdbcType=VARCHAR} </if>
+	       <if test="password!=null"> and manager_password=#{password,jdbcType=VARCHAR} </if>
+		      
+		 order by manager_name
+	</select>
+
+	<select id="findPage" parameterType="cn.forgeeks.pagination.Page" resultMap="managerRM">
+	
+	
+			SELECT r.manager_id,r.manager_name,r.manager_password,r.manager_call  
+				 FROM (   SELECT tt.*, ROWNUM AS rowno   
+				          FROM (   
+			                    select  manager_id,manager_name,manager_password,manager_call 
+			                    from manager 
+			                    where 1=1
+			                    <if test="params.arg!=null"> and manager_id=#{params.arg,jdbcType=VARCHAR}</if>
+			                    <if test="params.key!='%null%'"> and ( params.manager_name like #{params.key,jdbcType=VARCHAR}</if>
+			                    order by manager_name
+			                    )tt   
+				                WHERE #{pageSize}*#{pageNo} >=ROWNUM   
+				                ) r
+				   WHERE r.rowno >= #{pageSize}*(#{pageNo}-1) +1
+	</select>	
+	
+	<select id="findResultSize" parameterType="cn.forgeeks.pagination.Page" resultType="java.lang.String">
+   		   SELECT max(rownum)
+           FROM manager
+           where 1=1
+             <if test="params.arg!=null"> and manager_id=#{params.arg,jdbcType=VARCHAR}</if>
+             <if test="params.key!='%null%'"> and ( manager_name like #{params.key,jdbcType=VARCHAR}</if>
+	</select>
+
+	<select id="get" parameterType="string" resultMap="managerRM">
+		 select  manager_id,manager_name,manager_password,manager_call
+		 from manager 
+		 where 1=1
+		      and manager_id=#{managerId,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert" parameterType="cn.forgeeks.domain.Manager">
+			
+		insert into manager
+		( manager_id,manager_name,manager_password,manager_call)
+		values
+			(#{managerId,jdbcType=VARCHAR},#{managerName,jdbcType=VARCHAR},
+			#{managerPassword,jdbcType=VARCHAR},#{managerCall,jdbcType=VARCHAR}
+		 )
+	</insert>
+	
+	<update id="update" parameterType="cn.forgeeks.domain.Manager">
+		 update manager 
+		 <set>
+		 		<if test="managerName!=null">manager_name=#{managerName,jdbcType=VARCHAR},</if>
+		 		<if test="managerPassword!=null">manager_password=#{managerPassword,jdbcType=VARCHAR},</if>
+		 		<if test="managerCall!=null">manager_call=#{managerCall,jdbcType=VARCHAR},</if>
+		 </set>
+		 where    manager_id=#{managerId,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteById" parameterType="string">
+		delete from manager
+		where
+		manager_id=#{managerId}
+	</delete>
+	<delete id="delete" parameterType="string">
+		delete from manager
+		where manager_id in
+		<foreach collection="array" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</delete>
+
+
+</mapper>
