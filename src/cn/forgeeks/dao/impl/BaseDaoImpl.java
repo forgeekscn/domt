@@ -1,4 +1,4 @@
-package cn.forgeeks.dao.impl;
+﻿package cn.forgeeks.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;

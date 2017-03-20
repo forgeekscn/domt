@@ -57,7 +57,8 @@ public class BedroomController {
  		model.addAttribute("data",data);
 		
 		return "/cla/getdata.jsp";
-	}
+	}	
+	
 	@RequestMapping("/br/list.action")
 	public String annolist(String arg,String key,String totalPage,Integer pageNo,Model model) throws UnsupportedEncodingException {
 		Map map = new HashMap();

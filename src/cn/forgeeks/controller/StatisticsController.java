@@ -57,7 +57,61 @@ public class StatisticsController {
 	@Resource 
 	BedroomService bedroomService;
 	
-	
+	@RequestMapping("/statis/todisbystu.action")
+	public String todisbystu(Model model ){
+		List<College> collegeList= collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/disbystu.jsp"; 
+	}
+	@RequestMapping("/statis/disbystu.action")
+	public String disbystu(Model model,String stuId,String bedroomId){
+		if(stuId==null||bedroomId==null||stuId.length()<1||bedroomId.length()<1){ 
+			model.addAttribute("info","请选择待分配的学生和合适的宿舍"); return "/statis/sInfo2.jsp";  
+		} 
+		Student student= studentService.get(stuId);
+		Bedroom oldBedroom= bedroomService.get(student.getBedroomId());
+		Bedroom bedroom= bedroomService.get(bedroomId);
+		
+		student.setBedroomId(bedroomId);
+		Integer oldNum=-1;
+		Integer num=-1;
+		if(oldBedroom!=null)   oldNum= Integer.valueOf(oldBedroom.getTotalBed().split("/")[0]);
+		if(bedroom!=null)   num= Integer.valueOf(bedroom.getTotalBed().split("/")[0]);
+		
+		if(oldNum!=-1 && oldNum-1 >= 0 ) {oldBedroom.setStatus("Y");oldBedroom.setTotalBed( (oldNum-1)+"/" + oldBedroom.getTotalBed().split("/")[1] );}
+		if(num!=-1 && num+1 <= Integer.valueOf(bedroom.getTotalBed().split("/")[1])) {
+			bedroom.setTotalBed( (num+1)+"/"+bedroom.getTotalBed().split("/")[1]); 
+			if((num+1)==Integer.valueOf(bedroom.getTotalBed().split("/")[1]) ) bedroom.setStatus("N");
+			else  bedroom.setStatus("Y");}
+		else { model.addAttribute("info","该宿舍已经满员，请另选"); return "/statis/sInfo2.jsp";  } 
+		studentService.update(student);
+		bedroomService.update(oldBedroom);
+		bedroomService.update(bedroom);
+		model.addAttribute("info",student.getStudentName()+" 分配到了宿舍："+bedroom.getBedroomName());
+		return "/statis/sInfo2.jsp";
+	}
+	@RequestMapping("/statis/toempbystu.action")
+	public String empbystu(Model model){
+		List<College> collegeList= collegeService.find(null);
+		model.addAttribute("collegeList",collegeList);
+		return "/statis/empbystu.jsp"; 
+	}
+	@RequestMapping("/statis/empbystu.action")
+	public String empbystu(Model model, String stuId){
+		if(stuId==null || stuId.length()<1) { 
+			model.addAttribute("info","请选择待移出公寓的学生"); return "/statis/sInfo2.jsp";  
+		}
+		Student student = studentService.get(stuId);
+		Bedroom bedroom= bedroomService.get(student.getBedroomId());
+		student.setBedroomId(null);
+		student.setBedroomName(null);
+		bedroom.setStatus("Y");
+		bedroom.setTotalBed( (Integer.valueOf(bedroom.getTotalBed().split("/")[0])-1)+"/" + bedroom.getTotalBed().split("/")[1] ) ;
+		studentService.update(student);
+		bedroomService.update(bedroom);
+		model.addAttribute("info",student.getStudentName()+" 被成功移出宿舍："+bedroom.getBedroomName());
+		return "/statis/sInfo2.jsp";
+	}
 	
 	
 	
@@ -314,12 +368,6 @@ public class StatisticsController {
 	}
 
 	
-	
-	
-	
-	
-	
-	
 	@RequestMapping("/statis/toviewdisbycollege.action")
 	public String toviewdisbycollege(Model model){
 		List<College> collegeList=collegeService.find(null);
@@ -386,8 +434,6 @@ public class StatisticsController {
 		model.addAttribute("info",info);
 		return "/statis/sInfo1.jsp";
 	}
-	
-	
 	
 	@RequestMapping("/statis/toempbycollege.action")
 	public String toempbycollege(Model model){

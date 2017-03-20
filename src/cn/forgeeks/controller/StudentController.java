@@ -2,6 +2,7 @@ package cn.forgeeks.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,13 +52,22 @@ public class StudentController {
 		if(UtilFuns.isEmpty(cla)) cla=null;
 		map.put("classId", cla);
 		List<Student> list=studentService.find(map);
-
  		JSONArray jsonArray=new JSONArray();
  		jsonArray.addAll(list);
  		String data=jsonArray.toString();
- 		System.out.println(data);
  		model.addAttribute("data",data);
-		
+		return "/cla/getdata.jsp";
+	}	
+	
+	@RequestMapping("/stu/getdata1.action")
+	public String getdata1(Model model,String stuId){
+		if(UtilFuns.isEmpty(stuId)) stuId=null;
+		List<Student> list=new ArrayList<Student>();
+		list.add(	studentService.get(stuId));
+ 		JSONArray jsonArray=new JSONArray();
+ 		jsonArray.addAll(list);
+ 		String data=jsonArray.toString();
+ 		model.addAttribute("data",data);
 		return "/cla/getdata.jsp";
 	}
 	

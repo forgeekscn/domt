@@ -28,3 +28,4 @@ public interface StudentService {
 	public String findResultSize(Page page); // 分页查询总记录数
 
 }
+	
