@@ -102,6 +102,10 @@ public class StatisticsController {
 			model.addAttribute("info","请选择待移出公寓的学生"); return "/statis/sInfo2.jsp";  
 		}
 		Student student = studentService.get(stuId);
+		if(student.getBedroomId()==null) {
+			model.addAttribute("info","该学生尚未分配宿舍，请返回查看！");
+			return "/statis/sInfo2.jsp";
+		}
 		Bedroom bedroom= bedroomService.get(student.getBedroomId());
 		student.setBedroomId(null);
 		student.setBedroomName(null);
