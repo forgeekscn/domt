@@ -30,7 +30,7 @@
           <label>联系方式：</label>
         </div>
            <div class="field">
-          <input type="text"  class="input" style="width:250px;" name="managerCall" value="${obj.managerName}"/>
+          <input type="text"  class="input" style="width:250px;" name="managerCall" value="${obj.managerCall}"/>
         </div>
       </div>
     

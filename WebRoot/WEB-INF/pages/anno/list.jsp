@@ -25,7 +25,7 @@
 						</li>
 					<if condition="$iscid eq 1">
 					<li>
-						<select name="date" class="input"
+						<select name="date" class="input" id="arg"
 							style="margin-left:30px;width:250px; line-height:17px;">
 								<option value="">按日期分类</option>
 								<option value="3" onclick="selectdate(this.value)">三天内</option>
@@ -45,10 +45,10 @@
 			</div>
 			<table class="table table-hover text-center">
 				<tr>
-					<th width="20"></th>
+					<th width="5%"></th>
 					<th width="20%">时间</th>
-					<th width="25%">标题</th>
-					<th width="30%">内容</th>
+					<th width="40%">标题</th>
+					 
 					<th width="200">操作</th>
 				</tr>
 
@@ -59,7 +59,7 @@
 							value="${obj.announcementId}" class="sb" /></td>
 						<td>${obj.createTime}</td>
 						<td width="10%">${obj.title}</td>
-						<td>${obj.content}</td>
+						 
 						<td><div class="button-group" style="height:48px;">
 							<c:if test="${sessionScope.type=='root' or sessionScope.type=='manager'}">
 								<a class="button border-main"
@@ -205,7 +205,9 @@
 		//搜索
 		function Sear(){
 			var key=$("#key").val();
-			window.location.href='${ctx}/anno/list.action?key='+encodeURI(encodeURI(key));
+			var arg1=$("#arg").val();
+			window.location.href='${ctx}/anno/list.action?key='+encodeURI(encodeURI(key))+'&date='+arg1;
+			
 			return false;
 		}
 

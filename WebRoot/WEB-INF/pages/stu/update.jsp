@@ -18,12 +18,42 @@
   
 	<form method="post" class="form-x" action="${ctx}/stu/update.action">
       
+       <c:if test="${sessionScope.type=='student'}">
        <div class="form-group">
         <div class="label">
           <label>姓名：</label>
         </div>
            <div class="field">
-          <input type="text"  class="input" style="float:left; width:250px;" name="studentName" value="${obj.studentName}"/>
+          <input type="text" disabled="true" class="input" style="float:left; width:250px;" name="studentName" value="${obj.studentName}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label" >
+          <label>学号：</label>
+        </div>
+           <div class="field">
+          <input type="text"  class="input" disabled="true" style="width:250px;" name="studentNo" value="${obj.studentNo}"/>
+        </div>
+      </div>
+      
+      
+	      <div class="form-group">
+	        <div class="label" >
+	          <label>密码：</label>
+	        </div>
+	          <div class="field">
+	          <input type="password"  class="input" style="width:250px;" name="studentPassword" value="${obj.studentPassword}"/>
+	        </div>
+	      </div>
+       </c:if>
+       
+       <c:if test="${sessionScope.type=='root'}">
+       <div class="form-group">
+        <div class="label">
+          <label>姓名：</label>
+        </div>
+           <div class="field">
+          <input type="text"   class="input" style="float:left; width:250px;" name="studentName" value="${obj.studentName}"/>
         </div>
       </div>
       <div class="form-group">
@@ -34,18 +64,10 @@
           <input type="text"  class="input" style="width:250px;" name="studentNo" value="${obj.studentNo}"/>
         </div>
       </div>
+
+       </c:if>
       
-      
-      <c:if test="${sessionScope.type=='student'}">
-	      <div class="form-group">
-	        <div class="label" >
-	          <label>密码：</label>
-	        </div>
-	          <div class="field">
-	          <input type="password"  class="input" style="width:250px;" name="studentPassword" value="${obj.studentPassword}"/>
-	        </div>
-	      </div>
-      </c:if>
+       
       
       
 				<input name="studentId" type="hidden" value="${obj.studentId}"/>
@@ -53,7 +75,8 @@
 				<input id="className" name="className" type="hidden"value="${obj.className}"/>
 				<input id="bedroomName" name="bedroomName" type="hidden" value="${obj.bedroomName}"/>
 				<input id="collegeName" name="collegeName" type="hidden" value="${obj.collegeName}"/>
-    
+  
+    <c:if test="${sessionScope.name!=null and  sessionScope.type=='root'}">
 		<div>
 		
 				<!--根据学院取所属班级 http://localhost:8080/domt/cla/getdata.action?collegeId=2f11518b -->
@@ -107,7 +130,6 @@
 					
 				</script>      
 		</div>
-     
      	<div>
 				<br/>            
 				<br/>            
@@ -174,9 +196,43 @@
 				</select>      
 				<br/>      
 		</div>
-     
-
-     
+    </c:if>
+    
+    <c:if test="${sessionScope.type=='student'}">
+      <div class="form-group">
+        <div class="label">
+          <label>学院：</label>
+        </div>
+           <div class="field">
+          <input type="text" disabled="true" class="input" style="float:left; width:250px;" name="collegeName" value="${obj.collegeName}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>班级：</label>
+        </div>
+           <div class="field">
+          <input type="text"  disabled="true" class="input" style="float:left; width:250px;" name="className" value="${obj.className}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>年级：</label>
+        </div>
+           <div class="field">
+          <input type="text" disabled="true" class="input" style="float:left; width:250px;" name="grade" value="${obj.grade}"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>宿舍：</label>
+        </div>
+           <div class="field">
+          <input type="text" disabled="true" class="input" style="float:left; width:250px;" name="bedroomName" value="${obj.bedroomName}"/>
+        </div>
+      </div>
+     </c:if>
+    
       <div class="form-group">
         <div class="label">
           <label></label>

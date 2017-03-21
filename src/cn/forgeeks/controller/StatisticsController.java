@@ -80,6 +80,8 @@ public class StatisticsController {
 		
 		if(oldNum!=-1 && oldNum-1 >= 0 ) {oldBedroom.setStatus("N");oldBedroom.setTotalBed( (oldNum-1)+"/" + oldBedroom.getTotalBed().split("/")[1] );}
 		if(num!=-1 && num+1 <= Integer.valueOf(bedroom.getTotalBed().split("/")[1])) {
+			student.setBedroomId(bedroomId);
+			student.setBedroomName(bedroom.getBedroomName());
 			bedroom.setTotalBed( (num+1)+"/"+bedroom.getTotalBed().split("/")[1]); 
 			if((num+1)==Integer.valueOf(bedroom.getTotalBed().split("/")[1]) ) bedroom.setStatus("Y");
 			else  bedroom.setStatus("N");}

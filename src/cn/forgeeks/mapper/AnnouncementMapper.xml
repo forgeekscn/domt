@@ -53,8 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get" parameterType="string" resultMap="announcementRM">
 		SELECT
  		announcement_id,title,content, 	to_char(create_time,'YYYY-mm-dd hh24:MM:ss')as CREATE_TIME
- 		where announcementId = #{announcementId,jdbcType=VARCHAR} 
- 		FROM announcement  
+ 		FROM announcement
+ 		where announcement_id = #{announcementId,jdbcType=VARCHAR} 
+ 	  
 	
 	</select>
 	<insert id="insert" parameterType="cn.forgeeks.domain.Announcement">

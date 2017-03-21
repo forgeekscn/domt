@@ -92,7 +92,7 @@ public class ManagerController {
 	public String create(String stuId, Model model) {
 		Manager man= new Manager();
 		Student stu=studentService.get(stuId);
-		man.setManagerName(stu.getStudentName());
+		man.setManagerName(stu.getStudentNo());
 		man.setManagerPassword(stu.getStudentPassword());
 		man.setManagerId(UUID.randomUUID().toString().substring(0, 8));
 		
@@ -108,6 +108,8 @@ public class ManagerController {
 	
 	@RequestMapping("/man/toupdate.action")
 	public String toupdate(String manId, Model model) {
+		Manager man=managerService.get(manId);
+		model.addAttribute("obj",man);
 		return "/man/update.jsp";
 	}
 
