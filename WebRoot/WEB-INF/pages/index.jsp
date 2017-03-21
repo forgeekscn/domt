@@ -146,6 +146,7 @@
 			    		<span class="icon-caret-right"></span>我的室友</a></li>
 			    <li><a href="${ctx}/stu/findbyclassid.action?classId=${sessionScope.user.classId}" target="right"><span class="icon-caret-right"></span>我的同班同学</a></li>  
 			    <li><a href="${ctx}/visit/list.action?arg2=${sessionScope.user.bedroomName}" target="right"><span class="icon-caret-right"></span>我的宿舍访客记录</a></li>
+			    <li><a href="${ctx}/visit/list.action?arg2=${sessionScope.user.bedroomName}" target="right"><span class="icon-caret-right"></span>申请调换宿舍</a></li>
 			    
 			  </ul>
 			</div>

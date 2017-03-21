@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,27 @@ public class BedroomController {
 	@Resource
 	ApartmentService apartmentService;
 
+	
+
+	@RequestMapping("/br/getdata2.action")
+	public String getdata2(String apmId,Model model) throws UnsupportedEncodingException{
+		Map map = new HashMap();
+		if(UtilFuns.isEmpty(apmId)) apmId=null;
+		map.put("apmId", apmId);
+		List<Bedroom> list=bedroomService.find(map);
+
+		Integer brNum=0,brYNum=0,brNNum=0;
+		for(Bedroom bedroom: list){
+			brNum++;
+			if(bedroom.getStatus().equals("N")) 	brYNum++;
+			else brNNum++;
+		}
+		JSONObject json= new JSONObject();
+		json.put("tips2","该公寓共有宿舍"+brNum+"间，其中有空床位的有"+brYNum+"间 ， 最多能分配给"+5*brYNum+"位学生居住");
+		model.addAttribute("data",json.toString());
+		return "/cla/getdata.jsp";
+	}
+	
 	
 	@RequestMapping("/br/getdata.action")
 	public String getdata(String apmId,Model model) throws UnsupportedEncodingException{

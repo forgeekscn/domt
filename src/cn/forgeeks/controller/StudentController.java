@@ -1,6 +1,7 @@
 package cn.forgeeks.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,9 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +46,41 @@ public class StudentController {
 	@Resource
 	BedroomService bedroomService;
 
-	
+	@RequestMapping("/stu/getdata2.action")
+	public String getdata2(Model model,String collegeId){
+		Map map = new HashMap();
+		if(UtilFuns.isEmpty(collegeId)) collegeId=null;
+		map.put("collegeId", collegeId);
+		List<Student> list=studentService.find(map);
+		Integer allNum=0,bNum=0,gNum=0,bYNum=0,bNNum=0,gYNum=0,gNNum=0;
+		for(Student student:list){
+			allNum++;
+			if(student.getSex().equals("男")) { 
+				bNum++;
+				if(student.getBedroomId()==null) bNNum++;
+				else bYNum++;
+			}else{
+				gNum++;
+				if(student.getBedroomId()==null) gNNum++;
+				else gYNum++;
+			}
+		}
+		String tips1="  该学院共有学生人数："+allNum+" 其中男生"+bNum+"人，女生"+gNum+"人<br/>  未分配宿舍的男生"+bNNum
+				+"  未分配宿舍的女生"+gNNum+"人";
+		
+		JSONObject json= new JSONObject();
+		json.put("tips1", tips1);
+		
+//		list= new ArrayList<Student>();
+//		Student student= new Student();
+//		student.setStudentName("");
+//		list.add(student);
+// 		JSONArray jsonArray=new JSONArray();
+// 		jsonArray.addAll(list);
+// 		String data=jsonArray.toString();
+ 		model.addAttribute("data",json.toString());
+		return "/cla/getdata.jsp";
+	}
 	
 	
 	@RequestMapping("/stu/getdata.action")

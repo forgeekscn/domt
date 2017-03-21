@@ -22,16 +22,19 @@
 		<div>
 		
 				<!--根据学院取所属班级 http://localhost:8080/domt/cla/getdata.action?collegeId=2f11518b -->
-				<select id="college" class="input" name="classId"
+				<select id="college" class="input" name="classId" onchange="tips1(this.value)"
 					style="margin-left:60px;width:220px;float:left; line-height:17px;">
 						<option value="">选择学院</option>
 						 <c:forEach var="s" items="${collegeList}">
                              <option value="${s.collegeId}">${s.collegeName}</option>
                          </c:forEach>
 				</select>
+			    <div class="label" >
+         			<label id="tips1"></label>
+        		</div>
 				<br/>
 				<br/>
-				<br/>
+			 
 
 				<script type="text/javascript">
 					function setvalue1(){
@@ -63,8 +66,6 @@
 				</script>      
 		</div>
 
-     
-				<br/>            
 				<br/>
 				
 				
@@ -80,15 +81,15 @@
 						<option value="g">女</option>
 				</select>
      </div>            
-				<select id="apartment" class="input" name="apartmentId"
+				<select id="apartment" class="input" name="apartmentId" onchange="tips2(this.value)"
 					style="margin-left:60px;width:250px; float:left; line-height:17px;">
 						<option value="">选择公寓</option>
 				</select>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
+ 				<div class="label" >
+         			<label id="tips2"></label>
+        		</div>
 
+<br/><br/>
 		<div class="label" >
           <label>选择给该学院女生分配宿舍的公寓：</label>
         </div>		
@@ -100,12 +101,61 @@
 						<option value="g">女</option>
 				</select>
      </div>            
-				<select id="apartment2" class="input" name="apartmentId2"
+				<select id="apartment2" class="input" name="apartmentId2" onchange="tips3(this.value)"
 					style="margin-left:60px;width:250px; float:left; line-height:17px;">
 						<option value="">选择公寓</option>
 				</select>
+				 <div class="label" >
+         			<label id="tips3"></label>
+        		</div>
 				
 				<script type="text/javascript">
+				
+				function tips1(collegeId){
+					$.ajax({
+							 type: "POST",
+				             url: "${ctx}/stu/getdata2.action",
+				             data: {"collegeId":collegeId},
+				             dataType: "json",
+				             success:function(data){
+				             	$("#tips1").empty();
+			             		$("#tips1").html(data["tips1"]);
+				             },
+				             error:function(){
+				             	alert("eeror json");
+				             }
+						});
+				}
+				function tips2(apmId){
+						$.ajax({
+							 type: "POST",
+				             url: "${ctx}/br/getdata2.action",
+				             data: {"apmId":apmId},
+				             dataType: "json",
+				             success:function(data){
+				             	$("#tips2").empty();
+			             		$("#tips2").html(data["tips2"]);
+				             },
+				             error:function(){
+				             	alert("eeror json");
+				             }
+						});
+				}
+				function tips3(apmId){
+				$.ajax({
+							 type: "POST",
+				             url: "${ctx}/br/getdata2.action",
+				             data: {"apmId":apmId},
+				             dataType: "json",
+				             success:function(data){
+				             	$("#tips3").empty();
+			             		$("#tips3").html(data["tips2"]);
+				             },
+				             error:function(){
+				             	alert("eeror json");
+				             }
+						});
+				}
 				
 					function ejld22(sex){
 // 		             	$("#sex").val($("#sex1 option:selected").text());
