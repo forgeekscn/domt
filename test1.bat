@@ -1,0 +1,1 @@
+FOR /F "usebackq delims==" %i IN (`set`) DO @echo %i
