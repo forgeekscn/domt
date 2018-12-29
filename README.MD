@@ -14,5 +14,4 @@
 ![](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt4.png) 
 #### 联系作者
 - [x] forgeekscn@gmail.com
-- [x] http://forgeeks.cn
-- [x] qq783808649 
+- [x] http://forgeeks.cn 
