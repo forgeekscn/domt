@@ -1,22 +1,40 @@
-## 高校宿舍管理系统
-#### 开发平台 
- - [x] 开发工具 MyEclipse2014  oracle-xe 
- - [x] 框架技术 spring springmvc mybatis maven 
-#### 实现功能  
- - [x] 宿舍 学生 公寓 班级 学院 公告 用户等等的管理
- - [x] 按学院 班级 个人来 分配宿舍 腾空宿舍
- - [x] 统计打印宿舍班级学生等信息
- - [x] 角色不同 权限不同
-#### 运行截图
-![](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt1.png) 
-![](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt2.png) 
-![](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt3.png) 
-![](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt4.png) 
-#### 联系作者
-- [x] forgeekscn@gmail.com
-- [x] qq 783808649
+# 高校宿舍管理系统
 
-#### 广告
-- 接计算机毕业设计/毕业论文的辅导/代写,如java/python/php实现的web管理系统/门户网站/ios安卓app/公众号/小程序相关 
-- 单源码100 定制(毕设+论文)900-1600 一周内交付 提供/讲解/安装/远程调试/答辩辅导等服务 四四二分阶段支付 推荐他人促成交易可分得15%佣金 
-- 联系vx: forgeeks 
+## 项目简介
+
+这是一个基于Spring + SpringMVC + MyBatis开发的高校宿舍管理系统，提供学生宿舍日常管理所需的各项功能。
+
+## 技术栈
+
+- **开发工具**: MyEclipse 2014, Oracle XE
+- **后端框架**: Spring + SpringMVC + MyBatis
+- **项目管理**: Maven
+
+## 功能特性
+
+- 宿舍、学生、公寓、班级、学院、公告、用户等全面管理
+- 支持按学院、班级、个人分配和腾空宿舍
+- 提供宿舍、班级、学生等信息的统计和打印功能
+- 基于角色的权限管理系统
+
+## 系统截图
+
+![系统截图1](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt1.png)
+![系统截图2](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt2.png)
+![系统截图3](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt3.png)
+![系统截图4](https://raw.githubusercontent.com/forgeekscn/domt/master/note/domt_v/domt4.png)
+
+## 部署说明
+
+1. 克隆项目到本地
+2. 配置Oracle数据库连接
+3. 导入相关依赖（通过Maven）
+4. 在MyEclipse中运行或部署到Tomcat服务器
+
+## 许可证
+
+MIT License
+
+## 免责声明
+
+本项目仅用于学习和研究目的。
