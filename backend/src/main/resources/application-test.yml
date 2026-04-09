@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.forgeeks.domt.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    cn.forgeeks.domt.mapper: debug
