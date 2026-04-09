@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.ApartmentMapper">
+
+    <select id="findAll" resultType="Apartment">
+        SELECT apartment_id, apartment_name, sex, manager_id, total_floor, total_people
+        FROM apartment
+    </select>
+
+    <select id="findPage" resultType="Apartment">
+        SELECT apartment_id, apartment_name, sex, manager_id, total_floor, total_people
+        FROM apartment
+        <where>
+            <if test="apartmentName != null and apartmentName != ''">
+                AND apartment_name LIKE CONCAT('%', #{apartmentName}, '%')
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM apartment
+        <where>
+            <if test="apartmentName != null and apartmentName != ''">
+                AND apartment_name LIKE CONCAT('%', #{apartmentName}, '%')
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Apartment">
+        SELECT apartment_id, apartment_name, sex, manager_id, total_floor, total_people
+        FROM apartment WHERE apartment_id = #{apartmentId}
+    </select>
+
+    <select id="findBySex" resultType="Apartment">
+        SELECT apartment_id, apartment_name, sex, manager_id, total_floor, total_people
+        FROM apartment WHERE sex = #{sex}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO apartment (apartment_id, apartment_name, sex, manager_id, total_floor, total_people)
+        VALUES (#{apartmentId}, #{apartmentName}, #{sex}, #{managerId}, #{totalFloor}, #{totalPeople})
+    </insert>
+
+    <update id="update">
+        UPDATE apartment
+        <set>
+            <if test="apartmentName != null">apartment_name = #{apartmentName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="managerId != null">manager_id = #{managerId},</if>
+            <if test="totalFloor != null">total_floor = #{totalFloor},</if>
+            <if test="totalPeople != null">total_people = #{totalPeople},</if>
+        </set>
+        WHERE apartment_id = #{apartmentId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM apartment WHERE apartment_id = #{apartmentId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM apartment WHERE apartment_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

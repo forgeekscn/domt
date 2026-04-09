@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.AnnouncementMapper">
+
+    <select id="findAll" resultType="Announcement">
+        SELECT announcement_id, title, content, create_time
+        FROM announcement ORDER BY create_time DESC
+    </select>
+
+    <select id="findPage" resultType="Announcement">
+        SELECT announcement_id, title, content, create_time
+        FROM announcement
+        <where>
+            <if test="title != null and title != ''">
+                title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM announcement
+        <where>
+            <if test="title != null and title != ''">
+                title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Announcement">
+        SELECT announcement_id, title, content, create_time
+        FROM announcement WHERE announcement_id = #{announcementId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO announcement (announcement_id, title, content, create_time)
+        VALUES (#{announcementId}, #{title}, #{content}, #{createTime})
+    </insert>
+
+    <update id="update">
+        UPDATE announcement
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </set>
+        WHERE announcement_id = #{announcementId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM announcement WHERE announcement_id = #{announcementId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM announcement WHERE announcement_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

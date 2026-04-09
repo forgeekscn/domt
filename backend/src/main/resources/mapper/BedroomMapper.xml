@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.BedroomMapper">
+
+    <select id="findAll" resultType="Bedroom">
+        SELECT bedroom_id, apartment_id, bedroom_name, status, total_bed
+        FROM bedroom
+    </select>
+
+    <select id="findPage" resultType="Bedroom">
+        SELECT bedroom_id, apartment_id, bedroom_name, status, total_bed
+        FROM bedroom
+        <where>
+            <if test="bedroomName != null and bedroomName != ''">
+                AND bedroom_name LIKE CONCAT('%', #{bedroomName}, '%')
+            </if>
+            <if test="apartmentId != null and apartmentId != ''">
+                AND apartment_id = #{apartmentId}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM bedroom
+        <where>
+            <if test="bedroomName != null and bedroomName != ''">
+                AND bedroom_name LIKE CONCAT('%', #{bedroomName}, '%')
+            </if>
+            <if test="apartmentId != null and apartmentId != ''">
+                AND apartment_id = #{apartmentId}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Bedroom">
+        SELECT bedroom_id, apartment_id, bedroom_name, status, total_bed
+        FROM bedroom WHERE bedroom_id = #{bedroomId}
+    </select>
+
+    <select id="findByApartmentId" resultType="Bedroom">
+        SELECT bedroom_id, apartment_id, bedroom_name, status, total_bed
+        FROM bedroom WHERE apartment_id = #{apartmentId}
+    </select>
+
+    <select id="findAvailableByApartmentId" resultType="Bedroom">
+        SELECT bedroom_id, apartment_id, bedroom_name, status, total_bed
+        FROM bedroom WHERE apartment_id = #{apartmentId} AND status = 'N'
+    </select>
+
+    <select id="countByApartmentId" resultType="int">
+        SELECT COUNT(*) FROM bedroom WHERE apartment_id = #{apartmentId}
+    </select>
+
+    <select id="countAvailableByApartmentId" resultType="int">
+        SELECT COUNT(*) FROM bedroom WHERE apartment_id = #{apartmentId} AND status = 'N'
+    </select>
+
+    <insert id="insert">
+        INSERT INTO bedroom (bedroom_id, apartment_id, bedroom_name, status, total_bed)
+        VALUES (#{bedroomId}, #{apartmentId}, #{bedroomName}, #{status}, #{totalBed})
+    </insert>
+
+    <update id="update">
+        UPDATE bedroom
+        <set>
+            <if test="apartmentId != null">apartment_id = #{apartmentId},</if>
+            <if test="bedroomName != null">bedroom_name = #{bedroomName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="totalBed != null">total_bed = #{totalBed},</if>
+        </set>
+        WHERE bedroom_id = #{bedroomId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM bedroom WHERE bedroom_id = #{bedroomId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM bedroom WHERE bedroom_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

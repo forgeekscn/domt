@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.CollegeMapper">
+
+    <select id="findAll" resultType="College">
+        SELECT college_id, college_name FROM college
+    </select>
+
+    <select id="findPage" resultType="College">
+        SELECT college_id, college_name FROM college
+        <where>
+            <if test="collegeName != null and collegeName != ''">
+                college_name LIKE CONCAT('%', #{collegeName}, '%')
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM college
+        <where>
+            <if test="collegeName != null and collegeName != ''">
+                college_name LIKE CONCAT('%', #{collegeName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="College">
+        SELECT college_id, college_name FROM college WHERE college_id = #{collegeId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO college (college_id, college_name)
+        VALUES (#{collegeId}, #{collegeName})
+    </insert>
+
+    <update id="update">
+        UPDATE college
+        SET college_name = #{collegeName}
+        WHERE college_id = #{collegeId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM college WHERE college_id = #{collegeId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM college WHERE college_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
