@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.StudentMapper">
+
+    <sql id="studentColumns">
+        student_id, student_name, student_password, sex, class_id, class_name,
+        status, bedroom_id, bedroom_name, student_no, grade, college_id, college_name
+    </sql>
+
+    <sql id="searchConditions">
+        <if test="studentName != null and studentName != ''">
+            AND student_name LIKE CONCAT('%', #{studentName}, '%')
+        </if>
+        <if test="collegeId != null and collegeId != ''">
+            AND college_id = #{collegeId}
+        </if>
+        <if test="grade != null and grade != ''">
+            AND grade = #{grade}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="classId != null and classId != ''">
+            AND class_id = #{classId}
+        </if>
+        <if test="bedroomId != null and bedroomId != ''">
+            AND bedroom_id = #{bedroomId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (student_name LIKE CONCAT('%', #{keyword}, '%')
+                 OR class_name LIKE CONCAT('%', #{keyword}, '%')
+                 OR student_no LIKE CONCAT('%', #{keyword}, '%')
+                 OR bedroom_name LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+    </sql>
+
+    <select id="findAll" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student
+    </select>
+
+    <select id="findPage" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student
+        <where>
+            <include refid="searchConditions"/>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM student
+        <where>
+            <include refid="searchConditions"/>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student WHERE student_id = #{studentId}
+    </select>
+
+    <select id="findByNameAndPassword" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student
+        WHERE student_name = #{studentName} AND student_password = #{studentPassword}
+    </select>
+
+    <select id="findByClassId" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student WHERE class_id = #{classId}
+    </select>
+
+    <select id="findByBedroomId" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student WHERE bedroom_id = #{bedroomId}
+    </select>
+
+    <select id="findByCollegeId" resultType="Student">
+        SELECT <include refid="studentColumns"/> FROM student WHERE college_id = #{collegeId}
+    </select>
+
+    <select id="countByStatus" resultType="int">
+        SELECT COUNT(*) FROM student WHERE status = #{status}
+    </select>
+
+    <select id="countBySex" resultType="int">
+        SELECT COUNT(*) FROM student WHERE sex = #{sex}
+    </select>
+
+    <select id="countByGrade" resultType="int">
+        SELECT COUNT(*) FROM student WHERE grade = #{grade}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO student (student_id, student_name, student_password, sex, class_id, class_name,
+                             status, bedroom_id, bedroom_name, student_no, grade, college_id, college_name)
+        VALUES (#{studentId}, #{studentName}, #{studentPassword}, #{sex}, #{classId}, #{className},
+                #{status}, #{bedroomId}, #{bedroomName}, #{studentNo}, #{grade}, #{collegeId}, #{collegeName})
+    </insert>
+
+    <update id="update">
+        UPDATE student
+        <set>
+            <if test="studentName != null">student_name = #{studentName},</if>
+            <if test="studentPassword != null">student_password = #{studentPassword},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="classId != null">class_id = #{classId},</if>
+            <if test="className != null">class_name = #{className},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="bedroomId != null">bedroom_id = #{bedroomId},</if>
+            <if test="bedroomName != null">bedroom_name = #{bedroomName},</if>
+            <if test="studentNo != null">student_no = #{studentNo},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="collegeId != null">college_id = #{collegeId},</if>
+            <if test="collegeName != null">college_name = #{collegeName},</if>
+        </set>
+        WHERE student_id = #{studentId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM student WHERE student_id = #{studentId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM student WHERE student_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

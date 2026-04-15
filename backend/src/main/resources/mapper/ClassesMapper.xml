@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.ClassesMapper">
+
+    <select id="findAll" resultType="Classes">
+        SELECT class_id, class_name, coach, coach_call, college_id, grade
+        FROM classes
+    </select>
+
+    <select id="findPage" resultType="Classes">
+        SELECT class_id, class_name, coach, coach_call, college_id, grade
+        FROM classes
+        <where>
+            <if test="className != null and className != ''">
+                AND class_name LIKE CONCAT('%', #{className}, '%')
+            </if>
+            <if test="collegeId != null and collegeId != ''">
+                AND college_id = #{collegeId}
+            </if>
+            <if test="grade != null and grade != ''">
+                AND grade = #{grade}
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM classes
+        <where>
+            <if test="className != null and className != ''">
+                AND class_name LIKE CONCAT('%', #{className}, '%')
+            </if>
+            <if test="collegeId != null and collegeId != ''">
+                AND college_id = #{collegeId}
+            </if>
+            <if test="grade != null and grade != ''">
+                AND grade = #{grade}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Classes">
+        SELECT class_id, class_name, coach, coach_call, college_id, grade
+        FROM classes WHERE class_id = #{classId}
+    </select>
+
+    <select id="findByCollegeId" resultType="Classes">
+        SELECT class_id, class_name, coach, coach_call, college_id, grade
+        FROM classes WHERE college_id = #{collegeId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO classes (class_id, class_name, coach, coach_call, college_id, grade)
+        VALUES (#{classId}, #{className}, #{coach}, #{coachCall}, #{collegeId}, #{grade})
+    </insert>
+
+    <update id="update">
+        UPDATE classes
+        <set>
+            <if test="className != null">class_name = #{className},</if>
+            <if test="coach != null">coach = #{coach},</if>
+            <if test="coachCall != null">coach_call = #{coachCall},</if>
+            <if test="collegeId != null">college_id = #{collegeId},</if>
+            <if test="grade != null">grade = #{grade},</if>
+        </set>
+        WHERE class_id = #{classId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM classes WHERE class_id = #{classId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM classes WHERE class_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

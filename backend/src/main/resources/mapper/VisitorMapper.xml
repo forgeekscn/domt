@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.VisitorMapper">
+
+    <select id="findAll" resultType="Visitor">
+        SELECT visitor_id, visitor_name, visitor_sex, visitor_call,
+               bedroom_name, reason, visitor_date
+        FROM visitor
+    </select>
+
+    <select id="findPage" resultType="Visitor">
+        SELECT visitor_id, visitor_name, visitor_sex, visitor_call,
+               bedroom_name, reason, visitor_date
+        FROM visitor
+        <where>
+            <if test="visitorName != null and visitorName != ''">
+                AND visitor_name LIKE CONCAT('%', #{visitorName}, '%')
+            </if>
+            <if test="bedroomName != null and bedroomName != ''">
+                AND bedroom_name LIKE CONCAT('%', #{bedroomName}, '%')
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM visitor
+        <where>
+            <if test="visitorName != null and visitorName != ''">
+                AND visitor_name LIKE CONCAT('%', #{visitorName}, '%')
+            </if>
+            <if test="bedroomName != null and bedroomName != ''">
+                AND bedroom_name LIKE CONCAT('%', #{bedroomName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Visitor">
+        SELECT visitor_id, visitor_name, visitor_sex, visitor_call,
+               bedroom_name, reason, visitor_date
+        FROM visitor WHERE visitor_id = #{visitorId}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO visitor (visitor_id, visitor_name, visitor_sex, visitor_call,
+                             bedroom_name, reason, visitor_date)
+        VALUES (#{visitorId}, #{visitorName}, #{visitorSex}, #{visitorCall},
+                #{bedroomName}, #{reason}, #{visitorDate})
+    </insert>
+
+    <update id="update">
+        UPDATE visitor
+        <set>
+            <if test="visitorName != null">visitor_name = #{visitorName},</if>
+            <if test="visitorSex != null">visitor_sex = #{visitorSex},</if>
+            <if test="visitorCall != null">visitor_call = #{visitorCall},</if>
+            <if test="bedroomName != null">bedroom_name = #{bedroomName},</if>
+            <if test="reason != null">reason = #{reason},</if>
+            <if test="visitorDate != null">visitor_date = #{visitorDate},</if>
+        </set>
+        WHERE visitor_id = #{visitorId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM visitor WHERE visitor_id = #{visitorId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM visitor WHERE visitor_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

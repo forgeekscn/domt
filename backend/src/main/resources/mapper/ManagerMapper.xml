@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.forgeeks.domt.mapper.ManagerMapper">
+
+    <select id="findAll" resultType="Manager">
+        SELECT manager_id, manager_name, manager_password, manager_call
+        FROM manager
+    </select>
+
+    <select id="findPage" resultType="Manager">
+        SELECT manager_id, manager_name, manager_password, manager_call
+        FROM manager
+        <where>
+            <if test="managerName != null and managerName != ''">
+                manager_name LIKE CONCAT('%', #{managerName}, '%')
+            </if>
+        </where>
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM manager
+        <where>
+            <if test="managerName != null and managerName != ''">
+                manager_name LIKE CONCAT('%', #{managerName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="Manager">
+        SELECT manager_id, manager_name, manager_password, manager_call
+        FROM manager WHERE manager_id = #{managerId}
+    </select>
+
+    <select id="findByNameAndPassword" resultType="Manager">
+        SELECT manager_id, manager_name, manager_password, manager_call
+        FROM manager
+        WHERE manager_name = #{managerName} AND manager_password = #{managerPassword}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO manager (manager_id, manager_name, manager_password, manager_call)
+        VALUES (#{managerId}, #{managerName}, #{managerPassword}, #{managerCall})
+    </insert>
+
+    <update id="update">
+        UPDATE manager
+        <set>
+            <if test="managerName != null">manager_name = #{managerName},</if>
+            <if test="managerPassword != null">manager_password = #{managerPassword},</if>
+            <if test="managerCall != null">manager_call = #{managerCall},</if>
+        </set>
+        WHERE manager_id = #{managerId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM manager WHERE manager_id = #{managerId}
+    </delete>
+
+    <delete id="deleteBatch">
+        DELETE FROM manager WHERE manager_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
